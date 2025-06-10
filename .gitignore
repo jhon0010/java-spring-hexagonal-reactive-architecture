@@ -1,0 +1,74 @@
+# Build output
+/target/
+/build/
+
+# Maven wrapper
+/.mvn/wrapper/maven-wrapper.jar
+
+# Eclipse
+.settings/
+/.project
+.classpath
+/*.launch
+
+# IntelliJ IDEA
+.idea/
+/*.iml
+/out/
+
+# VS Code
+.vscode/
+
+# Spring Boot Devtools restart files
+restart/*.*
+spring-devtools.properties
+
+# Logs
+*.log
+logs/
+!logs/.gitkeep
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDE scratch files, local history, etc.
+*.swp
+*~
+*.tmp
+
+# Temporary files
+*.bak
+*.orig
+
+# Sensitive files
+application-*.yml
+application-*.properties
+!application.yml         # keep default config template if needed
+
+# JRebel
+.rebel/
+
+# JUnit test reports
+/surefire-reports/
+/failsafe-reports/
+
+# Coverage reports
+/target/site/jacoco/
+/coverage/
+
+# Docker
+docker-compose.override.yml
+
+# Generated sources
+/generated-sources/
+/generated/
+
+# Dependency directories
+/node_modules/
+
+# Spring Cloud Config (if used)
+/config-repo/
+
+# Misc
+!.gitignore
