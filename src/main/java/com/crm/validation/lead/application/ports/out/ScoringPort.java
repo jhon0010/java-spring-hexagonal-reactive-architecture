@@ -1,4 +1,8 @@
 package com.crm.validation.lead.application.ports.out;
 
-public class ScoringPort {
+import com.crm.validation.lead.domain.model.Lead;
+import reactor.core.publisher.Mono;
+
+public interface ScoringPort {
+    Mono<Double> getScore(Lead lead);
 }
