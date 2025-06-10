@@ -1,13 +1,13 @@
-package com.crm.validation.crm.validation;
+package com.crm.validation.lead;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application {
+public class LeadApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(LeadApplication.class, args);
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.crm.validation.crm.validation;
+package com.crm.validation.lead;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
