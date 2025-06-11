@@ -8,10 +8,12 @@ public class LeadMapper {
 
     public static Lead dtoToDomain(LeadDto leadDto) {
         return Lead.builder()
-                .id(leadDto.getId())
-                .name(leadDto.getName())
-                .birthdate(leadDto.getBirthdate())
-                .state(LeadState.CREATED)
+                .id(leadDto.id())
+                .name(leadDto.name())
+                .birthdate(leadDto.birthdate())
+                .state(LeadState.CREATED) // Default state is CREATED assume first time
+                .email(leadDto.email())
+                .phoneNumber(leadDto.phoneNumber())
                 .build();
     }
 

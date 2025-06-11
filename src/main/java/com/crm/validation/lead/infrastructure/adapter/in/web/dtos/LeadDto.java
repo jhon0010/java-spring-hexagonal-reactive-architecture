@@ -1,12 +1,8 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web.dtos;
 
-import lombok.Data;
+import lombok.Builder;
 
 import java.time.LocalDate;
 
-@Data
-public class LeadDto {
-    private final String id;
-    private final String name;
-    private final LocalDate birthdate;
-}
+@Builder
+public record LeadDto(String id, String name, LocalDate birthdate, String email, String phoneNumber) {}
