@@ -4,7 +4,7 @@ import com.crm.validation.lead.application.ports.out.JudicialRecordsPort;
 import com.crm.validation.lead.application.ports.out.NationalRegistryPort;
 import com.crm.validation.lead.application.ports.out.ScoringPort;
 import com.crm.validation.lead.application.services.validator.CompositeValidator;
-import com.crm.validation.lead.application.services.validator.ReactiveValidator;
+import com.crm.validation.lead.application.services.validator.IndependentValidator;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
@@ -19,7 +19,7 @@ public class LeadValidatorUseCase {
     private final JudicialRecordsPort judicialRecordsPort;
     private final NationalRegistryPort nationalRegistryPort;
     private final ScoringPort scoringPort;
-    private final ReactiveValidator<LeadDto> validator;
+    private final IndependentValidator<LeadDto> validator;
 
     public LeadValidatorUseCase(JudicialRecordsPort judicialRecordsPort, NationalRegistryPort nationalRegistryPort,
                                 ScoringPort scoringPort) {
@@ -27,14 +27,14 @@ public class LeadValidatorUseCase {
         this.nationalRegistryPort = nationalRegistryPort;
         this.scoringPort = scoringPort;
         this.validator = new CompositeValidator<LeadDto>()
-                    .add(this.judicialRecordsPort)
-                    .add(this.nationalRegistryPort)
-                    .add(this.scoringPort);
+                    .addIndependent(this.judicialRecordsPort)
+                    .addIndependent(this.nationalRegistryPort)
+                    .addDependent(this.scoringPort);
     }
 
     public Mono<LeadValidationResult> promoteLeadToProspect(LeadDto leadDto) {
-        return validator.validate(leadDto)
-                .map(result -> Lead.promoteLeadToProspect(leadDto, result));
+        return validator.apply(leadDto)
+                .map(validationOutcome -> Lead.promoteLeadToProspect(leadDto, validationOutcome.validation()));
     }
 
 }

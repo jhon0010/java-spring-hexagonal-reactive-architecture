@@ -1,6 +1,6 @@
 package com.crm.validation.lead.domain;
 
-import com.crm.validation.lead.application.services.validator.ValidationResult;
+import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.model.Lead;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +14,5 @@ import lombok.Data;
 @Data
 public class LeadValidationResult {
     Lead lead;
-    ValidationResult validations;
+    ValidationResults validations;
 }

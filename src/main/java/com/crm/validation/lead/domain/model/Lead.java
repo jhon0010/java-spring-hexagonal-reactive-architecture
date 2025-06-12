@@ -1,6 +1,6 @@
 package com.crm.validation.lead.domain.model;
 
-import com.crm.validation.lead.application.services.validator.ValidationResult;
+import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.exceptions.InvalidLeadDataException;
 import com.crm.validation.lead.domain.model.validator.LeadDataValidatorService;
@@ -53,7 +53,7 @@ public class Lead {
         }
     }
 
-    public static LeadValidationResult promoteLeadToProspect(LeadDto leadDto, ValidationResult result) {
+    public static LeadValidationResult promoteLeadToProspect(LeadDto leadDto, ValidationResults result) {
 
         Lead lead = fromDto(leadDto);
         log.info("Starting validations in order to promote a lead {} to {}", leadDto, LeadState.PROSPECT);
