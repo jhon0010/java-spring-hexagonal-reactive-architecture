@@ -10,3 +10,4 @@ example CLI and REST interfaces.
   * REJECTED : At least one of the validations failed.
 
 * The validation results would be relevant to the business, so they will be returned with the Lead information.
+  * This means ALL the validations will be executed, even if one of them fails.

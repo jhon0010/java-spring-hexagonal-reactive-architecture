@@ -1,11 +1,13 @@
 package com.crm.validation.lead.infrastructure.adapter.out;
 
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import lombok.extern.log4j.Log4j2;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.Random;
 
+@Log4j2
 public class BaseExternalCallSimulator {
 
     private static final double FAILURE_RATE = 0.15;
@@ -35,8 +37,8 @@ public class BaseExternalCallSimulator {
      * @param leadDto
      * @return true if the lead has a criminal record, false otherwise.
      */
-    protected Boolean simulateCriminalCheck(LeadDto leadDto) {
-        return !this.isEven(leadDto.documentNumber());
+    protected Mono<Boolean> simulateCriminalCheck(LeadDto leadDto) {
+        return Mono.just(!this.isEven(leadDto.documentNumber()));
     }
 
     /**
@@ -44,13 +46,15 @@ public class BaseExternalCallSimulator {
      * @param leadDto
      * @return true if the lead is present on the national registry, false otherwise.
      */
-    protected Boolean simulateNationalRegistryCheck(LeadDto leadDto) {
-        return this.isEven(leadDto.documentNumber());
+    protected Mono<Boolean> simulateNationalRegistryCheck(LeadDto leadDto) {
+        return Mono.just(this.isEven(leadDto.documentNumber()));
     }
 
-    protected Double simulateScoring(LeadDto leadDto) {
-        var probability = this.isEven(leadDto.documentNumber()) ? 70.0 : 30.0;
-        return (random.nextDouble() * 100) - probability;
+    protected Mono<Double> simulateScoring(LeadDto leadDto) {
+        var probability = this.isEven(leadDto.documentNumber()) ? 20.0 : 80.0;
+        var score = 100 - (random.nextDouble() * probability);
+        log.info("SCORE :: for lead {}: {}", leadDto.documentNumber(), score);
+        return Mono.just(score);
     }
 
 }

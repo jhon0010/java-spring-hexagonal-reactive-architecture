@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A simple container for validation ERRORS.
+ */
 public class ValidationResult {
     private final List<String> errors = new ArrayList<>();
 

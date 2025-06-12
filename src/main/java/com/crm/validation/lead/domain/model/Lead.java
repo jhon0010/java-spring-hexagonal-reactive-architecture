@@ -66,7 +66,7 @@ public class Lead {
                     .validations(result)
                     .build();
         }
-        log.info("The lead can not be promoted to {}", LeadState.PROSPECT);
+        log.info("CONGRATULATIONS !!! , The lead {} will be PROMOTED to {}", leadDto.documentNumber() ,LeadState.PROSPECT);
         return LeadValidationResult
                 .builder()
                 .lead(LeadMapper.changeState(lead, LeadState.PROSPECT))

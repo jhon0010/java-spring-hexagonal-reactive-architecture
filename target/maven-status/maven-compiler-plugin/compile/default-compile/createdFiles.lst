@@ -3,6 +3,7 @@ com/crm/validation/lead/application/ports/out/JudicialRecordsPort.class
 com/crm/validation/lead/domain/model/Lead$LeadBuilder.class
 com/crm/validation/lead/domain/model/Lead.class
 com/crm/validation/lead/infrastructure/adapter/in/web/dtos/LeadDto.class
+com/crm/validation/lead/application/services/validator/ReactiveValidator.class
 com/crm/validation/lead/LeadApplication.class
 com/crm/validation/lead/domain/LeadValidationResult.class
 com/crm/validation/lead/infrastructure/adapter/out/BaseExternalCallSimulator.class
@@ -11,10 +12,8 @@ com/crm/validation/lead/domain/mappers/LeadMapper.class
 com/crm/validation/lead/infrastructure/config/AppConfig.class
 com/crm/validation/lead/application/ports/out/ScoringPort.class
 com/crm/validation/lead/application/services/validator/CompositeValidator.class
-com/crm/validation/lead/domain/model/LeadValidations.class
 com/crm/validation/lead/infrastructure/adapter/in/web/dtos/LeadDto$LeadDtoBuilder.class
 com/crm/validation/lead/domain/LeadValidationResult$LeadValidationResultBuilder.class
-com/crm/validation/lead/application/services/validator/Validator.class
 com/crm/validation/lead/application/services/LeadValidatorUseCase.class
 com/crm/validation/lead/infrastructure/adapter/out/ScoringAdapter.class
 com/crm/validation/lead/infrastructure/adapter/out/NationalRegistryAdapter.class

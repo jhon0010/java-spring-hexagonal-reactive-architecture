@@ -13,32 +13,18 @@ public class JudicialRecordsAdapter extends BaseExternalCallSimulator implements
     public static final String SERVICE_NAME = "JudicialRecordsAdapter.hasCriminalRecord";
     public static final String CRIMINAL_RECORD_FOUND = "Criminal record found for lead: ";
 
-    /**
-     * Simulates a call to a judicial service add some delay to check if the lead has a criminal record.
-     *  Sometimes returns a random exception.
-     *
-     *  Expected to get false in order to promote the lead to a prospect.
-     *
-     * @param leadDto the lead to check for a criminal record.
-     * @return a Mono that emits true if the lead has a criminal record, false otherwise.
-     */
     @Override
-    public ValidationResult validate(LeadDto leadDto) {
-        log.info("Checking if lead {} has a criminal record", leadDto.id());
-        /*
-        Mono.defer(() ->
-             maybeFail(SERVICE_NAME)
-                    .then(simulateCriminalCheck(leadDto))
-                    .delayElement(randomDelay())
-        );
-         */
-
+    public Mono<ValidationResult> validate(LeadDto leadDto) {
+        log.info("Checking if lead {} has a criminal record", leadDto.documentNumber());
         ValidationResult result = new ValidationResult();
-        if (this.simulateCriminalCheck(leadDto)) {
-            result.addError(SERVICE_NAME.concat(CRIMINAL_RECORD_FOUND).concat(leadDto.name()));
-        }
 
-        return result;
+        return Mono.defer(() ->
+                this.simulateCriminalCheck(leadDto)
+                        .filter(hasCriminalRecord -> hasCriminalRecord)
+                        .doOnNext(hasCriminalRecord -> log.warn("Criminal record found for lead {}", leadDto.id()))
+                        .doOnNext(hasCriminalRecord -> result.addError(SERVICE_NAME.concat(CRIMINAL_RECORD_FOUND).concat(leadDto.toString())))
+                        .map(x -> result)
+        );
     }
 
 }

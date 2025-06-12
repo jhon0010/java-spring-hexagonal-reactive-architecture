@@ -15,22 +15,17 @@ public class ScoringAdapter extends BaseExternalCallSimulator implements Scoring
     public static final String SCORE_NOT_ENOUGH = "The lead score is not enough to promote to prospect: ";
 
     @Override
-    public ValidationResult validate(LeadDto leadDto){
+    public Mono<ValidationResult> validate(LeadDto leadDto){
         log.info("Calculating score for lead {}", leadDto.toString());
-        /*
-        return Mono.defer(() ->
-                maybeFail(SERVICE_NAME)
-                        .then(simulateScoring(lead))
-                        .delayElement(randomDelay())
-        );
-
-         */
-
         ValidationResult result = new ValidationResult();
-        if (Lead.isScoreEnoughToPromoteToProspect(this.simulateScoring(leadDto))) {
-            result.addError(SERVICE_NAME.concat(SCORE_NOT_ENOUGH).concat(leadDto.toString()));
-        }
 
-        return result;
+        return Mono.defer(() ->
+                this.simulateScoring(leadDto)
+                        .map(Lead::isScoreEnoughToPromoteToProspect)
+                        .filter(isScoreEnough -> !isScoreEnough)
+                        .doOnNext(isScoreEnough -> log.warn("Lead {}, doesn't get enough score point to be promoted", leadDto.documentNumber()))
+                        .doOnNext(isScoreEnough -> result.addError(SERVICE_NAME.concat(SCORE_NOT_ENOUGH).concat(leadDto.toString())))
+                        .map(x -> result)
+        );
     }
 }

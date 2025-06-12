@@ -1,8 +1,6 @@
 package com.crm.validation.lead.infrastructure.adapter.in.cli;
 
 import com.crm.validation.lead.application.services.LeadValidatorUseCase;
-import com.crm.validation.lead.domain.LeadValidationResult;
-import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +35,11 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
                 LeadDto leadDto = getDefaultLead(); // TODO Delete after testing
                 System.out.println("Validating lead..." + leadDto.toString());
 
-                LeadValidationResult leadValidationResult = validator.promoteLeadToProspect(leadDto);
-                log.info("--------------------------- RESULT ---------------------------");
-                log.info("LeadValidationResult {}", leadValidationResult.toString());
+                validator.promoteLeadToProspect(leadDto)
+                                .doOnNext(leadValidationResult -> {
+                                    log.info("--------------------------- RESULT ---------------------------");
+                                    log.info("LeadValidationResult {}", leadValidationResult.toString());
+                                }).block();
             } catch (Exception e) {
                 System.out.println("⚠️ Invalid input: " + e.getMessage());
             }

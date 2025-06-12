@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @AllArgsConstructor
 @RestController
@@ -16,7 +17,7 @@ public class LeadController {
     private final LeadValidatorUseCase leadValidatorService;
 
     @PostMapping("/validate")
-    public LeadValidationResult validateLead(@RequestBody LeadDto leadDtoMono) {
+    public Mono<LeadValidationResult> validateLead(@RequestBody LeadDto leadDtoMono) {
         return leadValidatorService.promoteLeadToProspect(leadDtoMono);
     }
 }
