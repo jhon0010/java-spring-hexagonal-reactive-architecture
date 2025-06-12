@@ -12,53 +12,26 @@
 This pattern is used to validate domain objects in a functional way, allowing for a more declarative style of validation. It uses functional interfaces to define validation rules and combines them to create a comprehensive validation service.
 
 
-## Collector Pattern combined with a Result/Validation wrapper
+## External services validation pattern Error Accumulator  and Composite Validator with delegates
 
-Key Design Patterns Used:
-1. Strategy Pattern - ValidationResultFormatter allows different output formats
-2. Template Method Pattern - Abstract formatter with concrete implementations
-3. Composite Pattern - ValidationGroup for organizing related validations
-4. Factory Pattern - Static factory methods in ValidationResult
-5. Fluent Interface Pattern - Method chaining for readable validation setup
-6. Command Pattern - Each validation rule is encapsulated as a command
-   Key Enhancements:
-   Severity Levels
+Notification (or “Error Accumulator”) Pattern
+A simple container (ValidationResult) that holds a list of messages and an overall “valid” flag.
 
-Added ValidationSeverity enum (INFO, WARNING, ERROR)
-Different validation outcomes can have different importance levels
+Composite Validator
+A Validator<T> interface, many small validator implementations (each focused on one rule), and a “composite” that runs them all and merges their results.
 
-Validation Rules Interface
+* Implement multiple validator solution design, includes:
+- Validator : A SAM interface, that allows the polymorphism.
+- ValidationResult: A simple accumulator for errors.
+- CompositeValidator: A set of validators, and functions that allows to operate all the validators in a simple way.
 
-ValidationRule<T> functional interface for reusable validation logic
-CommonValidations utility class with predefined rules
+Why This Works
+Single Responsibility: Each Validator<T> only knows about one rule.
 
-Validation Groups
+Open/Closed: You can add new Validator implementations without touching existing code.
 
-Organize related validations together
-Execute groups of validations on objects
+Reusability: You can reuse validators in different combinations.
 
-Multiple Output Formats
+Clear Error Reporting: You collect all failures in ValidationResult, so callers can see everything at once.
 
-Default, Errors Only, Summary, and Detailed formatters
-Easy to add new formatting strategies
-
-Enhanced Query Methods
-
-Filter by field, severity, or validation status
-Check overall validation state
-
-Type Safety
-
-Generic types ensure type safety across validation rules
-Prevents runtime type errors
-
-Best Practices Implemented:
-
-Immutable Results - ValidationResult objects are immutable
-Null Safety - Proper null checking in validation rules
-Separation of Concerns - Validation, collection, and formatting are separate
-Extensibility - Easy to add new rules, formatters, and validation types
-Fluent API - Readable and chainable method calls
-Factory Methods - Clean object creation with meaningful names
-
-This design is production-ready and follows SOLID principles, making it maintainable and extensible for complex validation scenarios.
+Testability: You can unit-test each rule in isolation.

@@ -1,9 +1,11 @@
 package com.crm.validation.lead.domain.model;
 
+import com.crm.validation.lead.application.services.validator.ValidationResult;
+import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.exceptions.InvalidLeadDataException;
 import com.crm.validation.lead.domain.model.validator.LeadDataValidatorService;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadMapper;
+import com.crm.validation.lead.domain.mappers.LeadMapper;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.log4j.Log4j2;
@@ -23,6 +25,8 @@ public class Lead {
     private final LeadState state;
     private final String email;
     private final String phoneNumber;
+    private final String documentType;
+    private final int documentNumber;
 
     private static final double SCORE_THRESHOLD = 60;
 
@@ -49,25 +53,28 @@ public class Lead {
         }
     }
 
-    public Lead promoteLeadToProspect(Lead lead, LeadValidations validations) {
+    public static LeadValidationResult promoteLeadToProspect(LeadDto leadDto, ValidationResult result) {
 
-        log.info("Starting validations in order to promote a lead {} to {}", lead.id, LeadState.PROSPECT);
-        if (!validations.criminalRecordPresent()
-                && validations.presentOnNationalRegistry()
-                && this.isScoreEnoughToPromoteToProspect(validations.score())
-        ) {
-            return Lead.builder()
-                    .id(lead.id)
-                    .name(lead.name)
-                    .state(LeadState.PROSPECT)
-                    .birthdate(lead.birthdate)
+        Lead lead = fromDto(leadDto);
+        log.info("Starting validations in order to promote a lead {} to {}", leadDto, LeadState.PROSPECT);
+        if (!result.isValid()) {
+            log.warn("Validation failed, the prospect will be rejected:");
+            result.getErrors().forEach(err -> log.error("  • {}",err));
+            return LeadValidationResult
+                    .builder()
+                    .lead(LeadMapper.changeState(lead, LeadState.REJECTED))
+                    .validations(result)
                     .build();
         }
         log.info("The lead can not be promoted to {}", LeadState.PROSPECT);
-        return lead;
+        return LeadValidationResult
+                .builder()
+                .lead(LeadMapper.changeState(lead, LeadState.PROSPECT))
+                .validations(result)
+                .build();
     }
 
-    public boolean isScoreEnoughToPromoteToProspect(double score){
+    public static boolean isScoreEnoughToPromoteToProspect(double score){
         return score >= SCORE_THRESHOLD;
     }
 

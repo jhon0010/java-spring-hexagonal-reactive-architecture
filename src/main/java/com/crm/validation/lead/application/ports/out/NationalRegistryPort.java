@@ -1,8 +1,6 @@
 package com.crm.validation.lead.application.ports.out;
 
-import com.crm.validation.lead.domain.model.Lead;
-import reactor.core.publisher.Mono;
+import com.crm.validation.lead.application.services.validator.Validator;
+import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 
-public interface NationalRegistryPort {
-    Mono<Boolean> isPresentOnNationalRegistry(Lead lead);
-}
+public interface NationalRegistryPort extends Validator<LeadDto> {}

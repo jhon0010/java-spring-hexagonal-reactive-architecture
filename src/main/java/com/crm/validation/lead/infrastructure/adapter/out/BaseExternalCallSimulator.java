@@ -1,6 +1,6 @@
 package com.crm.validation.lead.infrastructure.adapter.out;
 
-import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -14,6 +14,9 @@ public class BaseExternalCallSimulator {
 
     private final Random random = new Random();
 
+    private boolean isEven(int number) {
+        return number % 2 == 0;
+    }
 
     protected Duration randomDelay() {
         int delay = MIN_DELAY_MS + random.nextInt(MAX_DELAY_MS - MIN_DELAY_MS + 1);
@@ -27,27 +30,27 @@ public class BaseExternalCallSimulator {
         return Mono.empty();
     }
 
-    protected Mono<Boolean> simulateCriminalCheck(Lead lead) {
-        boolean hasCriminalRecord = !lead.getName().contains("j")
-                || !lead.getName().contains("J")
-                || lead.getBirthdate().getYear() > 2000;
-        return Mono.just(hasCriminalRecord);
+    /**
+     * Simulates a call to a judicial service to check if the lead has a criminal record.
+     * @param leadDto
+     * @return true if the lead has a criminal record, false otherwise.
+     */
+    protected Boolean simulateCriminalCheck(LeadDto leadDto) {
+        return !this.isEven(leadDto.documentNumber());
     }
 
-    protected Mono<Boolean> simulateNationalRegistryCheck(Lead lead) {
-        boolean isPresent = lead.getName().contains("n")
-                || lead.getName().contains("N")
-                || lead.getBirthdate().getYear() < 2000;
-        return Mono.just(isPresent);
+    /**
+     * Simulates a call to a national registry service to check if the lead is present on the national registry.
+     * @param leadDto
+     * @return true if the lead is present on the national registry, false otherwise.
+     */
+    protected Boolean simulateNationalRegistryCheck(LeadDto leadDto) {
+        return this.isEven(leadDto.documentNumber());
     }
 
-    protected Mono<Double> simulateScoring(Lead lead) {
-        var probability = 40;
-        if (lead.getName().contains("o") || lead.getName().contains("O")) {
-            probability += 20;
-        }
-        double score = probability + (random.nextDouble() * 60);
-        return Mono.just(score);
+    protected Double simulateScoring(LeadDto leadDto) {
+        var probability = this.isEven(leadDto.documentNumber()) ? 70.0 : 30.0;
+        return (random.nextDouble() * 100) - probability;
     }
 
 }
