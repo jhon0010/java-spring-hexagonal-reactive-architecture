@@ -3,6 +3,7 @@ package com.crm.validation.lead.domain.model;
 import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.exceptions.InvalidLeadDataException;
+import com.crm.validation.lead.domain.model.enums.LeadState;
 import com.crm.validation.lead.domain.model.validator.LeadDataValidatorService;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import com.crm.validation.lead.domain.mappers.LeadMapper;

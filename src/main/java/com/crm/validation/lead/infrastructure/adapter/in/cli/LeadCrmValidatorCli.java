@@ -1,6 +1,7 @@
 package com.crm.validation.lead.infrastructure.adapter.in.cli;
 
 import com.crm.validation.lead.application.services.LeadValidatorUseCase;
+import com.crm.validation.lead.domain.model.enums.DocumentType;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,8 +32,8 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
             if ("exit".equalsIgnoreCase(name)) break;
 
             try {
-                // LeadDto leadDto = getLeadFromConsole();
-                LeadDto leadDto = getDefaultLead(); // TODO Delete after testing
+                LeadDto leadDto = getLeadFromConsole();
+                //LeadDto leadDto = getDefaultLead(); // TODO Delete after testing
                 System.out.println("Validating lead..." + leadDto.toString());
 
                 validator.promoteLeadToProspect(leadDto)
@@ -52,8 +53,16 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
         System.out.print("\nEnter lead name (or 'exit'): ");
         String name = scanner.nextLine();
 
-        System.out.println("Enter your document type (CC, TI, CE, etc.): ");
-        String documentType = scanner.nextLine();
+        DocumentType documentType = null;
+        while (documentType == null) {
+            System.out.print("Enter your document type (CC, TI, CE): ");
+            String input = scanner.nextLine().trim().toUpperCase();
+            try {
+                documentType = DocumentType.valueOf(input);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid document type. Please enter one of: CC, TI, CE.");
+            }
+        }
 
         System.out.println("Enter your document number: ");
         int documentNumber = Integer.parseInt(scanner.nextLine());
@@ -69,8 +78,7 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
 
         return LeadDto
                 .builder()
-                .id(UUID.randomUUID().toString())
-                .documentType(documentType)
+                .documentType(documentType.name())
                 .documentNumber(documentNumber)
                 .name(name)
                 .email(email)
@@ -82,7 +90,6 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
     private static LeadDto getDefaultLead() {
         return LeadDto
                 .builder()
-                .id(UUID.randomUUID().toString())
                 .documentType("CC")
                 .documentNumber(10000000)
                 .name("Jhon")
