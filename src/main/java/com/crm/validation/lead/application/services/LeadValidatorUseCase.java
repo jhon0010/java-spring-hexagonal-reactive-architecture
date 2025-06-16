@@ -6,6 +6,7 @@ import com.crm.validation.lead.application.ports.out.endpoints.ScoringPort;
 import com.crm.validation.lead.application.services.validator.CompositeValidator;
 import com.crm.validation.lead.application.services.validator.IndependentValidator;
 import com.crm.validation.lead.domain.LeadValidationResult;
+import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
 import com.crm.validation.lead.domain.mappers.LeadMapper;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
@@ -45,11 +46,21 @@ public class LeadValidatorUseCase {
                 .flatMap(leadValidationResult -> {
 
                     Lead lead = leadValidationResult.getLead();
-                    return leadRepository.findByCoreData(lead.getEmail(), lead.getPhoneNumber(), lead.getDocumentNumber())
+
+                    if (LeadState.REJECTED.equals(lead.getState())) {
+                        log.warn("The lead goes rejected please see the log for further details.");
+                        return this.leadRepository.save(LeadMapper.domainToEntity(lead))
+                                .map(savedEntity -> {
+                                    leadValidationResult.setLead(LeadMapper.entityToDomain(savedEntity));
+                                    return leadValidationResult;
+                                });
+                    }
+
+                        return leadRepository.findByCoreData(lead.getEmail(), lead.getPhoneNumber(), lead.getDocumentNumber())
                             .flatMap(entity -> {
                                 if (LeadState.isEqual(entity.getState(),LeadState.PROSPECT)){
-                                    log.info("Lead {} is already a prospect, skipping promotion.", lead.getDocumentNumber());
-                                    return Mono.just(leadValidationResult);
+                                    log.info("Lead {} is already a prospect, rejecting promotion.", lead.getDocumentNumber());
+                                    return Mono.error(new LeadAlreadyExistException(lead));
                                 }
                                 log.info("Lead {} already exists in the database, updating state to PROSPECT.", lead.getDocumentNumber());
                                 Lead updatedLead = LeadMapper.changeState(lead, LeadState.PROSPECT);
@@ -71,3 +82,4 @@ public class LeadValidatorUseCase {
     }
 
 }
+

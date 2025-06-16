@@ -20,20 +20,25 @@ public class ScoringAdapter extends BaseExternalCallSimulator implements Scoring
     @Override
     public Mono<ValidationOutcome> apply(LeadDto leadDto, ValidationOutcome... previous) throws IndependentValidationFailsException {
         log.info("Calculating score for lead {}", leadDto.toString());
-        ValidationResults result = new ValidationResults();
-
 
         return Mono.defer(() ->
                 this.simulateScoring(leadDto, previous)
                         .map(Lead::isScoreEnoughToPromoteToProspect)
-                        .filter(isScoreEnough -> !isScoreEnough)
-                        .doOnNext(isScoreEnough -> log.warn("Lead {}, doesn't get enough score point to be promoted", leadDto.documentNumber()))
-                        .doOnNext(isScoreEnough -> result.addError(SERVICE_NAME.concat(SCORE_NOT_ENOUGH).concat(leadDto.toString())))
-                        .map(isScoreEnough -> ValidationOutcome.builder()
-                                .validation(result)
-                                .payload(isScoreEnough)
-                                .build()
-                        )
+                        .map(isScoreEnough -> {
+                            ValidationResults result = new ValidationResults();
+
+                            if (!isScoreEnough) {
+                                log.warn("Lead {}, doesn't get enough score points to be promoted", leadDto.documentNumber());
+                                result.addError(SERVICE_NAME.concat(SCORE_NOT_ENOUGH).concat(leadDto.toString()));
+                            } else {
+                                log.info("Lead {} has sufficient score for promotion", leadDto.documentNumber());
+                            }
+
+                            return ValidationOutcome.builder()
+                                    .validation(result)
+                                    .payload(isScoreEnough)
+                                    .build();
+                        })
         );
     }
 }

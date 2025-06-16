@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,9 @@ public class LeadController {
             @ApiResponse(responseCode = "404", description = "Lead not found")
     })
     @PostMapping("/validate")
-    public Mono<LeadValidationResult> validateLead(@RequestBody LeadDto leadDtoMono) {
-        return leadValidatorService.promoteLeadToProspect(leadDtoMono);
+    public Mono<ResponseEntity<LeadValidationResult>> validateLead(@RequestBody LeadDto leadDto) {
+        return leadValidatorService.promoteLeadToProspect(leadDto)
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 }

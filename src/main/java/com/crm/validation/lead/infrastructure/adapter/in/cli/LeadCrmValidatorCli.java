@@ -6,6 +6,7 @@ import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -15,6 +16,10 @@ import java.util.UUID;
 @Slf4j
 @Component
 @AllArgsConstructor
+@ConditionalOnProperty(
+        name = "app.cli.enabled",    // ↙ property flag
+        havingValue = "true",
+        matchIfMissing = false)
 public class LeadCrmValidatorCli implements CommandLineRunner {
 
     private final LeadValidatorUseCase validator;
@@ -32,14 +37,14 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
             if ("exit".equalsIgnoreCase(name)) break;
 
             try {
-                LeadDto leadDto = getLeadFromConsole();
+                LeadDto leadDto = getLeadFromConsole(name);
                 //LeadDto leadDto = getDefaultLead(); // TODO Delete after testing
                 System.out.println("Validating lead..." + leadDto.toString());
 
                 validator.promoteLeadToProspect(leadDto)
                                 .doOnNext(leadValidationResult -> {
                                     log.info("--------------------------- RESULT ---------------------------");
-                                    log.info("LeadValidationResult {}", leadValidationResult.toString());
+                                    log.info(" \uD83E\uDD16 LeadValidationResult {}", leadValidationResult.toString());
                                 }).block();
             } catch (Exception e) {
                 System.out.println("⚠️ Invalid input: " + e.getMessage());
@@ -49,9 +54,7 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
         System.exit(1);
     }
 
-    private LeadDto getLeadFromConsole() {
-        System.out.print("\nEnter lead name (or 'exit'): ");
-        String name = scanner.nextLine();
+    private LeadDto getLeadFromConsole(String name) {
 
         DocumentType documentType = null;
         while (documentType == null) {

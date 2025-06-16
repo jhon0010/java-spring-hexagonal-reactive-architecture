@@ -1,14 +1,5 @@
 # crm-validation
 
-* Make idempotent the promoteOperation
-* Add exception handler 
-* Add unit test and e2e test
-* Add random exceptions and handlers in the external endpoints.
-* Improve all the documentation
-  * Assumptions
-  * Technologies ADR's
-
-
 # How to start the project 
 
 ## Start Docker containers
@@ -63,7 +54,13 @@ The application has 2 main entry points:
 The command line interface will start automatically when the application starts.
 
 It will start asking you for the lead information, then it will validate it, and finally show you the results by console messages.
-                                
+               
+To execute the CLI client, you can run the application with the following command:
+
+```bash
+mvn spring-boot:run -Dspring-boot.run.arguments="--app.cli.enabled=true"
+```
+                 
 ## REST API
 
 You can find the SWAGGER specification once the application is running at:
@@ -118,3 +115,21 @@ If you want to manually execute the flyway migrations, you can do it with the fo
 ```
 mvn flyway:migrate
 ```
+
+## High Level Architecture
+
+| Layer                  | Responsibilities                                                                   |
+| ---------------------- |------------------------------------------------------------------------------------|
+| **Domain Layer**       | - Core business logic (entities, validation rules, value objects)                  |
+| **Application Layer**  | - Orchestrates use cases (e.g., `ValidateLeadUseCase`)                             |
+| **Ports (Interfaces)** | - Abstractions for interacting with external systems (e.g., `JudicialRecordsPort`) |
+| **Adapters (Infra)**   | - Implementations of ports (stubbed HTTP, mock services, etc.)                     |
+| **Presentation Layer** | - CLI input/output and REST uses the application service                           |
+| **Testing Layer**      | - Unit tests, validation flow tests, edge case checks                              |
+
+
+## Relevant links
+
+- [Business Assumptions and requirements](adr/ADR-000-assumptions-and-requirements.md)
+- [Hexagonal Architecture](adr/ADR-001-adopt-hexagonal-architecture.md)
+- [Internal Design Patterns](adr/ADR-002-internal-design-patterns.md)

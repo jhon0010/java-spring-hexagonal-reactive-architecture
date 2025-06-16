@@ -17,18 +17,24 @@ public class NationalRegistryAdapter extends BaseExternalCallSimulator implement
     @Override
     public Mono<ValidationOutcome> apply(LeadDto leadDto) {
         log.info("Checking if lead {} is present on the national registry", leadDto.documentNumber());
-        ValidationResults result = new ValidationResults();
 
         return Mono.defer(() ->
                 this.simulateNationalRegistryCheck(leadDto)
-                        .filter(isPresentOnNationalRegistry -> !isPresentOnNationalRegistry)
-                        .doOnNext(isPresentOnNationalRegistry -> log.warn("Lead {}, not found in the National Registry", leadDto.documentNumber()))
-                        .doOnNext(isPresentOnNationalRegistry -> result.addError(SERVICE_NAME.concat(NATIONAL_RECORD_NOT_FOUND).concat(leadDto.toString())))
-                        .map(isPresentOnNationalRegistry -> ValidationOutcome.builder()
-                                .validation(result)
-                                .payload(isPresentOnNationalRegistry)
-                                .build()
-                        )
+                .map(isPresentOnNationalRegistry -> {
+                    ValidationResults result = new ValidationResults();
+
+                    if (!isPresentOnNationalRegistry) {
+                        log.warn("Lead {}, not found in the National Registry", leadDto.documentNumber());
+                        result.addError(SERVICE_NAME.concat(NATIONAL_RECORD_NOT_FOUND).concat(leadDto.toString()));
+                    } else {
+                        log.info("Lead {} successfully found in the National Registry", leadDto.documentNumber());
+                    }
+
+                    return ValidationOutcome.builder()
+                            .validation(result) // Will be empty (valid) if isPresentOnNationalRegistry is true
+                            .payload(isPresentOnNationalRegistry)
+                            .build();
+                })
         );
     }
 }

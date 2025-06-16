@@ -1,7 +1,6 @@
 package com.crm.validation.lead.infrastructure.adapter.out.endpoints;
 
 import com.crm.validation.lead.application.services.validator.ValidationOutcome;
-import com.crm.validation.lead.domain.exceptions.IndependentValidationFailsException;
 import com.crm.validation.lead.domain.model.enums.DocumentType;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import lombok.extern.log4j.Log4j2;
@@ -14,8 +13,6 @@ import java.util.Random;
 
 @Log4j2
 public class BaseExternalCallSimulator {
-
-    private static final double FAILURE_RATE = 0.15;
     private static final int MIN_DELAY_MS = 40;
     private static final int MAX_DELAY_MS = 300;
 

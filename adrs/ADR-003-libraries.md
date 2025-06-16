@@ -1,0 +1,17 @@
+# Library Stack & Pattern Support
+
+Context: Document why each dependency in pom.xml is present and which architectural requirement or pattern it enables.
+
+| Dependency (artifact)                                               | Version             | Role / Design-Pattern Support                                                                                                                                |
+| ------------------------------------------------------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **spring-boot-starter-webflux**                                     | 3.5.0<sup>†</sup>   | Reactive baseline (ADR-01). Exposes `Mono`/`Flux` endpoints; underpins functional **Combinator validation** and **Error-Accumulator** execution in parallel. |
+| **spring-boot-starter-reactor-netty**                               | 3.5.0               | Customises Netty options (timeouts, wire-logs) while staying on Reactor model (ADR-01).                                                                      |
+| **spring-boot-starter-data-r2dbc**                                  | 3.5.0               | Provides `ReactiveCrudRepository` used by **Repository pattern** (ADR-10) and idempotent promotion query (ADR-04).                                           |
+| **r2dbc-postgresql**                                                | 1.0.7 RELEASE       | Non-blocking Postgres driver → required by ADR-10 & idempotent SQL guard.                                                                                    |
+| **postgresql (JDBC)**                                               | latest BOM          | *Only* for Flyway migrations at build time; **not** wired at runtime to keep stack purely reactive (ADR-01).                                                 |
+| **flyway-core**, **flyway-database-postgresql**                     | latest BOM          | Automates schema (UUID default, unique indexes) enabling idempotency keys (ADR-04).                                                                          |
+| **springdoc-openapi-starter-webflux-ui**                            | 2.8.9               | Auto-generates Swagger docs for reactive controllers; supports team documentation requirement.                                                               |
+| **spring-boot-starter-logging**                                     | inherited (Logback) | Centralised logs referenced by **GlobalRestExceptionHandler** (ADR-09).                                                                                      |
+| **lombok**                                                          | 1.18.38             | Generates builders & immutables (ADR-08), reduces boilerplate in entities, DTOs.                                                                             |
+| **wiremock-standalone**<sup>‡</sup>                                 | 3.0.0               | (Test scope) stubs external adapters (Scoring / Registry) used by **Adapter pattern** (ADR-07).                                                              |
+| **spring-boot-starter-test + reactor-test + mockito-junit-jupiter** | BOM                 | Validate combinator logic, idempotency guard and exception mapping in a reactive manner.                                                                     |
