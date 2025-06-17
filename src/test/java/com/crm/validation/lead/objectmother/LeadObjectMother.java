@@ -1,6 +1,5 @@
 package com.crm.validation.lead.objectmother;
 
-import ch.qos.logback.core.spi.LogbackLock;
 import com.crm.validation.lead.application.services.validator.ValidationOutcome;
 import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.model.enums.DocumentType;

@@ -25,6 +25,7 @@ public class LeadValidatorUseCase {
     private final ScoringPort scoringPort;
     private final IndependentValidator<LeadDto> validator;
     private final LeadRepository leadRepository;
+    private final LeadMapper leadMapper = LeadMapper.INSTANCE;
 
     public LeadValidatorUseCase(JudicialRecordsPort judicialRecordsPort, NationalRegistryPort nationalRegistryPort,
                                 ScoringPort scoringPort, LeadRepository leadRepository) {
@@ -49,9 +50,9 @@ public class LeadValidatorUseCase {
 
                     if (LeadState.REJECTED.equals(lead.getState())) {
                         log.warn("The lead goes rejected please see the log for further details.");
-                        return this.leadRepository.save(LeadMapper.domainToEntity(lead))
+                        return this.leadRepository.save(leadMapper.leadToLeadEntity(lead))
                                 .map(savedEntity -> {
-                                    leadValidationResult.setLead(LeadMapper.entityToDomain(savedEntity));
+                                    leadValidationResult.withLead(leadMapper.leadEntityToLead(savedEntity));
                                     return leadValidationResult;
                                 });
                     }
@@ -64,17 +65,17 @@ public class LeadValidatorUseCase {
                                 }
                                 log.info("Lead {} already exists in the database, updating state to PROSPECT.", lead.getDocumentNumber());
                                 Lead updatedLead = LeadMapper.changeState(lead, LeadState.PROSPECT);
-                                return this.leadRepository.save(LeadMapper.domainToEntity(updatedLead))
+                                return this.leadRepository.save(leadMapper.leadToLeadEntity(updatedLead))
                                         .map(savedEntity -> {
-                                            leadValidationResult.setLead(LeadMapper.entityToDomain(savedEntity));
+                                            leadValidationResult.withLead(leadMapper.leadEntityToLead(savedEntity));
                                             return leadValidationResult;
                                         });
                             })
                             .switchIfEmpty(
-                                this.leadRepository.save(LeadMapper.domainToEntity(leadValidationResult.getLead()))
+                                this.leadRepository.save(leadMapper.leadToLeadEntity(leadValidationResult.getLead()))
                                     .map(savedLead -> {
                                         log.info("Lead {} saved as a prospect in the database.", savedLead.getDocumentNumber());
-                                        leadValidationResult.setLead(LeadMapper.entityToDomain(savedLead));
+                                        leadValidationResult.withLead(leadMapper.leadEntityToLead(savedLead));
                                         return leadValidationResult;
                                     })
                             );

@@ -59,7 +59,7 @@ Our company uses a custom CRM where sales-qualified leads are stored with basic 
 
 ## Decision
 
-We will adopt **Hexagonal Architecture (Ports and Adapters)** for the User Management Service.
+We will adopt **Hexagonal Architecture (Ports and Adapters)** for the Lead Promotion Service.
 
 ### Rationale
 
@@ -80,25 +80,6 @@ We will adopt **Hexagonal Architecture (Ports and Adapters)** for the User Manag
 - **Risk Mitigation**: Vendor lock-in risks are minimized through clear abstraction layers
 - **Team Scaling**: Clear architectural boundaries enable multiple teams to work independently
 - **Maintenance**: Bugs in external integrations don't affect core business logic
-
-## Implementation Plan
-
-### Phase 1: Core Setup (Sprint 1-2)
-- Define domain models and business rules
-- Create primary ports (UserService interface)
-- Implement core business logic
-- Set up comprehensive unit tests
-
-### Phase 2: Initial Adapters (Sprint 3-4)
-- REST API adapter for user management
-- JPA adapter for MySQL persistence
-- Email notification adapter
-- Integration tests
-
-### Phase 3: Additional Interfaces (Sprint 5-6)
-- GraphQL adapter
-- Audit logging adapter
-- Performance monitoring
 
 ### Architecture Guidelines
 
@@ -137,19 +118,6 @@ We will adopt **Hexagonal Architecture (Ports and Adapters)** for the User Manag
 - **Documentation**: Maintain clear examples and patterns for common scenarios
 - **Gradual Adoption**: Start with core features and expand the pattern incrementally
 - **Code Generation**: Use templates/generators for repetitive adapter code
-
-## Monitoring and Review
-
-### Success Metrics
-- **Test Coverage**: Maintain >90% unit test coverage for business logic
-- **Integration Time**: New external system integrations should take <2 days
-- **Bug Isolation**: <10% of external system issues should affect core business logic
-- **Development Velocity**: Feature development time should decrease after initial setup
-
-### Review Schedule
-- **3-month review**: Assess team adoption and identify pain points
-- **6-month review**: Evaluate architecture effectiveness and consider refinements
-- **Annual review**: Compare with alternative architectures and industry trends
 
 ## References
 - [Hexagonal Architecture by Alistair Cockburn](https://alistair.cockburn.us/hexagonal-architecture/)

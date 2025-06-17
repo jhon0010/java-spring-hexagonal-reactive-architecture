@@ -8,32 +8,33 @@ import com.crm.validation.lead.domain.model.validator.LeadDataValidatorService;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import com.crm.validation.lead.domain.mappers.LeadMapper;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Value;
 import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDate;
 
 /**
- * TODO: Make sure it is immutable, and implement idempotence.
+ * Lead domain model representing a potential customer.
+ * This class is immutable by design, as enforced by @Value (makes all fields private and final by default).
  */
 @Log4j2
 @Builder
-@Data
+@Value
 public class Lead {
-    private final String id;
-    private final String name;
-    private final LocalDate birthdate;
-    private final LeadState state;
-    private final String email;
-    private final String phoneNumber;
-    private final String documentType;
-    private final int documentNumber;
+    String id;
+    String name;
+    LocalDate birthdate;
+    LeadState state;
+    String email;
+    String phoneNumber;
+    String documentType;
+    int documentNumber;
 
     private static final double SCORE_THRESHOLD = 60;
 
     /**
      * Validates if a lead dto has a valid data set and returns a Lead object from it in CREATED state.
-     * @param leadDto
+     * @param leadDto LeadDto object containing lead data.
      * @return Lead object if the data is valid.
      * @throws InvalidLeadDataException if the data is not valid.
      */
@@ -47,9 +48,9 @@ public class Lead {
 
         if (LeadDataValidatorService.ValidationResult.SUCCESS.equals(validationResult)) {
             log.info("Lead data is valid, proceeding to create Lead object.");
-            return LeadMapper.dtoToDomain(leadDto);
+            return LeadMapper.INSTANCE.leadDtoToLead(leadDto);
         } else {
-            log.error("Lead data validation failed: {}", validationResult);
+            log.error("Lead data validaLeadMappertion failed: {}", validationResult);
             throw new InvalidLeadDataException("Invalid lead data: " + validationResult);
         }
     }

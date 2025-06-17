@@ -1,1 +1,11 @@
 com/crm/validation/lead/objectmother/LeadObjectMother.class
+com/crm/validation/lead/application/ports/mocks/JudicialRecordsMock.class
+com/crm/validation/lead/application/ports/mocks/NationalRegistryMock.class
+com/crm/validation/lead/infrastructure/adapter/out/endpoints/ExternalAdapterIntegrationTest.class
+com/crm/validation/lead/application/services/LeadValidatorUseCaseTest.class
+com/crm/validation/lead/infrastructure/adapter/in/web/LeadControllerEndToEndTest$TestConfig$1.class
+com/crm/validation/lead/infrastructure/adapter/in/web/LeadControllerEndToEndTest$TestConfig.class
+com/crm/validation/lead/application/ports/mocks/ScoringMock.class
+com/crm/validation/lead/LeadApplicationTests.class
+com/crm/validation/lead/domain/model/LeadTest.class
+com/crm/validation/lead/infrastructure/adapter/in/web/LeadControllerEndToEndTest.class

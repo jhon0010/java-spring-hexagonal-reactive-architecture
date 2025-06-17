@@ -38,7 +38,6 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
 
             try {
                 LeadDto leadDto = getLeadFromConsole(name);
-                //LeadDto leadDto = getDefaultLead(); // TODO Delete after testing
                 System.out.println("Validating lead..." + leadDto.toString());
 
                 validator.promoteLeadToProspect(leadDto)
@@ -90,6 +89,10 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
                 .build();
     }
 
+    /**
+     * Used for testing purposes, to provide a default lead.
+     * @return LeadDto with default values.
+     */
     private static LeadDto getDefaultLead() {
         return LeadDto
                 .builder()

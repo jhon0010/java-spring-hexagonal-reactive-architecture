@@ -49,7 +49,7 @@ public class BaseExternalCallSimulator {
 
     /**
      * Simulates a call to a national registry service to check if the lead is present on the national registry.
-     * @param leadDto
+     * @param leadDto The lead data transfer object containing the lead's information.
      * @return true if the lead is present on the national registry, false otherwise.
      */
     protected Mono<Boolean> simulateNationalRegistryCheck(LeadDto leadDto) {

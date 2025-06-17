@@ -54,6 +54,7 @@ public class CompositeValidator<T> implements IndependentValidator<T> {
      * @param lists the ValidationOutcome lists to merge
      * @return a single ValidationOutcome containing all validation results
      */
+    @SafeVarargs
     private ValidationOutcome mergeAll(List<ValidationOutcome>... lists) {
         ValidationResults allValidationResults = new ValidationResults();
 

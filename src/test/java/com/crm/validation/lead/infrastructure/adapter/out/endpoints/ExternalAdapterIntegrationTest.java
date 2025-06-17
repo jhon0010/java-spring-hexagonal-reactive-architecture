@@ -10,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import static com.crm.validation.lead.objectmother.LeadObjectMother.createInvalidValidationOutcome;
 import static com.crm.validation.lead.objectmother.LeadObjectMother.createValidValidationOutcome;
 
 @SpringBootTest

@@ -9,6 +9,7 @@ com/crm/validation/lead/infrastructure/adapter/out/endpoints/BaseExternalCallSim
 com/crm/validation/lead/infrastructure/adapter/in/web/dtos/LeadDto.class
 com/crm/validation/lead/infrastructure/adapter/out/endpoints/JudicialRecordsAdapter.class
 com/crm/validation/lead/LeadApplication.class
+com/crm/validation/lead/domain/mappers/LeadMapperImpl.class
 com/crm/validation/lead/domain/LeadValidationResult.class
 com/crm/validation/lead/application/ports/out/endpoints/JudicialRecordsPort.class
 com/crm/validation/lead/infrastructure/adapter/out/db/repositories/LeadRepository.class
@@ -22,13 +23,17 @@ com/crm/validation/lead/domain/LeadValidationResult$LeadValidationResultBuilder.
 com/crm/validation/lead/application/services/LeadValidatorUseCase.class
 com/crm/validation/lead/infrastructure/adapter/out/db/entities/LeadEntity$LeadEntityBuilder.class
 com/crm/validation/lead/application/ports/out/endpoints/NationalRegistryPort.class
+com/crm/validation/lead/domain/exceptions/LeadAlreadyExistException.class
 com/crm/validation/lead/infrastructure/adapter/in/cli/LeadCrmValidatorCli.class
 com/crm/validation/lead/infrastructure/adapter/in/web/LeadController.class
+com/crm/validation/lead/infrastructure/adapter/in/web/envelopes/ApiError.class
 com/crm/validation/lead/domain/model/validator/LeadDataValidatorService$ValidationResult.class
 com/crm/validation/lead/application/services/validator/ValidationOutcome.class
 com/crm/validation/lead/infrastructure/adapter/out/endpoints/NationalRegistryAdapter.class
 com/crm/validation/lead/application/services/validator/ValidationResults.class
+com/crm/validation/lead/infrastructure/adapter/in/web/envelopes/ApiResponse.class
 com/crm/validation/lead/application/ports/out/endpoints/ScoringPort.class
 com/crm/validation/lead/application/services/validator/ValidationOutcome$ValidationOutcomeBuilder.class
 com/crm/validation/lead/domain/exceptions/IndependentValidationFailsException.class
 com/crm/validation/lead/infrastructure/adapter/out/db/entities/LeadEntity.class
+com/crm/validation/lead/infrastructure/adapter/in/web/handlers/GlobalRestExceptionHandler.class

@@ -2,7 +2,7 @@
 |  |  |
 |---|---|
 | **Status** | ✅ Accepted |
-| **Context** | Lead ingestion, validation and persistence must be **non‑blocking** to hit >5 k req/s and integrate with R2DBC. |
+| **Context** | Lead ingestion, validation and persistence must be **non‑blocking** and integrate with R2DBC. |
 | **Decision** | Adopt **Project Reactor** (`Mono` / `Flux`) as the default execution model for controllers, services and repositories. |
 | **Consequences** | Back‑pressure handled by Reactor. Blocking drivers are banned or confined to `Schedulers.boundedElastic()`. |
 
@@ -18,7 +18,7 @@
 
 ---
 
-## ADR‑03 – Error‑Accumulator + Composite Validator
+## ADR‑03 – Error‑Accumulator (ValidationResults) + Composite Validator
 |  |  |
 |---|---|
 | **Status** | ✅ Accepted |
@@ -101,7 +101,7 @@
 ## ADR‑11 – CLI Command Pattern
 |  |  |
 |---|---|
-| **Status** | 🟡 Under review |
+| **Status** | ✅ Acceptedview |
 | **Context** | Need batch validation from shell. |
 | **Decision** | `LeadCrmValidatorCli` implements `CommandLineRunner`; may evolve to Spring Shell later. |
 | **Consequences** | Simple container entry point; easy replacement when Ops finalises scheduling. |

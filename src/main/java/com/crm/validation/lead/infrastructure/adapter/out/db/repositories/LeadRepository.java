@@ -1,6 +1,5 @@
 package com.crm.validation.lead.infrastructure.adapter.out.db.repositories;
 
-import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadEntity;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.query.Param;
