@@ -9,8 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *
  * TODO:
  * - Consider use of domain events for better decoupling.
- * - Create a LeadRepository interface in the domain layer to refer to the Entity or domain object.
- *
  */
 @SpringBootApplication
 public class LeadApplication {

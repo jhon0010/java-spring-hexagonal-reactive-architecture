@@ -1,4 +1,4 @@
-package com.crm.validation.lead.application.services;
+package com.crm.validation.lead.infrastructure.adapter.in;
 
 import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
 import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
@@ -41,14 +41,12 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
     }
 
     // TODO : Add more function modularity for this function.
-    public Mono<LeadValidationResult> promoteLeadToProspect(LeadDto leadDto) {
-        return validator.apply(leadDto)
+    public Mono<LeadValidationResult> promoteLeadToProspect(Lead lead) {
+        return validator.apply(leadWebMapper.leadToLeadDto(lead))
                 .map(validationOutcome ->
-                        leadWebMapper.leadDtoToLead(leadDto).promoteLeadToProspect(validationOutcome.validation())
+                        lead.promoteLeadToProspect(validationOutcome.validation())
                 )
                 .flatMap(leadValidationResult -> {
-                    Lead lead = leadValidationResult.lead();
-
                     if (LeadState.REJECTED.equals(lead.getState())) {
                         log.warn("The lead goes rejected please see the log for further details.");
                         return this.leadRepository.save(lead)
@@ -73,7 +71,7 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
                             Mono.defer(() -> {
                                 log.info("Lead {} not found in database, creating new lead", lead.getDocumentNumber());
                                 // Create a new lead with PROSPECT state for insertion (not update)
-                                Lead newLead = lead.withOutId().withState(LeadState.PROSPECT);
+                                Lead newLead = lead.withState(LeadState.PROSPECT);
                                 return this.leadRepository.save(newLead)
                                     .map(savedLead -> {
                                         log.info("Lead {} saved as a prospect in the database with ID {}.",

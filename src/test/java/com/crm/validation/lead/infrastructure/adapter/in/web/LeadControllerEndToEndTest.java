@@ -54,7 +54,7 @@ class LeadControllerEndToEndTest {
                 // Then
                 .expectStatus().isOk()
                 .expectBody()
-                .jsonPath("$.lead.state").isEqualTo("PROSPECT");
+                .jsonPath("$.state").isEqualTo("PROSPECT");
 
         Lead lead = LeadWebMapper.INSTANCE.leadDtoToLead(validLeadDto);
 

@@ -1,7 +1,7 @@
 package com.crm.validation.lead.application.ports.in;
 
 import com.crm.validation.lead.domain.LeadValidationResult;
-import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.domain.model.Lead;
 import reactor.core.publisher.Mono;
 
 /**
@@ -16,8 +16,8 @@ public interface PromoteLeadUseCase {
     /**
      * Promotes a lead to prospect if it passes all validations.
      *
-     * @param leadDto The lead data transfer object from the client
+     * @param lead The lead to be promoted
      * @return A Mono containing the validation result with the updated lead state
      */
-    Mono<LeadValidationResult> promoteLeadToProspect(LeadDto leadDto);
+    Mono<LeadValidationResult> promoteLeadToProspect(Lead lead);
 }

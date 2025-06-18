@@ -1,5 +1,7 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web.mappers;
 
+import com.crm.validation.lead.application.services.validator.ValidationResults;
+import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
 import com.crm.validation.lead.domain.model.valueobjects.Document;
@@ -8,6 +10,7 @@ import com.crm.validation.lead.domain.model.valueobjects.LeadId;
 import com.crm.validation.lead.domain.model.valueobjects.PersonalInfo;
 import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadValidationResultDto;
 import com.crm.validation.lead.infrastructure.adapter.in.web.services.validator.LeadDtoDataValidatorService;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
@@ -45,7 +48,6 @@ public interface LeadWebMapper {
      * Maps a LeadDto to a Lead domain entity.
      * This creates all the necessary value objects from the primitive values in the DTO.
      */
-    @Mapping(target = "id", expression = "java(LeadId.generate())")
     @Mapping(target = "personalInfo", expression = "java(PersonalInfo.of(leadDto.name(), leadDto.birthdate()))")
     @Mapping(target = "email", expression = "java(Email.of(leadDto.email()))")
     @Mapping(target = "phoneNumber", expression = "java(PhoneNumber.of(leadDto.phoneNumber()))")
@@ -89,5 +91,32 @@ public interface LeadWebMapper {
                 .document(Document.of(leadDto.documentType(), leadDto.documentNumber()))
                 .state(state)
                 .build();
+    }
+
+    /**
+     * Maps a LeadValidationResult domain object to a LeadValidationResultDto.
+     * This prevents domain objects from crossing the adapter boundary.
+     *
+     * @param result The domain validation result
+     * @return A DTO representing the validation result
+     */
+    @Mapping(source = "lead.id.value", target = "id")
+    @Mapping(source = "lead.personalInfo.name", target = "name")
+    @Mapping(source = "lead.personalInfo.birthdate", target = "birthdate")
+    @Mapping(source = "lead.email.value", target = "email")
+    @Mapping(source = "lead.phoneNumber.value", target = "phoneNumber")
+    @Mapping(source = "lead.document.type", target = "documentType")
+    @Mapping(source = "lead.document.number", target = "documentNumber")
+    @Mapping(source = "lead.state", target = "state", qualifiedByName = "leadStateToString")
+    @Mapping(source = "validations.valid", target = "isValid")
+    @Mapping(source = "validations.errors", target = "validationErrors")
+    LeadValidationResultDto leadValidationResultToDto(LeadValidationResult result);
+
+    /**
+     * Convert LeadState enum to String for the DTO
+     */
+    @Named("leadStateToString")
+    default String leadStateToString(LeadState state) {
+        return state != null ? state.name() : null;
     }
 }

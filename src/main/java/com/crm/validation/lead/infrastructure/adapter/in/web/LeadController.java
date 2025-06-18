@@ -1,8 +1,9 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web;
 
 import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
-import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadValidationResultDto;
+import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -21,16 +22,18 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/leads")
 public class LeadController {
     private final PromoteLeadUseCase leadValidatorService;
+    private final LeadWebMapper leadWebMapper;
 
     @Operation(summary = "Promote a lead (idempotent)",
-            description = "Idempotently changes a lead’s status to PROMOTED")
+            description = "Idempotently changes a lead's status to PROMOTED")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Success"),
             @ApiResponse(responseCode = "404", description = "Lead not found")
     })
     @PostMapping("/validate")
-    public Mono<ResponseEntity<LeadValidationResult>> validateLead(@RequestBody LeadDto leadDto) {
-        return leadValidatorService.promoteLeadToProspect(leadDto)
+    public Mono<ResponseEntity<LeadValidationResultDto>> validateLead(@RequestBody LeadDto leadDto) {
+        return leadValidatorService.promoteLeadToProspect(leadWebMapper.leadDtoToLead(leadDto))
+                .map(leadWebMapper::leadValidationResultToDto)
                 .map(ResponseEntity::ok)
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
