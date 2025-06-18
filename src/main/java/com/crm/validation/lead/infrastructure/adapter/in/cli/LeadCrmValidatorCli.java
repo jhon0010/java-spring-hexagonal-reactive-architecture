@@ -3,7 +3,7 @@ package com.crm.validation.lead.infrastructure.adapter.in.cli;
 import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
 import com.crm.validation.lead.domain.model.enums.DocumentType;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
+import com.crm.validation.lead.infrastructure.adapter.in.commons.mappers.LeadWebMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.UUID;
 
 @Slf4j
 @Component

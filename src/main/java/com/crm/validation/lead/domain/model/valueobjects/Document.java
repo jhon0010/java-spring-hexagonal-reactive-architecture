@@ -1,5 +1,6 @@
 package com.crm.validation.lead.domain.model.valueobjects;
 
+import com.crm.validation.lead.domain.exceptions.InvalidLeadDataException;
 import lombok.Value;
 
 /**
@@ -17,15 +18,15 @@ public class Document {
      * @param type The document type (e.g., "passport", "national_id")
      * @param number The document number
      * @return A new Document instance
-     * @throws IllegalArgumentException if validation fails
+     * @throws InvalidLeadDataException if validation fails
      */
     public static Document of(String type, int number) {
         if (type == null || type.trim().isEmpty()) {
-            throw new IllegalArgumentException("Document type cannot be empty");
+            throw new InvalidLeadDataException("Document type cannot be empty");
         }
 
         if (number <= 0) {
-            throw new IllegalArgumentException("Document number must be positive");
+            throw new InvalidLeadDataException("Document number must be positive");
         }
 
         return new Document(type, number);

@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in.web.mappers;
+package com.crm.validation.lead.infrastructure.adapter.in.commons.mappers;
 
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.model.Lead;

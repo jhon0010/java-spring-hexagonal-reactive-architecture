@@ -3,7 +3,7 @@ package com.crm.validation.lead.infrastructure.adapter.in.web;
 import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadValidationResultDto;
-import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
+import com.crm.validation.lead.infrastructure.adapter.in.commons.mappers.LeadWebMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
