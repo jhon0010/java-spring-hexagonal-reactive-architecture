@@ -1,8 +1,8 @@
 package com.crm.validation.lead.application.ports.mocks;
 
 import com.crm.validation.lead.application.ports.out.endpoints.NationalRegistryPort;
-import com.crm.validation.lead.application.services.validator.ValidationOutcome;
-import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import reactor.core.publisher.Mono;
 
@@ -15,7 +15,7 @@ public class NationalRegistryMock implements NationalRegistryPort {
     }
 
     @Override
-    public Mono<ValidationOutcome> apply(LeadDto leadDto) {
+    public Mono<ValidationOutcome> apply(Lead lead) {
         if (shouldPass) {
             return Mono.just(LeadObjectMother.createValidValidationOutcome());
         } else {

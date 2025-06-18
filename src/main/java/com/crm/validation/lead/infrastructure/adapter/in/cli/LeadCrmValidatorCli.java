@@ -1,8 +1,9 @@
 package com.crm.validation.lead.infrastructure.adapter.in.cli;
 
-import com.crm.validation.lead.application.services.LeadValidatorUseCase;
+import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
 import com.crm.validation.lead.domain.model.enums.DocumentType;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.infrastructure.adapter.in.commons.mappers.LeadWebMapper;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.Scanner;
-import java.util.UUID;
 
 @Slf4j
 @Component
@@ -21,8 +21,8 @@ import java.util.UUID;
         havingValue = "true",
         matchIfMissing = false)
 public class LeadCrmValidatorCli implements CommandLineRunner {
-
-    private final LeadValidatorUseCase validator;
+    private final LeadWebMapper leadWebMapper = LeadWebMapper.INSTANCE;
+    private final PromoteLeadUseCase validator;
     private final Scanner scanner = new Scanner(System.in);
 
 
@@ -40,7 +40,7 @@ public class LeadCrmValidatorCli implements CommandLineRunner {
                 LeadDto leadDto = getLeadFromConsole(name);
                 System.out.println("Validating lead..." + leadDto.toString());
 
-                validator.promoteLeadToProspect(leadDto)
+                validator.promoteLeadToProspect(leadWebMapper.leadDtoToLead(leadDto))
                                 .doOnNext(leadValidationResult -> {
                                     log.info("--------------------------- RESULT ---------------------------");
                                     log.info(" \uD83E\uDD16 LeadValidationResult {}", leadValidationResult.toString());

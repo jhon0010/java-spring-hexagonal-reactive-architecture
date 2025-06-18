@@ -1,9 +1,9 @@
 package com.crm.validation.lead.infrastructure.adapter.out.endpoints;
 
 import com.crm.validation.lead.application.ports.out.endpoints.NationalRegistryPort;
-import com.crm.validation.lead.application.services.validator.ValidationOutcome;
-import com.crm.validation.lead.application.services.validator.ValidationResults;
-import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.validator.ValidationResults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -15,23 +15,23 @@ public class NationalRegistryAdapter extends BaseExternalCallSimulator implement
     public static final String NATIONAL_RECORD_NOT_FOUND = "The lead is not present on the national registry: ";
 
     @Override
-    public Mono<ValidationOutcome> apply(LeadDto leadDto) {
-        log.info("Checking if lead {} is present on the national registry", leadDto.documentNumber());
+    public Mono<ValidationOutcome> apply(Lead lead) {
+        log.info("Checking if lead {} is present on the national registry", lead.getDocumentNumber());
 
         return Mono.defer(() ->
-                this.simulateNationalRegistryCheck(leadDto)
+                this.simulateNationalRegistryCheck(lead)
                 .map(isPresentOnNationalRegistry -> {
                     ValidationResults result = new ValidationResults();
 
                     if (!isPresentOnNationalRegistry) {
-                        log.warn("Lead {}, not found in the National Registry", leadDto.documentNumber());
-                        result.addError(SERVICE_NAME.concat(NATIONAL_RECORD_NOT_FOUND).concat(leadDto.toString()));
+                        log.warn("Lead {}, not found in the National Registry", lead.getDocumentNumber());
+                        result.addError(SERVICE_NAME.concat(NATIONAL_RECORD_NOT_FOUND).concat(lead.toString()));
                     } else {
-                        log.info("Lead {} successfully found in the National Registry", leadDto.documentNumber());
+                        log.info("Lead {} successfully found in the National Registry", lead.getDocumentNumber());
                     }
 
                     return ValidationOutcome.builder()
-                            .validation(result) // Will be empty (valid) if isPresentOnNationalRegistry is true
+                            .validation(result)
                             .payload(isPresentOnNationalRegistry)
                             .build();
                 })

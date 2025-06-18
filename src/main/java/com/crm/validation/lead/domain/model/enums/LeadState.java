@@ -4,6 +4,7 @@ public enum LeadState {
     CREATED,
     ON_VALIDATION,
     PROSPECT,
+    REFUSED, // Invalid data, could not be processed.
     REJECTED;
 
     /**
@@ -17,16 +18,4 @@ public enum LeadState {
         }
         return false;
     }
-
-    /**
-     * Function to compare a String with a String.
-     */
-    public static boolean isEqual(String state, LeadState leadState) {
-        if(isValid(state)) {
-            return state.equalsIgnoreCase(leadState.name());
-        } else {
-            return false;
-        }
-    }
-
 }

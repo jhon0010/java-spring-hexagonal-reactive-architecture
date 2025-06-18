@@ -1,5 +1,7 @@
 package com.crm.validation.lead.application.services.validator;
 
+import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.validator.ValidationResults;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
