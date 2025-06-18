@@ -1,7 +1,6 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web.services.validator;
 
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -20,7 +19,6 @@ import static com.crm.validation.lead.infrastructure.adapter.in.web.services.val
  * Combinators: Higher-order functions that combine other functions to produce new functions.
  * Function Composition: Combining multiple functions to create a new function that applies them in sequence or logical combination.
  */
-@Component
 public interface LeadDtoDataValidatorService extends Function<LeadDto, LeadDtoDataValidatorService.ValidationResult> {
 
     static LeadDtoDataValidatorService isEmailValid(){

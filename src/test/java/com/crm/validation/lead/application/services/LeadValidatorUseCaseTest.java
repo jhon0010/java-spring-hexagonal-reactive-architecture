@@ -10,7 +10,6 @@ import com.crm.validation.lead.domain.model.enums.LeadState;
 import com.crm.validation.lead.domain.model.valueobjects.Document;
 import com.crm.validation.lead.domain.model.valueobjects.Email;
 import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
-import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
 import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
 import com.crm.validation.lead.infrastructure.adapter.out.db.mappers.LeadPersistenceMapper;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
@@ -39,7 +38,6 @@ class LeadValidatorUseCaseTest {
 
     private LeadValidatorUseCase useCase;
     private Lead validLead;
-    private final LeadWebMapper leadWebMapper = LeadWebMapper.INSTANCE;
 
     @BeforeEach
     void setUp() {
@@ -49,7 +47,7 @@ class LeadValidatorUseCaseTest {
         // Use the static instance of the mapper
         leadPersistenceMapper = LeadPersistenceMapper.INSTANCE;
 
-        validLead = leadWebMapper.leadDtoToLead(LeadObjectMother.createValidLeadDto());
+        validLead = LeadObjectMother.createValidLead();
     }
 
     @Test

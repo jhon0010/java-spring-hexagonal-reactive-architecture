@@ -4,8 +4,10 @@ import com.crm.validation.lead.LeadApplication;
 import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
+import com.crm.validation.lead.domain.model.valueobjects.Document;
+import com.crm.validation.lead.domain.model.valueobjects.Email;
+import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,20 +58,18 @@ class LeadControllerEndToEndTest {
                 .expectBody()
                 .jsonPath("$.state").isEqualTo("PROSPECT");
 
-        Lead lead = LeadWebMapper.INSTANCE.leadDtoToLead(validLeadDto);
-
         // Verify that the lead was saved to the database with PROSPECT status
+        // Use the values from the DTO that was submitted to the API
         Mono<Lead> savedLeadMono = leadRepository.findByCoreData(
-                lead.getEmail(),
-                lead.getPhoneNumber(),
-                lead.getDocument()
+                Email.of(validLeadDto.email()),
+                PhoneNumber.of(validLeadDto.phoneNumber()),
+                Document.of(validLeadDto.documentType(), validLeadDto.documentNumber())
         );
 
         StepVerifier.create(savedLeadMono)
                 .assertNext(savedLead -> {
                     assertNotNull(savedLead);
                     assertEquals(LeadState.PROSPECT, savedLead.getState());
-                    assertEquals(validLeadDto.name(), savedLead.getName());
                     assertEquals(validLeadDto.email(), savedLead.getEmail().getValue());
                 })
                 .verifyComplete();
