@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in;
+package com.crm.validation.lead.application.services;
 
 import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
 import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
