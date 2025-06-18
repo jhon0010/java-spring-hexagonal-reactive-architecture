@@ -5,9 +5,12 @@ import com.crm.validation.lead.application.ports.out.db.repositories.LeadReposit
 import com.crm.validation.lead.application.ports.out.endpoints.JudicialRecordsPort;
 import com.crm.validation.lead.application.ports.out.endpoints.NationalRegistryPort;
 import com.crm.validation.lead.application.ports.out.endpoints.ScoringPort;
+import com.crm.validation.lead.application.ports.out.events.DomainEventPublisher;
 import com.crm.validation.lead.application.services.validator.CompositeValidator;
 import com.crm.validation.lead.application.services.validator.IndependentValidator;
 import com.crm.validation.lead.domain.LeadValidationResult;
+import com.crm.validation.lead.domain.events.LeadPromotedEvent;
+import com.crm.validation.lead.domain.events.LeadRejectedEvent;
 import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
@@ -24,13 +27,16 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
     private final ScoringPort scoringPort;
     private final IndependentValidator<Lead> validator;
     private final LeadRepository leadRepository;
+    private final DomainEventPublisher eventPublisher;
 
     public LeadValidatorUseCase(JudicialRecordsPort judicialRecordsPort, NationalRegistryPort nationalRegistryPort,
-                                ScoringPort scoringPort, LeadRepository leadRepository) {
+                                ScoringPort scoringPort, LeadRepository leadRepository,
+                                DomainEventPublisher eventPublisher) {
         this.leadRepository = leadRepository;
         this.judicialRecordsPort = judicialRecordsPort;
         this.nationalRegistryPort = nationalRegistryPort;
         this.scoringPort = scoringPort;
+        this.eventPublisher = eventPublisher;
         this.validator = new CompositeValidator<Lead>()
                     .addIndependent(this.judicialRecordsPort)
                     .addIndependent(this.nationalRegistryPort)
@@ -87,7 +93,11 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
     private Mono<LeadValidationResult> handleRejectedLead(Lead lead, LeadValidationResult validationResult) {
         log.warn("The lead goes rejected please see the log for further details.");
         return this.leadRepository.save(lead)
-                .map(validationResult::withLead);
+                .map(savedLead -> {
+                    // Publish domain event for rejected lead
+                    eventPublisher.publish(new LeadRejectedEvent(savedLead));
+                    return validationResult.withLead(savedLead);
+                });
     }
 
     /**
@@ -129,7 +139,11 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
         log.info("Lead {} already exists in the database, updating state to PROSPECT.", existingLead.toString());
         Lead updatedLead = existingLead.withState(LeadState.PROSPECT);
         return this.leadRepository.save(updatedLead)
-                .map(validationResult::withLead);
+                .map(savedLead -> {
+                    // Publish domain event for lead promotion
+                    eventPublisher.publish(new LeadPromotedEvent(savedLead));
+                    return validationResult.withLead(savedLead);
+                });
     }
 
     /**
@@ -147,6 +161,8 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
                 .map(savedLead -> {
                     log.info("Lead {} saved as a prospect in the database with ID {}.",
                             savedLead.getDocumentNumber(), savedLead.getId().getValue());
+                    // Publish domain event for new lead promotion
+                    eventPublisher.publish(new LeadPromotedEvent(savedLead));
                     return validationResult.withLead(savedLead);
                 });
         });

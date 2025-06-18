@@ -4,6 +4,7 @@ import com.crm.validation.lead.application.ports.mocks.JudicialRecordsMock;
 import com.crm.validation.lead.application.ports.mocks.NationalRegistryMock;
 import com.crm.validation.lead.application.ports.mocks.ScoringMock;
 import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
+import com.crm.validation.lead.application.ports.out.events.DomainEventPublisher;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
@@ -34,6 +35,9 @@ class LeadValidatorUseCaseTest {
     @Mock
     private LeadRepository leadRepository;
 
+    @Mock
+    private DomainEventPublisher eventPublisher;
+
     private LeadPersistenceMapper leadPersistenceMapper;
 
     private LeadValidatorUseCase useCase;
@@ -58,7 +62,7 @@ class LeadValidatorUseCaseTest {
                 new JudicialRecordsMock(true),
                 new NationalRegistryMock(true),
                 new ScoringMock(true),
-                leadRepository
+                leadRepository, eventPublisher
         );
 
         // Setup mocks
@@ -90,7 +94,7 @@ class LeadValidatorUseCaseTest {
                 new JudicialRecordsMock(false),
                 new NationalRegistryMock(true),
                 new ScoringMock(true),
-                leadRepository
+                leadRepository, eventPublisher
         );
 
         // Setup mocks - Only need to stub the save method for rejected leads
@@ -122,7 +126,7 @@ class LeadValidatorUseCaseTest {
                 new JudicialRecordsMock(true),
                 new NationalRegistryMock(false),
                 new ScoringMock(true),
-                leadRepository
+                leadRepository, eventPublisher
         );
 
         // Setup mocks - Only need to stub the save method for rejected leads
@@ -154,7 +158,7 @@ class LeadValidatorUseCaseTest {
                 new JudicialRecordsMock(true),
                 new NationalRegistryMock(true),
                 new ScoringMock(false),
-                leadRepository
+                leadRepository, eventPublisher
         );
 
         // Setup mocks - Only need to stub the save method for rejected leads
@@ -186,7 +190,7 @@ class LeadValidatorUseCaseTest {
                 new JudicialRecordsMock(true),
                 new NationalRegistryMock(true),
                 new ScoringMock(true),
-                leadRepository
+                leadRepository, eventPublisher
         );
 
         // Setup mocks
@@ -222,7 +226,7 @@ class LeadValidatorUseCaseTest {
                 new JudicialRecordsMock(false), // This will cause the validation to fail
                 new NationalRegistryMock(true),
                 new ScoringMock(true),
-                leadRepository
+                leadRepository, eventPublisher
         );
 
         // Setup mocks - Only need to stub the save method for rejected leads
@@ -254,7 +258,7 @@ class LeadValidatorUseCaseTest {
                 new JudicialRecordsMock(true),
                 new NationalRegistryMock(true),
                 new ScoringMock(true),
-                leadRepository
+                leadRepository, eventPublisher
         );
 
         // Setup mocks
