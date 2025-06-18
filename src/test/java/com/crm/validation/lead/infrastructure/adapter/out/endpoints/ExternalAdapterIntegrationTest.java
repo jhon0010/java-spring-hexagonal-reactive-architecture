@@ -1,7 +1,7 @@
 package com.crm.validation.lead.infrastructure.adapter.out.endpoints;
 
-import com.crm.validation.lead.application.services.validator.ValidationOutcome;
-import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,10 +28,10 @@ class ExternalAdapterIntegrationTest {
     @DisplayName("Judicial Records adapter should return valid result for leads without criminal records")
     void judicialRecordsAdapterShouldReturnValidResultForLeadsWithoutCriminalRecords() {
         // Given
-        LeadDto leadDto = LeadObjectMother.createValidLeadDto();
+        Lead lead = LeadObjectMother.createValidLead();
 
         // When - Directly access the simulation method to verify it works
-        Mono<Boolean> simulationResult = judicialRecordsAdapter.simulateCriminalCheck(leadDto);
+        Mono<Boolean> simulationResult = judicialRecordsAdapter.simulateCriminalCheck(lead);
 
         // Then - The simulation should complete with a value
         StepVerifier.create(simulationResult)
@@ -44,9 +44,7 @@ class ExternalAdapterIntegrationTest {
     void judicialRecordsAdapterShouldHandleLeadsWithCriminalRecords() {
         // Given - Special document number that would trigger a criminal record match
         // (assuming the simulator recognizes certain patterns as "bad")
-        LeadDto leadWithCriminalRecord = LeadObjectMother.createValidLeadDto().toBuilder()
-                .documentNumber(999999) // Using a special number that might trigger a match
-                .build();
+        Lead leadWithCriminalRecord = LeadObjectMother.createInvalidLead();
 
         // When
         var result = judicialRecordsAdapter.apply(leadWithCriminalRecord);
@@ -61,10 +59,10 @@ class ExternalAdapterIntegrationTest {
     @DisplayName("National Registry adapter should return validation result")
     void nationalRegistryAdapterShouldReturnValidationResult() {
         // Given
-        LeadDto leadDto = LeadObjectMother.createValidLeadDto();
+        Lead lead = LeadObjectMother.createValidLead();
 
         // When
-        var result = nationalRegistryAdapter.apply(leadDto);
+        var result = nationalRegistryAdapter.apply(lead);
 
         // Then
         StepVerifier.create(result)
@@ -76,11 +74,11 @@ class ExternalAdapterIntegrationTest {
     @DisplayName("Scoring adapter should return validation result when previous validations pass")
     void scoringAdapterShouldReturnValidationResultWhenPreviousValidationsPass() {
         // Given
-        LeadDto leadDto = LeadObjectMother.createValidLeadDto();
+        Lead lead = LeadObjectMother.createValidLead();
         ValidationOutcome outcome = createValidValidationOutcome();
 
         // When
-        var result = scoringAdapter.apply(leadDto, outcome);
+        var result = scoringAdapter.apply(lead, outcome);
 
         // Then
         StepVerifier.create(result)

@@ -1,6 +1,5 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web.mappers;
 
-import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;

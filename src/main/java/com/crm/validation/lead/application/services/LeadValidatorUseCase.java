@@ -11,8 +11,6 @@ import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -20,12 +18,11 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @Service
 public class LeadValidatorUseCase implements PromoteLeadUseCase {
-    private final LeadWebMapper leadWebMapper = LeadWebMapper.INSTANCE;
 
     private final JudicialRecordsPort judicialRecordsPort;
     private final NationalRegistryPort nationalRegistryPort;
     private final ScoringPort scoringPort;
-    private final IndependentValidator<LeadDto> validator;
+    private final IndependentValidator<Lead> validator;
     private final LeadRepository leadRepository;
 
     public LeadValidatorUseCase(JudicialRecordsPort judicialRecordsPort, NationalRegistryPort nationalRegistryPort,
@@ -34,7 +31,7 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
         this.judicialRecordsPort = judicialRecordsPort;
         this.nationalRegistryPort = nationalRegistryPort;
         this.scoringPort = scoringPort;
-        this.validator = new CompositeValidator<LeadDto>()
+        this.validator = new CompositeValidator<Lead>()
                     .addIndependent(this.judicialRecordsPort)
                     .addIndependent(this.nationalRegistryPort)
                     .addDependent(this.scoringPort);
@@ -42,7 +39,7 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
 
     // TODO : Add more function modularity for this function.
     public Mono<LeadValidationResult> promoteLeadToProspect(Lead lead) {
-        return validator.apply(leadWebMapper.leadToLeadDto(lead))
+        return validator.apply(lead)
                 .map(validationOutcome ->
                         lead.promoteLeadToProspect(validationOutcome.validation())
                 )
@@ -59,8 +56,8 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
                                 log.info("Lead {} is already a prospect, rejecting promotion.", existingLead.getDocumentNumber());
                                 return Mono.error(new LeadAlreadyExistException(existingLead));
                             }
-                            log.info("Lead {} already exists in the database with ID {}, updating state to PROSPECT.",
-                                    existingLead.getDocumentNumber(), existingLead.getId().getValue());
+                            log.info("Lead {} already exists in the database, updating state to PROSPECT.",
+                                    existingLead.toString());
                             // Create updated lead with the EXISTING ID from the database to ensure the update works
                             Lead updatedLead = existingLead.withState(LeadState.PROSPECT);
                             return this.leadRepository.save(updatedLead)
@@ -84,3 +81,4 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
     }
 
 }
+

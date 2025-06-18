@@ -1,9 +1,15 @@
 package com.crm.validation.lead.objectmother;
 
-import com.crm.validation.lead.application.services.validator.ValidationOutcome;
-import com.crm.validation.lead.application.services.validator.ValidationResults;
+import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.validator.ValidationResults;
 import com.crm.validation.lead.domain.model.enums.DocumentType;
 import com.crm.validation.lead.domain.model.enums.LeadState;
+import com.crm.validation.lead.domain.model.valueobjects.Document;
+import com.crm.validation.lead.domain.model.valueobjects.Email;
+import com.crm.validation.lead.domain.model.valueobjects.LeadId;
+import com.crm.validation.lead.domain.model.valueobjects.PersonalInfo;
+import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
 
@@ -11,6 +17,28 @@ import java.time.LocalDate;
 import java.util.Arrays;
 
 public class LeadObjectMother {
+
+    public static Lead createValidLead() {
+        return Lead.builder()
+                .id(LeadId.of(java.util.UUID.randomUUID()))
+                .email(Email.of("peter@some.com"))
+                .phoneNumber(PhoneNumber.of("+1234567890"))
+                .document(Document.of(DocumentType.CC.name(), 1234))
+                .personalInfo(PersonalInfo.of("Jhon Doe", LocalDate.of(1990, 12, 12)))
+                .state(LeadState.CREATED)
+                .build();
+    }
+
+    public static Lead createInvalidLead() {
+        return Lead.builder()
+                .id(LeadId.of(java.util.UUID.randomUUID()))
+                .email(Email.of("peter@some.com"))
+                .phoneNumber(PhoneNumber.of("+1234567890"))
+                .document(Document.of(DocumentType.CC.name(), 999999)) // Invalid document number for testing
+                .personalInfo(PersonalInfo.of("Jhon Doe", LocalDate.of(1990, 12, 12)))
+                .state(LeadState.CREATED)
+                .build();
+    }
 
     public static LeadDto createValidLeadDto() {
         return LeadDto.builder()

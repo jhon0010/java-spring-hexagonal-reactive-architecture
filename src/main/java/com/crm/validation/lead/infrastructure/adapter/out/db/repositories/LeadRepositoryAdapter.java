@@ -22,11 +22,10 @@ import reactor.core.publisher.Mono;
 public class LeadRepositoryAdapter implements LeadRepository {
 
     private final LeadRepositorySpringData leadRepositorySpringData;
-    private final LeadPersistenceMapper mapper;
+    private final LeadPersistenceMapper mapper = LeadPersistenceMapper.INSTANCE;
 
-    public LeadRepositoryAdapter(LeadRepositorySpringData r2dbcRepository, LeadPersistenceMapper mapper) {
+    public LeadRepositoryAdapter(LeadRepositorySpringData r2dbcRepository) {
         this.leadRepositorySpringData = r2dbcRepository;
-        this.mapper = mapper;
     }
 
     @Override

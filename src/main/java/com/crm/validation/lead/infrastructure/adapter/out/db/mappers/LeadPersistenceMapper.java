@@ -6,15 +6,14 @@ import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEnt
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
 
 /**
  * Mapper for converting between Lead domain entities and persistence entities.
  * This isolates the domain model from persistence concerns.
  */
-@Mapper(componentModel = "spring")
+@Mapper()
 public interface LeadPersistenceMapper {
-    LeadPersistenceMapper INSTANCE = Mappers.getMapper(LeadPersistenceMapper.class);
+    LeadPersistenceMapper INSTANCE = org.mapstruct.factory.Mappers.getMapper(LeadPersistenceMapper.class);
 
     /**
      * Converts a domain entity to a persistence entity.

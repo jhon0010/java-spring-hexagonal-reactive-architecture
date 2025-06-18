@@ -1,6 +1,6 @@
 package com.crm.validation.lead.domain.model;
 
-import com.crm.validation.lead.application.services.validator.ValidationResults;
+import com.crm.validation.lead.domain.model.validator.ValidationResults;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.model.enums.LeadState;
 import com.crm.validation.lead.domain.model.valueobjects.Email;
@@ -10,7 +10,6 @@ import com.crm.validation.lead.domain.model.valueobjects.PersonalInfo;
 import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
 import lombok.Builder;
 import lombok.Value;
-import lombok.extern.log4j.Log4j2;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -20,9 +19,10 @@ import java.util.UUID;
  * This class is immutable by design, as enforced by @Value.
  * It uses Value Objects to encapsulate related attributes and behaviors.
  */
-@Log4j2
 @Value
 public class Lead {
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Lead.class);
+
     LeadId id;
     PersonalInfo personalInfo;
     Email email;
@@ -34,7 +34,7 @@ public class Lead {
 
     @Builder
     private Lead(LeadId id, PersonalInfo personalInfo, Email email, PhoneNumber phoneNumber,
-                Document document, LeadState state) {
+                 Document document, LeadState state) {
         this.id = id;
         this.personalInfo = personalInfo;
         this.email = email;

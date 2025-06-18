@@ -1,6 +1,6 @@
 package com.crm.validation.lead.domain;
 
-import com.crm.validation.lead.application.services.validator.ValidationResults;
+import com.crm.validation.lead.domain.model.validator.ValidationResults;
 import com.crm.validation.lead.domain.model.Lead;
 import lombok.Builder;
 
