@@ -7,13 +7,14 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Builder
 @Data
 @Table(name = "leads")
-public class LeadEntity {
+public class LeadJPAEntity {
     @Id
-    private String id;
+    private UUID id;
     private String name;
     private LocalDate birthdate;
     private String state;

@@ -5,7 +5,7 @@ import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.model.enums.DocumentType;
 import com.crm.validation.lead.domain.model.enums.LeadState;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadEntity;
+import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -32,24 +32,42 @@ public class LeadObjectMother {
                 .build();
     }
 
-    public static LeadEntity createLeadEntity() {
-        return LeadEntity.builder()
+    public static LeadJPAEntity createLeadEntity() {
+        return LeadJPAEntity.builder()
+                .id(java.util.UUID.randomUUID())
                 .name("John Doe")
                 .email("jhon.doe@gmail.com")
                 .phoneNumber("+1234567890")
+                .documentType(DocumentType.CC.name())
                 .documentNumber(1234)
+                .birthdate(LocalDate.of(1990,12,12))
                 .state(LeadState.CREATED.name())
                 .build();
     }
 
-    public static LeadEntity createProspectEntity() {
-        return LeadEntity.builder()
+    public static LeadJPAEntity createProspectEntity() {
+        return LeadJPAEntity.builder()
+                .id(java.util.UUID.randomUUID())
                 .name("John Doe")
                 .email("jhon.doe@gmail.com")
                 .phoneNumber("+1234567890")
+                .documentType(DocumentType.CC.name())
                 .documentNumber(1234)
                 .birthdate(LocalDate.of(1990,12,12))
                 .state(LeadState.PROSPECT.name())
+                .build();
+    }
+
+    public static LeadJPAEntity createRejectedEntity() {
+        return LeadJPAEntity.builder()
+                .id(java.util.UUID.randomUUID())
+                .name("John Doe")
+                .email("jhon.doe@gmail.com")
+                .phoneNumber("+1234567890")
+                .documentType(DocumentType.CC.name())
+                .documentNumber(1234)
+                .birthdate(LocalDate.of(1990,12,12))
+                .state(LeadState.REJECTED.name())
                 .build();
     }
 

@@ -1,6 +1,6 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web;
 
-import com.crm.validation.lead.application.services.LeadValidatorUseCase;
+import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping("/api/leads")
 public class LeadController {
-    private final LeadValidatorUseCase leadValidatorService;
+    private final PromoteLeadUseCase leadValidatorService;
 
     @Operation(summary = "Promote a lead (idempotent)",
             description = "Idempotently changes a lead’s status to PROMOTED")

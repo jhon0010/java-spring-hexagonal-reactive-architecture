@@ -4,8 +4,8 @@ import com.crm.validation.lead.application.ports.out.endpoints.ScoringPort;
 import com.crm.validation.lead.application.services.validator.ValidationOutcome;
 import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.exceptions.IndependentValidationFailsException;
-import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
@@ -23,7 +23,7 @@ public class ScoringAdapter extends BaseExternalCallSimulator implements Scoring
 
         return Mono.defer(() ->
                 this.simulateScoring(leadDto, previous)
-                        .map(Lead::isScoreEnoughToPromoteToProspect)
+                        .map(LeadWebMapper.INSTANCE.leadDtoToLead(leadDto)::isScoreEnoughToPromoteToProspect)
                         .map(isScoreEnough -> {
                             ValidationResults result = new ValidationResults();
 

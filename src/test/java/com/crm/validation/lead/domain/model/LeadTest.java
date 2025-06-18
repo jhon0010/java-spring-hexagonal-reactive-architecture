@@ -4,6 +4,7 @@ import com.crm.validation.lead.application.services.validator.ValidationResults;
 import com.crm.validation.lead.domain.exceptions.InvalidLeadDataException;
 import com.crm.validation.lead.domain.model.enums.LeadState;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class LeadTest {
 
+    private final LeadWebMapper leadWebMapper = LeadWebMapper.INSTANCE;
+
     @Test
     @DisplayName("Should create a valid Lead from LeadDto")
     void shouldCreateValidLeadFromDto() {
@@ -22,12 +25,12 @@ class LeadTest {
         LeadDto validLeadDto = LeadObjectMother.createValidLeadDto();
 
         // When
-        Lead lead = Lead.fromDto(validLeadDto);
+        Lead lead = leadWebMapper.leadDtoToLead(validLeadDto);
 
         // Then
         assertNotNull(lead);
         assertEquals(validLeadDto.name(), lead.getName());
-        assertEquals(validLeadDto.email(), lead.getEmail());
+        assertEquals(validLeadDto.email(), lead.getEmail().getValue());
     }
 
     @ParameterizedTest
@@ -37,7 +40,7 @@ class LeadTest {
     void shouldThrowExceptionWhenEmailIsInvalid(String invalidEmail) {
         // Given
         LeadDto invalidLeadDto = LeadObjectMother.createValidLeadDto().toBuilder().email(invalidEmail).build();
-        assertThrows(InvalidLeadDataException.class, () -> Lead.fromDto(invalidLeadDto));
+        assertThrows(InvalidLeadDataException.class, () -> leadWebMapper.leadDtoToLead(invalidLeadDto));
     }
 
     @Test
@@ -48,12 +51,12 @@ class LeadTest {
         ValidationResults validationResult = LeadObjectMother.createValidValidationResults();
 
         // When
-        var result = Lead.promoteLeadToProspect(validLeadDto, validationResult);
+        var result = leadWebMapper.leadDtoToLead(validLeadDto).promoteLeadToProspect(validationResult);
 
         // Then
         assertNotNull(result);
-        assertEquals("PROSPECT", result.getLead().getState().name());
-        assertSame(LeadState.PROSPECT, result.getLead().getState());
+        assertEquals("PROSPECT", result.lead().getState().name());
+        assertSame(LeadState.PROSPECT, result.lead().getState());
     }
 
     @Test
@@ -64,10 +67,10 @@ class LeadTest {
         ValidationResults errorsValidationResults = LeadObjectMother.createErrorsValidationResults();
 
         // When
-        var result = Lead.promoteLeadToProspect(validLeadDto, errorsValidationResults);
+        var result = leadWebMapper.leadDtoToLead(validLeadDto).promoteLeadToProspect(errorsValidationResults);
 
         // Then
         assertNotNull(result);
-        assertEquals(LeadState.PROSPECT.name(), result.getLead().getState().name());
+        assertEquals(LeadState.PROSPECT.name(), result.lead().getState().name());
     }
 }

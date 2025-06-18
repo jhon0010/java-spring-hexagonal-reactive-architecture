@@ -1,20 +1,17 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web;
 
 import com.crm.validation.lead.LeadApplication;
+import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
+import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.infrastructure.adapter.in.cli.LeadCrmValidatorCli;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadEntity;
-import com.crm.validation.lead.infrastructure.adapter.out.db.repositories.LeadRepository;
+import com.crm.validation.lead.infrastructure.adapter.in.web.mappers.LeadWebMapper;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
@@ -27,24 +24,9 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest(
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-    classes = {LeadApplication.class, LeadControllerEndToEndTest.TestConfig.class}
+    classes = {LeadApplication.class}
 )
 class LeadControllerEndToEndTest {
-
-    // Create a configuration to replace the real CommandLineRunner
-    @Configuration
-    static class TestConfig {
-        @Bean
-        @Primary
-        public LeadCrmValidatorCli testCliRunner() {
-            return new LeadCrmValidatorCli(null) {
-                @Override
-                public void run(String... args) {
-                    // Do nothing - override run method to prevent CLI execution
-                }
-            };
-        }
-    }
 
     @Autowired
     private WebTestClient webTestClient;
@@ -74,19 +56,21 @@ class LeadControllerEndToEndTest {
                 .expectBody()
                 .jsonPath("$.lead.state").isEqualTo("PROSPECT");
 
+        Lead lead = LeadWebMapper.INSTANCE.leadDtoToLead(validLeadDto);
+
         // Verify that the lead was saved to the database with PROSPECT status
-        Mono<LeadEntity> savedLeadMono = leadRepository.findByCoreData(
-                validLeadDto.email(),
-                validLeadDto.phoneNumber(),
-                validLeadDto.documentNumber()
+        Mono<Lead> savedLeadMono = leadRepository.findByCoreData(
+                lead.getEmail(),
+                lead.getPhoneNumber(),
+                lead.getDocument()
         );
 
         StepVerifier.create(savedLeadMono)
-                .assertNext(leadEntity -> {
-                    assertNotNull(leadEntity);
-                    assertEquals(LeadState.PROSPECT.name(), leadEntity.getState());
-                    assertEquals(validLeadDto.name(), leadEntity.getName());
-                    assertEquals(validLeadDto.email(), leadEntity.getEmail());
+                .assertNext(savedLead -> {
+                    assertNotNull(savedLead);
+                    assertEquals(LeadState.PROSPECT, savedLead.getState());
+                    assertEquals(validLeadDto.name(), savedLead.getName());
+                    assertEquals(validLeadDto.email(), savedLead.getEmail().getValue());
                 })
                 .verifyComplete();
     }

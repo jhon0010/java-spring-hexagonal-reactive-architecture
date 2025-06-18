@@ -1,6 +1,6 @@
 package com.crm.validation.lead.infrastructure.adapter.in.cli;
 
-import com.crm.validation.lead.application.services.LeadValidatorUseCase;
+import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
 import com.crm.validation.lead.domain.model.enums.DocumentType;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import lombok.AllArgsConstructor;
@@ -22,7 +22,7 @@ import java.util.UUID;
         matchIfMissing = false)
 public class LeadCrmValidatorCli implements CommandLineRunner {
 
-    private final LeadValidatorUseCase validator;
+    private final PromoteLeadUseCase validator;
     private final Scanner scanner = new Scanner(System.in);
 
 

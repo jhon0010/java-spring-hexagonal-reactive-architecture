@@ -3,29 +3,31 @@ package com.crm.validation.lead.application.services;
 import com.crm.validation.lead.application.ports.mocks.JudicialRecordsMock;
 import com.crm.validation.lead.application.ports.mocks.NationalRegistryMock;
 import com.crm.validation.lead.application.ports.mocks.ScoringMock;
+import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
 import com.crm.validation.lead.domain.LeadValidationResult;
-import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
+import com.crm.validation.lead.domain.model.valueobjects.Document;
+import com.crm.validation.lead.domain.model.valueobjects.Email;
+import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadEntity;
-import com.crm.validation.lead.infrastructure.adapter.out.db.repositories.LeadRepository;
+import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
+import com.crm.validation.lead.infrastructure.adapter.out.db.mappers.LeadPersistenceMapper;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class LeadValidatorUseCaseTest {
@@ -33,11 +35,19 @@ class LeadValidatorUseCaseTest {
     @Mock
     private LeadRepository leadRepository;
 
+    private LeadPersistenceMapper leadPersistenceMapper;
+
     private LeadValidatorUseCase useCase;
     private LeadDto validLeadDto;
 
     @BeforeEach
     void setUp() {
+        // Reset mocks before each test to avoid unfinished stubbing issues
+        Mockito.reset(leadRepository);
+
+        // Use the static instance of the mapper
+        leadPersistenceMapper = LeadPersistenceMapper.INSTANCE;
+
         validLeadDto = LeadObjectMother.createValidLeadDto();
     }
 
@@ -52,12 +62,13 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        when(leadRepository.findByCoreData(anyString(), anyString(), anyInt()))
+        // Setup mocks
+        when(leadRepository.findByCoreData(any(Email.class), any(PhoneNumber.class), any(Document.class)))
                 .thenReturn(Mono.empty());
 
-        LeadEntity savedEntity = LeadObjectMother.createProspectEntity();
-        when(leadRepository.save(any(LeadEntity.class)))
-                .thenReturn(Mono.just(savedEntity));
+        LeadJPAEntity prospectEntity = LeadObjectMother.createProspectEntity();
+        when(leadRepository.save(any(Lead.class)))
+                .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(prospectEntity)));
 
         // When
         Mono<LeadValidationResult> result = useCase.promoteLeadToProspect(validLeadDto);
@@ -65,8 +76,8 @@ class LeadValidatorUseCaseTest {
         // Then
         StepVerifier.create(result)
                 .expectNextMatches(validationResult -> {
-                    Lead lead = validationResult.getLead();
-                    return validationResult.getValidations().isValid() &&
+                    Lead lead = validationResult.lead();
+                    return validationResult.validations().isValid() &&
                            lead.getState() == LeadState.PROSPECT;
                 })
                 .verifyComplete();
@@ -83,10 +94,10 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        LeadEntity savedEntity = LeadObjectMother.createProspectEntity();
-        savedEntity.setState(LeadState.REJECTED.name());
-        when(leadRepository.save(any(LeadEntity.class)))
-                .thenReturn(Mono.just(savedEntity));
+        // Setup mocks
+        LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
+        when(leadRepository.save(any(Lead.class)))
+                .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));
 
         // When
         Mono<LeadValidationResult> result = useCase.promoteLeadToProspect(validLeadDto);
@@ -94,14 +105,14 @@ class LeadValidatorUseCaseTest {
         // Then
         StepVerifier.create(result)
                 .expectNextMatches(validationResult -> {
-                    Lead lead = validationResult.getLead();
-                    return !validationResult.getValidations().isValid() &&
+                    Lead lead = validationResult.lead();
+                    return !validationResult.validations().isValid() &&
                            lead.getState() == LeadState.REJECTED;
                 })
                 .verifyComplete();
 
         // Verify the lead was saved with REJECTED state
-        verify(leadRepository, times(1)).save(any(LeadEntity.class));
+        verify(leadRepository, times(1)).save(any(Lead.class));
     }
 
     @Test
@@ -115,10 +126,10 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        LeadEntity savedEntity = LeadObjectMother.createProspectEntity();
-        savedEntity.setState(LeadState.REJECTED.name());
-        when(leadRepository.save(any(LeadEntity.class)))
-                .thenReturn(Mono.just(savedEntity));
+        // Setup mocks
+        LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
+        when(leadRepository.save(any(Lead.class)))
+                .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));
 
         // When
         Mono<LeadValidationResult> result = useCase.promoteLeadToProspect(validLeadDto);
@@ -126,14 +137,14 @@ class LeadValidatorUseCaseTest {
         // Then
         StepVerifier.create(result)
                 .expectNextMatches(validationResult -> {
-                    Lead lead = validationResult.getLead();
-                    return !validationResult.getValidations().isValid() &&
+                    Lead lead = validationResult.lead();
+                    return !validationResult.validations().isValid() &&
                            lead.getState() == LeadState.REJECTED;
                 })
                 .verifyComplete();
 
         // Verify the lead was saved with REJECTED state
-        verify(leadRepository, times(1)).save(any(LeadEntity.class));
+        verify(leadRepository, times(1)).save(any(Lead.class));
     }
 
     @Test
@@ -147,10 +158,10 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        LeadEntity savedEntity = LeadObjectMother.createProspectEntity();
-        savedEntity.setState(LeadState.REJECTED.name());
-        when(leadRepository.save(any(LeadEntity.class)))
-                .thenReturn(Mono.just(savedEntity));
+        // Setup mocks
+        LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
+        when(leadRepository.save(any(Lead.class)))
+                .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));
 
         // When
         Mono<LeadValidationResult> result = useCase.promoteLeadToProspect(validLeadDto);
@@ -158,31 +169,20 @@ class LeadValidatorUseCaseTest {
         // Then
         StepVerifier.create(result)
                 .expectNextMatches(validationResult -> {
-                    Lead lead = validationResult.getLead();
-                    return !validationResult.getValidations().isValid() &&
+                    Lead lead = validationResult.lead();
+                    return !validationResult.validations().isValid() &&
                            lead.getState() == LeadState.REJECTED;
                 })
                 .verifyComplete();
 
         // Verify the lead was saved with REJECTED state
-        verify(leadRepository, times(1)).save(any(LeadEntity.class));
+        verify(leadRepository, times(1)).save(any(Lead.class));
     }
-
 
     @Test
     @DisplayName("Should update existing lead to prospect when it exists but is not a prospect")
     void shouldUpdateExistingLeadToProspectWhenItExistsButIsNotAProspect() {
         // Given
-        LeadEntity existingLead = LeadObjectMother.createProspectEntity();
-        existingLead.setState(LeadState.REJECTED.name()); // Existing lead is in REJECTED state
-
-        when(leadRepository.findByCoreData(anyString(), anyString(), anyInt()))
-                .thenReturn(Mono.just(existingLead));
-
-        LeadEntity updatedEntity = LeadObjectMother.createProspectEntity();
-        when(leadRepository.save(any(LeadEntity.class)))
-                .thenReturn(Mono.just(updatedEntity));
-
         useCase = new LeadValidatorUseCase(
                 new JudicialRecordsMock(true),
                 new NationalRegistryMock(true),
@@ -190,20 +190,29 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
+        // Setup mocks
+        LeadJPAEntity existingLead = LeadObjectMother.createRejectedEntity();
+        when(leadRepository.findByCoreData(any(Email.class), any(PhoneNumber.class), any(Document.class)))
+                .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(existingLead)));
+
+        LeadJPAEntity prospectEntity = LeadObjectMother.createProspectEntity();
+        when(leadRepository.save(any(Lead.class)))
+                .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(prospectEntity)));
+
         // When
         Mono<LeadValidationResult> result = useCase.promoteLeadToProspect(validLeadDto);
 
         // Then
         StepVerifier.create(result)
                 .expectNextMatches(validationResult -> {
-                    Lead lead = validationResult.getLead();
-                    return validationResult.getValidations().isValid() &&
+                    Lead lead = validationResult.lead();
+                    return validationResult.validations().isValid() &&
                            lead.getState() == LeadState.PROSPECT;
                 })
                 .verifyComplete();
 
         // Verify the lead was updated
-        verify(leadRepository, times(2)).save(any(LeadEntity.class));
+        verify(leadRepository, times(1)).save(any(Lead.class));
     }
 
     @Test
@@ -217,10 +226,10 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        LeadEntity rejectedEntity = LeadObjectMother.createProspectEntity();
-        rejectedEntity.setState(LeadState.REJECTED.name());
-        when(leadRepository.save(any(LeadEntity.class)))
-                .thenReturn(Mono.just(rejectedEntity));
+        // Setup mocks
+        LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
+        when(leadRepository.save(any(Lead.class)))
+                .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));
 
         // When
         Mono<LeadValidationResult> result = useCase.promoteLeadToProspect(validLeadDto);
@@ -228,14 +237,14 @@ class LeadValidatorUseCaseTest {
         // Then
         StepVerifier.create(result)
                 .expectNextMatches(validationResult -> {
-                    Lead lead = validationResult.getLead();
-                    return !validationResult.getValidations().isValid() &&
+                    Lead lead = validationResult.lead();
+                    return !validationResult.validations().isValid() &&
                            lead.getState() == LeadState.REJECTED;
                 })
                 .verifyComplete();
 
         // Verify the rejected lead was saved
-        verify(leadRepository, times(1)).save(any(LeadEntity.class));
+        verify(leadRepository, times(1)).save(any(Lead.class));
     }
 
     @Test
@@ -249,10 +258,11 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        when(leadRepository.findByCoreData(anyString(), anyString(), anyInt()))
+        // Setup mocks
+        when(leadRepository.findByCoreData(any(Email.class), any(PhoneNumber.class), any(Document.class)))
                 .thenReturn(Mono.empty());
 
-        when(leadRepository.save(any(LeadEntity.class)))
+        when(leadRepository.save(any(Lead.class)))
                 .thenReturn(Mono.error(new RuntimeException("Database error")));
 
         // When
@@ -266,4 +276,3 @@ class LeadValidatorUseCaseTest {
                 .verify();
     }
 }
-
