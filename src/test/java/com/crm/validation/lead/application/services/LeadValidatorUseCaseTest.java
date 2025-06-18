@@ -93,10 +93,7 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        // Setup mocks
-        when(leadRepository.findByCoreData(any(Email.class), any(PhoneNumber.class), any(Document.class)))
-                .thenReturn(Mono.empty());
-
+        // Setup mocks - Only need to stub the save method for rejected leads
         LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
         when(leadRepository.save(any(Lead.class)))
                 .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));
@@ -128,10 +125,7 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        // Setup mocks
-        when(leadRepository.findByCoreData(any(Email.class), any(PhoneNumber.class), any(Document.class)))
-                .thenReturn(Mono.empty());
-
+        // Setup mocks - Only need to stub the save method for rejected leads
         LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
         when(leadRepository.save(any(Lead.class)))
                 .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));
@@ -163,10 +157,7 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        // Setup mocks
-        when(leadRepository.findByCoreData(any(Email.class), any(PhoneNumber.class), any(Document.class)))
-                .thenReturn(Mono.empty());
-
+        // Setup mocks - Only need to stub the save method for rejected leads
         LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
         when(leadRepository.save(any(Lead.class)))
                 .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));
@@ -234,10 +225,7 @@ class LeadValidatorUseCaseTest {
                 leadRepository
         );
 
-        // Setup mocks
-        when(leadRepository.findByCoreData(any(Email.class), any(PhoneNumber.class), any(Document.class)))
-                .thenReturn(Mono.empty());
-
+        // Setup mocks - Only need to stub the save method for rejected leads
         LeadJPAEntity rejectedEntity = LeadObjectMother.createRejectedEntity();
         when(leadRepository.save(any(Lead.class)))
                 .thenReturn(Mono.just(leadPersistenceMapper.toDomainEntity(rejectedEntity)));

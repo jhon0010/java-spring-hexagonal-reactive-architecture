@@ -37,48 +37,119 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
                     .addDependent(this.scoringPort);
     }
 
-    // TODO : Add more function modularity for this function.
+    /**
+     * Promotes a lead to prospect after validating it.
+     * This is the main orchestration method that coordinates the validation and promotion process.
+     *
+     * @param lead The lead to promote
+     * @return A Mono containing the validation result with the updated lead
+     */
     public Mono<LeadValidationResult> promoteLeadToProspect(Lead lead) {
-        return validator.apply(lead)
-                .map(validationOutcome ->
-                        lead.promoteLeadToProspect(validationOutcome.validation())
-                )
-                .flatMap(leadValidationResult -> {
-                    if (LeadState.REJECTED.equals(lead.getState())) {
-                        log.warn("The lead goes rejected please see the log for further details.");
-                        return this.leadRepository.save(lead)
-                                .map(leadValidationResult::withLead);
-                    }
+        return validateLead(lead)
+                .flatMap(this::processValidatedLead);
+    }
 
-                    return leadRepository.findByCoreData(lead.getEmail(), lead.getPhoneNumber(), lead.getDocument())
-                        .flatMap(existingLead -> {
-                            if (LeadState.PROSPECT.equals(existingLead.getState())) {
-                                log.info("Lead {} is already a prospect, rejecting promotion.", existingLead.getDocumentNumber());
-                                return Mono.error(new LeadAlreadyExistException(existingLead));
-                            }
-                            log.info("Lead {} already exists in the database, updating state to PROSPECT.",
-                                    existingLead.toString());
-                            // Create updated lead with the EXISTING ID from the database to ensure the update works
-                            Lead updatedLead = existingLead.withState(LeadState.PROSPECT);
-                            return this.leadRepository.save(updatedLead)
-                                    .map(leadValidationResult::withLead);
-                        })
-                        .switchIfEmpty(
-                            // For new leads, create a completely new entity and insert it
-                            Mono.defer(() -> {
-                                log.info("Lead {} not found in database, creating new lead", lead.getDocumentNumber());
-                                // Create a new lead with PROSPECT state for insertion (not update)
-                                Lead newLead = lead.withState(LeadState.PROSPECT);
-                                return this.leadRepository.save(newLead)
-                                    .map(savedLead -> {
-                                        log.info("Lead {} saved as a prospect in the database with ID {}.",
-                                                savedLead.getDocumentNumber(), savedLead.getId().getValue());
-                                        return leadValidationResult.withLead(savedLead);
-                                    });
-                            })
-                        );
+    /**
+     * Validates a lead using the composite validator.
+     *
+     * @param lead The lead to validate
+     * @return A Mono containing the validation result
+     */
+    private Mono<LeadValidationResult> validateLead(Lead lead) {
+        return validator.apply(lead)
+                .map(validationOutcome -> lead.promoteLeadToProspect(validationOutcome.validation()));
+    }
+
+    /**
+     * Processes a lead after validation, handling both rejected and approved leads.
+     *
+     * @param validationResult The result of the validation process
+     * @return A Mono containing the final lead validation result after persistence
+     */
+    private Mono<LeadValidationResult> processValidatedLead(LeadValidationResult validationResult) {
+        Lead lead = validationResult.lead();
+
+        if (LeadState.REJECTED.equals(lead.getState())) {
+            return handleRejectedLead(lead, validationResult);
+        }
+
+        return findAndProcessExistingLead(lead, validationResult)
+                .switchIfEmpty(createNewProspectLead(lead, validationResult));
+    }
+
+    /**
+     * Handles a lead that failed validation and was rejected.
+     *
+     * @param lead The rejected lead
+     * @param validationResult The validation result
+     * @return A Mono containing the updated validation result
+     */
+    private Mono<LeadValidationResult> handleRejectedLead(Lead lead, LeadValidationResult validationResult) {
+        log.warn("The lead goes rejected please see the log for further details.");
+        return this.leadRepository.save(lead)
+                .map(validationResult::withLead);
+    }
+
+    /**
+     * Finds and processes an existing lead in the database.
+     *
+     * @param lead The lead to find and process
+     * @param validationResult The validation result
+     * @return A Mono containing the validation result, or empty if no existing lead found
+     */
+    private Mono<LeadValidationResult> findAndProcessExistingLead(Lead lead, LeadValidationResult validationResult) {
+        return leadRepository.findByCoreData(lead.getEmail(), lead.getPhoneNumber(), lead.getDocument())
+                .flatMap(existingLead -> {
+                    if (LeadState.PROSPECT.equals(existingLead.getState())) {
+                        return handleExistingProspect(existingLead);
+                    }
+                    return updateExistingLeadToProspect(existingLead, validationResult);
                 });
     }
 
-}
+    /**
+     * Handles the case when a lead is already a prospect.
+     *
+     * @param existingLead The existing lead that is already a prospect
+     * @return A Mono that errors with LeadAlreadyExistException
+     */
+    private Mono<LeadValidationResult> handleExistingProspect(Lead existingLead) {
+        log.info("Lead {} is already a prospect, rejecting promotion.", existingLead.getDocumentNumber());
+        return Mono.error(new LeadAlreadyExistException(existingLead));
+    }
 
+    /**
+     * Updates an existing lead to prospect state.
+     *
+     * @param existingLead The existing lead to update
+     * @param validationResult The validation result
+     * @return A Mono containing the updated validation result
+     */
+    private Mono<LeadValidationResult> updateExistingLeadToProspect(Lead existingLead, LeadValidationResult validationResult) {
+        log.info("Lead {} already exists in the database, updating state to PROSPECT.", existingLead.toString());
+        Lead updatedLead = existingLead.withState(LeadState.PROSPECT);
+        return this.leadRepository.save(updatedLead)
+                .map(validationResult::withLead);
+    }
+
+    /**
+     * Creates a new prospect lead when no existing lead is found.
+     *
+     * @param lead The lead to create
+     * @param validationResult The validation result
+     * @return A Mono containing the validation result with the newly created lead
+     */
+    private Mono<LeadValidationResult> createNewProspectLead(Lead lead, LeadValidationResult validationResult) {
+        return Mono.defer(() -> {
+            log.info("Lead {} not found in database, creating new lead", lead.getDocumentNumber());
+            Lead newLead = lead.withState(LeadState.PROSPECT);
+            return this.leadRepository.save(newLead)
+                .map(savedLead -> {
+                    log.info("Lead {} saved as a prospect in the database with ID {}.",
+                            savedLead.getDocumentNumber(), savedLead.getId().getValue());
+                    return validationResult.withLead(savedLead);
+                });
+        });
+    }
+
+}
