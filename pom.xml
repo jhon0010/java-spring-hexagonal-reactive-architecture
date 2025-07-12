@@ -23,7 +23,7 @@
 		<maven.compiler.target>17</maven.compiler.target>
 		<wiremock.version>3.0.0</wiremock.version>
 		<lombok.version>1.18.38</lombok.version>
-		<mapstruct.version>1.5.5.Final</mapstruct.version>
+		<mapstruct.version>1.6.3</mapstruct.version>
 		<lombok.mapstruct.version>0.2.0</lombok.mapstruct.version>
 	</properties>
 

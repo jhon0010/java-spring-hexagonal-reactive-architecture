@@ -1,9 +1,0 @@
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/LeadApplicationTests.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/infrastructure/adapter/in/web/LeadControllerEndToEndTest.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/domain/model/LeadTest.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/application/ports/mocks/NationalRegistryMock.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/application/ports/mocks/JudicialRecordsMock.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/infrastructure/adapter/out/endpoints/ExternalAdapterIntegrationTest.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/objectmother/LeadObjectMother.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/application/services/LeadValidatorUseCaseTest.java
-/home/jhon/workspace/crm-validation/src/test/java/com/crm/validation/lead/application/ports/mocks/ScoringMock.java
