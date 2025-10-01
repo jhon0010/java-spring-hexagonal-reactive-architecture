@@ -8,13 +8,19 @@ import com.crm.validation.lead.application.ports.out.endpoints.ScoringPort;
 import com.crm.validation.lead.application.ports.out.events.DomainEventPublisher;
 import com.crm.validation.lead.application.services.validator.CompositeValidator;
 import com.crm.validation.lead.application.services.validator.IndependentValidator;
+import com.crm.validation.lead.avro.LeadPromotedAvroEvent;
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.events.LeadPromotedEvent;
 import com.crm.validation.lead.domain.events.LeadRejectedEvent;
 import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
+import com.crm.validation.lead.infrastructure.adapter.in.kafka.producer.KafkaLeadPromotedProducer;
+
 import lombok.extern.slf4j.Slf4j;
+
+import java.time.ZoneOffset;
+
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
@@ -27,16 +33,16 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
     private final ScoringPort scoringPort;
     private final IndependentValidator<Lead> validator;
     private final LeadRepository leadRepository;
-    private final DomainEventPublisher eventPublisher;
+    private final KafkaLeadPromotedProducer kafkaLeadPromotedProducer;
 
     public LeadValidatorUseCase(JudicialRecordsPort judicialRecordsPort, NationalRegistryPort nationalRegistryPort,
                                 ScoringPort scoringPort, LeadRepository leadRepository,
-                                DomainEventPublisher eventPublisher) {
+                                KafkaLeadPromotedProducer kafkaLeadPromotedProducer) {
         this.leadRepository = leadRepository;
         this.judicialRecordsPort = judicialRecordsPort;
         this.nationalRegistryPort = nationalRegistryPort;
         this.scoringPort = scoringPort;
-        this.eventPublisher = eventPublisher;
+        this.kafkaLeadPromotedProducer = kafkaLeadPromotedProducer;
         this.validator = new CompositeValidator<Lead>()
                     .addIndependent(this.judicialRecordsPort)
                     .addIndependent(this.nationalRegistryPort)
@@ -95,7 +101,7 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
         return this.leadRepository.save(lead)
                 .map(savedLead -> {
                     // Publish domain event for rejected lead
-                    eventPublisher.publish(new LeadRejectedEvent(savedLead));
+                    kafkaLeadPromotedProducer.sendLeadToKafka(null);
                     return validationResult.withLead(savedLead);
                 });
     }
@@ -141,9 +147,53 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
         return this.leadRepository.save(updatedLead)
                 .map(savedLead -> {
                     // Publish domain event for lead promotion
-                    eventPublisher.publish(new LeadPromotedEvent(savedLead));
+                    kafkaLeadPromotedProducer.sendLeadToKafka(leadToAvroEvent(savedLead)); 
                     return validationResult.withLead(savedLead);
                 });
+    }
+
+    private LeadPromotedAvroEvent leadToAvroEvent(Lead lead) {
+        log.atInfo().log("Converting lead to Avro event: {}", lead);
+        if (lead == null) {
+            throw new IllegalArgumentException("Lead cannot be null");
+        }
+
+        // Create nested Avro objects
+        com.crm.validation.lead.avro.LeadId avroId = com.crm.validation.lead.avro.LeadId.newBuilder()
+            .setValue(lead.getId().getValue().toString())
+            .build();
+
+        com.crm.validation.lead.avro.PersonalInfo avroPersonalInfo = 
+            com.crm.validation.lead.avro.PersonalInfo.newBuilder()
+                .setName(lead.getPersonalInfo().name())
+                .setBirthdate(lead.getPersonalInfo().birthdate().atStartOfDay().toInstant(ZoneOffset.UTC))
+                .build();
+
+        com.crm.validation.lead.avro.Email avroEmail = 
+            com.crm.validation.lead.avro.Email.newBuilder()
+                .setValue(lead.getEmail().getValue())
+                .build();
+
+        com.crm.validation.lead.avro.PhoneNumber avroPhoneNumber = 
+            com.crm.validation.lead.avro.PhoneNumber.newBuilder()
+                .setValue(lead.getPhoneNumber().getValue())
+                .build();
+
+        com.crm.validation.lead.avro.Document avroDocument = 
+            com.crm.validation.lead.avro.Document.newBuilder()
+                .setType(lead.getDocument().getType())
+                .setNumber(lead.getDocument().getNumber()) 
+                .build();
+
+        // Build the main event
+        return LeadPromotedAvroEvent.newBuilder()
+            .setId(avroId)
+            .setPersonalInfo(avroPersonalInfo)
+            .setEmail(avroEmail)
+            .setPhoneNumber(avroPhoneNumber)
+            .setDocument(avroDocument)
+            .setState(com.crm.validation.lead.avro.LeadState.valueOf(lead.getState().name()))
+            .build();
     }
 
     /**
@@ -162,7 +212,7 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
                     log.info("Lead {} saved as a prospect in the database with ID {}.",
                             savedLead.getDocumentNumber(), savedLead.getId().getValue());
                     // Publish domain event for new lead promotion
-                    eventPublisher.publish(new LeadPromotedEvent(savedLead));
+                    kafkaLeadPromotedProducer.sendLeadToKafka(leadToAvroEvent(savedLead));
                     return validationResult.withLead(savedLead);
                 });
         });

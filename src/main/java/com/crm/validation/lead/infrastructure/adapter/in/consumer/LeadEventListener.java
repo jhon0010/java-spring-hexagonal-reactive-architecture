@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in.events;
+package com.crm.validation.lead.infrastructure.adapter.in.consumer;
 
 import com.crm.validation.lead.domain.events.LeadPromotedEvent;
 import com.crm.validation.lead.domain.events.LeadRejectedEvent;

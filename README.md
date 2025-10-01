@@ -39,6 +39,13 @@ psql -h localhost -p 5432 -U leaduser -d leadsdb
 
 # Run the application
 
+
+Run maven install to generate the objects
+
+```bash
+mvn clean install
+```
+
 Compile and package the source code, and then you will be able to run the generated jar,
 for see those fo to the target directory. 
 
