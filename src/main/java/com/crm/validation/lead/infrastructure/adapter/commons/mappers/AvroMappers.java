@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in.commons.mappers;
+package com.crm.validation.lead.infrastructure.adapter.commons.mappers;
 
 import java.time.ZoneOffset;
 

@@ -1,19 +1,21 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web;
 
-import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
-import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadValidationResultDto;
-import com.crm.validation.lead.infrastructure.adapter.in.commons.mappers.LeadWebMapper;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
+import com.crm.validation.lead.infrastructure.adapter.commons.mappers.LeadWebMapper;
+import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
+import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadValidationResultDto;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
 @AllArgsConstructor

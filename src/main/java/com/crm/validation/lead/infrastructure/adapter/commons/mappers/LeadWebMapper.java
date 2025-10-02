@@ -1,4 +1,13 @@
-package com.crm.validation.lead.infrastructure.adapter.in.commons.mappers;
+package com.crm.validation.lead.infrastructure.adapter.commons.mappers;
+
+import org.mapstruct.Builder;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Named;
+import org.mapstruct.ReportingPolicy;
+import org.mapstruct.factory.Mappers;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.model.Lead;
@@ -11,14 +20,6 @@ import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadValidationResultDto;
 import com.crm.validation.lead.infrastructure.adapter.in.web.services.validator.LeadDtoDataValidatorService;
-import org.mapstruct.Builder;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.ReportingPolicy;
-import org.mapstruct.factory.Mappers;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Mapper(
         builder = @Builder(disableBuilder = false),

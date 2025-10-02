@@ -13,7 +13,7 @@ import com.crm.validation.lead.domain.LeadValidationResult;
 import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.infrastructure.adapter.in.commons.mappers.AvroMappers;
+import com.crm.validation.lead.infrastructure.adapter.commons.mappers.AvroMappers;
 import com.crm.validation.lead.infrastructure.adapter.out.kafka.producer.KafkaProducer;
 
 import lombok.extern.slf4j.Slf4j;
