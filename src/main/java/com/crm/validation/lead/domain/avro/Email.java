@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.crm.validation.lead.avro;
+package com.crm.validation.lead.domain.avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -13,26 +13,26 @@ import org.apache.avro.message.BinaryMessageDecoder;
 import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
-public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -3077921776975210623L;
+public class Email extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -4094330963731149563L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PhoneNumber\",\"namespace\":\"com.crm.validation.lead.avro\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Email\",\"namespace\":\"com.crm.validation.lead.domain.avro\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
 
-  private static final BinaryMessageEncoder<PhoneNumber> ENCODER =
+  private static final BinaryMessageEncoder<Email> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<PhoneNumber> DECODER =
+  private static final BinaryMessageDecoder<Email> DECODER =
       new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<PhoneNumber> getEncoder() {
+  public static BinaryMessageEncoder<Email> getEncoder() {
     return ENCODER;
   }
 
@@ -40,7 +40,7 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<PhoneNumber> getDecoder() {
+  public static BinaryMessageDecoder<Email> getDecoder() {
     return DECODER;
   }
 
@@ -49,12 +49,12 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<PhoneNumber> createDecoder(SchemaStore resolver) {
+  public static BinaryMessageDecoder<Email> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this PhoneNumber to a ByteBuffer.
+   * Serializes this Email to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -63,12 +63,12 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
   }
 
   /**
-   * Deserializes a PhoneNumber from a ByteBuffer.
+   * Deserializes a Email from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a PhoneNumber instance decoded from the given buffer
+   * @return a Email instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static PhoneNumber fromByteBuffer(
+  public static Email fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
@@ -80,13 +80,13 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public PhoneNumber() {}
+  public Email() {}
 
   /**
    * All-args constructor.
    * @param value The new value for value
    */
-  public PhoneNumber(java.lang.String value) {
+  public Email(java.lang.String value) {
     this.value = value;
   }
 
@@ -133,45 +133,45 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
   }
 
   /**
-   * Creates a new PhoneNumber RecordBuilder.
-   * @return A new PhoneNumber RecordBuilder
+   * Creates a new Email RecordBuilder.
+   * @return A new Email RecordBuilder
    */
-  public static com.crm.validation.lead.avro.PhoneNumber.Builder newBuilder() {
-    return new com.crm.validation.lead.avro.PhoneNumber.Builder();
+  public static com.crm.validation.lead.domain.avro.Email.Builder newBuilder() {
+    return new com.crm.validation.lead.domain.avro.Email.Builder();
   }
 
   /**
-   * Creates a new PhoneNumber RecordBuilder by copying an existing Builder.
+   * Creates a new Email RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new PhoneNumber RecordBuilder
+   * @return A new Email RecordBuilder
    */
-  public static com.crm.validation.lead.avro.PhoneNumber.Builder newBuilder(com.crm.validation.lead.avro.PhoneNumber.Builder other) {
+  public static com.crm.validation.lead.domain.avro.Email.Builder newBuilder(com.crm.validation.lead.domain.avro.Email.Builder other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.PhoneNumber.Builder();
+      return new com.crm.validation.lead.domain.avro.Email.Builder();
     } else {
-      return new com.crm.validation.lead.avro.PhoneNumber.Builder(other);
+      return new com.crm.validation.lead.domain.avro.Email.Builder(other);
     }
   }
 
   /**
-   * Creates a new PhoneNumber RecordBuilder by copying an existing PhoneNumber instance.
+   * Creates a new Email RecordBuilder by copying an existing Email instance.
    * @param other The existing instance to copy.
-   * @return A new PhoneNumber RecordBuilder
+   * @return A new Email RecordBuilder
    */
-  public static com.crm.validation.lead.avro.PhoneNumber.Builder newBuilder(com.crm.validation.lead.avro.PhoneNumber other) {
+  public static com.crm.validation.lead.domain.avro.Email.Builder newBuilder(com.crm.validation.lead.domain.avro.Email other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.PhoneNumber.Builder();
+      return new com.crm.validation.lead.domain.avro.Email.Builder();
     } else {
-      return new com.crm.validation.lead.avro.PhoneNumber.Builder(other);
+      return new com.crm.validation.lead.domain.avro.Email.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for PhoneNumber instances.
+   * RecordBuilder for Email instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<PhoneNumber>
-    implements org.apache.avro.data.RecordBuilder<PhoneNumber> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<Email>
+    implements org.apache.avro.data.RecordBuilder<Email> {
 
     private java.lang.String value;
 
@@ -184,7 +184,7 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.crm.validation.lead.avro.PhoneNumber.Builder other) {
+    private Builder(com.crm.validation.lead.domain.avro.Email.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.value)) {
         this.value = data().deepCopy(fields()[0].schema(), other.value);
@@ -193,10 +193,10 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
     }
 
     /**
-     * Creates a Builder by copying an existing PhoneNumber instance
+     * Creates a Builder by copying an existing Email instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.crm.validation.lead.avro.PhoneNumber other) {
+    private Builder(com.crm.validation.lead.domain.avro.Email other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.value)) {
         this.value = data().deepCopy(fields()[0].schema(), other.value);
@@ -218,7 +218,7 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
       * @param value The value of 'value'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.PhoneNumber.Builder setValue(java.lang.String value) {
+    public com.crm.validation.lead.domain.avro.Email.Builder setValue(java.lang.String value) {
       validate(fields()[0], value);
       this.value = value;
       fieldSetFlags()[0] = true;
@@ -238,7 +238,7 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
       * Clears the value of the 'value' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.PhoneNumber.Builder clearValue() {
+    public com.crm.validation.lead.domain.avro.Email.Builder clearValue() {
       value = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -246,9 +246,9 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
 
     @Override
     @SuppressWarnings("unchecked")
-    public PhoneNumber build() {
+    public Email build() {
       try {
-        PhoneNumber record = new PhoneNumber();
+        Email record = new Email();
         record.value = fieldSetFlags()[0] ? this.value : (java.lang.String) defaultValue(fields()[0]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
@@ -260,8 +260,8 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<PhoneNumber>
-    WRITER$ = (org.apache.avro.io.DatumWriter<PhoneNumber>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<Email>
+    WRITER$ = (org.apache.avro.io.DatumWriter<Email>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -269,8 +269,8 @@ public class PhoneNumber extends org.apache.avro.specific.SpecificRecordBase imp
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<PhoneNumber>
-    READER$ = (org.apache.avro.io.DatumReader<PhoneNumber>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<Email>
+    READER$ = (org.apache.avro.io.DatumReader<Email>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {

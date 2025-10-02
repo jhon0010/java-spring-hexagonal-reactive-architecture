@@ -3,11 +3,11 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.crm.validation.lead.avro;
+package com.crm.validation.lead.domain.avro;
 @org.apache.avro.specific.AvroGenerated
 public enum LeadState implements org.apache.avro.generic.GenericEnumSymbol<LeadState> {
   NEW, IN_PROGRESS, PROSPECT, REJECTED  ;
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"LeadState\",\"namespace\":\"com.crm.validation.lead.avro\",\"symbols\":[\"NEW\",\"IN_PROGRESS\",\"PROSPECT\",\"REJECTED\"]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"enum\",\"name\":\"LeadState\",\"namespace\":\"com.crm.validation.lead.domain.avro\",\"symbols\":[\"NEW\",\"IN_PROGRESS\",\"PROSPECT\",\"REJECTED\"]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   @Override

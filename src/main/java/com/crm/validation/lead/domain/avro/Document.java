@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.crm.validation.lead.avro;
+package com.crm.validation.lead.domain.avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Document extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 4426332145679388731L;
+  private static final long serialVersionUID = 3535863508587637444L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Document\",\"namespace\":\"com.crm.validation.lead.avro\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"number\",\"type\":\"int\"}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Document\",\"namespace\":\"com.crm.validation.lead.domain.avro\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"number\",\"type\":\"int\"}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -158,8 +158,8 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
    * Creates a new Document RecordBuilder.
    * @return A new Document RecordBuilder
    */
-  public static com.crm.validation.lead.avro.Document.Builder newBuilder() {
-    return new com.crm.validation.lead.avro.Document.Builder();
+  public static com.crm.validation.lead.domain.avro.Document.Builder newBuilder() {
+    return new com.crm.validation.lead.domain.avro.Document.Builder();
   }
 
   /**
@@ -167,11 +167,11 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
    * @param other The existing builder to copy.
    * @return A new Document RecordBuilder
    */
-  public static com.crm.validation.lead.avro.Document.Builder newBuilder(com.crm.validation.lead.avro.Document.Builder other) {
+  public static com.crm.validation.lead.domain.avro.Document.Builder newBuilder(com.crm.validation.lead.domain.avro.Document.Builder other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.Document.Builder();
+      return new com.crm.validation.lead.domain.avro.Document.Builder();
     } else {
-      return new com.crm.validation.lead.avro.Document.Builder(other);
+      return new com.crm.validation.lead.domain.avro.Document.Builder(other);
     }
   }
 
@@ -180,11 +180,11 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
    * @param other The existing instance to copy.
    * @return A new Document RecordBuilder
    */
-  public static com.crm.validation.lead.avro.Document.Builder newBuilder(com.crm.validation.lead.avro.Document other) {
+  public static com.crm.validation.lead.domain.avro.Document.Builder newBuilder(com.crm.validation.lead.domain.avro.Document other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.Document.Builder();
+      return new com.crm.validation.lead.domain.avro.Document.Builder();
     } else {
-      return new com.crm.validation.lead.avro.Document.Builder(other);
+      return new com.crm.validation.lead.domain.avro.Document.Builder(other);
     }
   }
 
@@ -207,7 +207,7 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.crm.validation.lead.avro.Document.Builder other) {
+    private Builder(com.crm.validation.lead.domain.avro.Document.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.type)) {
         this.type = data().deepCopy(fields()[0].schema(), other.type);
@@ -223,7 +223,7 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
      * Creates a Builder by copying an existing Document instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.crm.validation.lead.avro.Document other) {
+    private Builder(com.crm.validation.lead.domain.avro.Document other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.type)) {
         this.type = data().deepCopy(fields()[0].schema(), other.type);
@@ -249,7 +249,7 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'type'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.Document.Builder setType(java.lang.String value) {
+    public com.crm.validation.lead.domain.avro.Document.Builder setType(java.lang.String value) {
       validate(fields()[0], value);
       this.type = value;
       fieldSetFlags()[0] = true;
@@ -269,7 +269,7 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'type' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.Document.Builder clearType() {
+    public com.crm.validation.lead.domain.avro.Document.Builder clearType() {
       type = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -289,7 +289,7 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
       * @param value The value of 'number'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.Document.Builder setNumber(int value) {
+    public com.crm.validation.lead.domain.avro.Document.Builder setNumber(int value) {
       validate(fields()[1], value);
       this.number = value;
       fieldSetFlags()[1] = true;
@@ -309,7 +309,7 @@ public class Document extends org.apache.avro.specific.SpecificRecordBase implem
       * Clears the value of the 'number' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.Document.Builder clearNumber() {
+    public com.crm.validation.lead.domain.avro.Document.Builder clearNumber() {
       fieldSetFlags()[1] = false;
       return this;
     }

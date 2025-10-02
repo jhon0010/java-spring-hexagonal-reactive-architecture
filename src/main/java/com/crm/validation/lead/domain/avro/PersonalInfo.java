@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.crm.validation.lead.avro;
+package com.crm.validation.lead.domain.avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -2213389076240755052L;
+  private static final long serialVersionUID = 8235025660879809881L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PersonalInfo\",\"namespace\":\"com.crm.validation.lead.avro\",\"fields\":[{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthdate\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"PersonalInfo\",\"namespace\":\"com.crm.validation.lead.domain.avro\",\"fields\":[{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthdate\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -173,8 +173,8 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
    * Creates a new PersonalInfo RecordBuilder.
    * @return A new PersonalInfo RecordBuilder
    */
-  public static com.crm.validation.lead.avro.PersonalInfo.Builder newBuilder() {
-    return new com.crm.validation.lead.avro.PersonalInfo.Builder();
+  public static com.crm.validation.lead.domain.avro.PersonalInfo.Builder newBuilder() {
+    return new com.crm.validation.lead.domain.avro.PersonalInfo.Builder();
   }
 
   /**
@@ -182,11 +182,11 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
    * @param other The existing builder to copy.
    * @return A new PersonalInfo RecordBuilder
    */
-  public static com.crm.validation.lead.avro.PersonalInfo.Builder newBuilder(com.crm.validation.lead.avro.PersonalInfo.Builder other) {
+  public static com.crm.validation.lead.domain.avro.PersonalInfo.Builder newBuilder(com.crm.validation.lead.domain.avro.PersonalInfo.Builder other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.PersonalInfo.Builder();
+      return new com.crm.validation.lead.domain.avro.PersonalInfo.Builder();
     } else {
-      return new com.crm.validation.lead.avro.PersonalInfo.Builder(other);
+      return new com.crm.validation.lead.domain.avro.PersonalInfo.Builder(other);
     }
   }
 
@@ -195,11 +195,11 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
    * @param other The existing instance to copy.
    * @return A new PersonalInfo RecordBuilder
    */
-  public static com.crm.validation.lead.avro.PersonalInfo.Builder newBuilder(com.crm.validation.lead.avro.PersonalInfo other) {
+  public static com.crm.validation.lead.domain.avro.PersonalInfo.Builder newBuilder(com.crm.validation.lead.domain.avro.PersonalInfo other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.PersonalInfo.Builder();
+      return new com.crm.validation.lead.domain.avro.PersonalInfo.Builder();
     } else {
-      return new com.crm.validation.lead.avro.PersonalInfo.Builder(other);
+      return new com.crm.validation.lead.domain.avro.PersonalInfo.Builder(other);
     }
   }
 
@@ -222,7 +222,7 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.crm.validation.lead.avro.PersonalInfo.Builder other) {
+    private Builder(com.crm.validation.lead.domain.avro.PersonalInfo.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.name)) {
         this.name = data().deepCopy(fields()[0].schema(), other.name);
@@ -238,7 +238,7 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
      * Creates a Builder by copying an existing PersonalInfo instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.crm.validation.lead.avro.PersonalInfo other) {
+    private Builder(com.crm.validation.lead.domain.avro.PersonalInfo other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.name)) {
         this.name = data().deepCopy(fields()[0].schema(), other.name);
@@ -264,7 +264,7 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
       * @param value The value of 'name'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.PersonalInfo.Builder setName(java.lang.String value) {
+    public com.crm.validation.lead.domain.avro.PersonalInfo.Builder setName(java.lang.String value) {
       validate(fields()[0], value);
       this.name = value;
       fieldSetFlags()[0] = true;
@@ -284,7 +284,7 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
       * Clears the value of the 'name' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.PersonalInfo.Builder clearName() {
+    public com.crm.validation.lead.domain.avro.PersonalInfo.Builder clearName() {
       name = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -304,7 +304,7 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
       * @param value The value of 'birthdate'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.PersonalInfo.Builder setBirthdate(java.time.Instant value) {
+    public com.crm.validation.lead.domain.avro.PersonalInfo.Builder setBirthdate(java.time.Instant value) {
       validate(fields()[1], value);
       this.birthdate = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
       fieldSetFlags()[1] = true;
@@ -324,7 +324,7 @@ public class PersonalInfo extends org.apache.avro.specific.SpecificRecordBase im
       * Clears the value of the 'birthdate' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.PersonalInfo.Builder clearBirthdate() {
+    public com.crm.validation.lead.domain.avro.PersonalInfo.Builder clearBirthdate() {
       fieldSetFlags()[1] = false;
       return this;
     }

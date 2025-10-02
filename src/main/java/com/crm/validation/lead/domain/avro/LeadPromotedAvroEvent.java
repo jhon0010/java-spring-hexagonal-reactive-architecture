@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.crm.validation.lead.avro;
+package com.crm.validation.lead.domain.avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,11 +14,11 @@ import org.apache.avro.message.SchemaStore;
 
 /** Avro schema for Lead domain model */
 @org.apache.avro.specific.AvroGenerated
-public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -6232275029046242095L;
+public class LeadPromotedAvroEvent extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+  private static final long serialVersionUID = -4494764071346548832L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"LeadRejectedEvent\",\"namespace\":\"com.crm.validation.lead.avro\",\"doc\":\"Avro schema for Lead domain model\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"record\",\"name\":\"LeadId\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"personalInfo\",\"type\":{\"type\":\"record\",\"name\":\"PersonalInfo\",\"fields\":[{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthdate\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}},{\"name\":\"email\",\"type\":{\"type\":\"record\",\"name\":\"Email\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"phoneNumber\",\"type\":{\"type\":\"record\",\"name\":\"PhoneNumber\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"document\",\"type\":{\"type\":\"record\",\"name\":\"Document\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"number\",\"type\":\"int\"}]}},{\"name\":\"state\",\"type\":{\"type\":\"enum\",\"name\":\"LeadState\",\"symbols\":[\"NEW\",\"IN_PROGRESS\",\"PROSPECT\",\"REJECTED\"]}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"LeadPromotedAvroEvent\",\"namespace\":\"com.crm.validation.lead.domain.avro\",\"doc\":\"Avro schema for Lead domain model\",\"fields\":[{\"name\":\"id\",\"type\":{\"type\":\"record\",\"name\":\"LeadId\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"personalInfo\",\"type\":{\"type\":\"record\",\"name\":\"PersonalInfo\",\"fields\":[{\"name\":\"name\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"birthdate\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}},{\"name\":\"email\",\"type\":{\"type\":\"record\",\"name\":\"Email\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"phoneNumber\",\"type\":{\"type\":\"record\",\"name\":\"PhoneNumber\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}},{\"name\":\"document\",\"type\":{\"type\":\"record\",\"name\":\"Document\",\"fields\":[{\"name\":\"type\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}},{\"name\":\"number\",\"type\":\"int\"}]}},{\"name\":\"state\",\"type\":{\"type\":\"enum\",\"name\":\"LeadState\",\"symbols\":[\"NEW\",\"IN_PROGRESS\",\"PROSPECT\",\"REJECTED\"]}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -26,17 +26,17 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
     MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.TimestampMillisConversion());
   }
 
-  private static final BinaryMessageEncoder<LeadRejectedEvent> ENCODER =
+  private static final BinaryMessageEncoder<LeadPromotedAvroEvent> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
 
-  private static final BinaryMessageDecoder<LeadRejectedEvent> DECODER =
+  private static final BinaryMessageDecoder<LeadPromotedAvroEvent> DECODER =
       new BinaryMessageDecoder<>(MODEL$, SCHEMA$);
 
   /**
    * Return the BinaryMessageEncoder instance used by this class.
    * @return the message encoder used by this class
    */
-  public static BinaryMessageEncoder<LeadRejectedEvent> getEncoder() {
+  public static BinaryMessageEncoder<LeadPromotedAvroEvent> getEncoder() {
     return ENCODER;
   }
 
@@ -44,7 +44,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Return the BinaryMessageDecoder instance used by this class.
    * @return the message decoder used by this class
    */
-  public static BinaryMessageDecoder<LeadRejectedEvent> getDecoder() {
+  public static BinaryMessageDecoder<LeadPromotedAvroEvent> getDecoder() {
     return DECODER;
   }
 
@@ -53,12 +53,12 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * @param resolver a {@link SchemaStore} used to find schemas by fingerprint
    * @return a BinaryMessageDecoder instance for this class backed by the given SchemaStore
    */
-  public static BinaryMessageDecoder<LeadRejectedEvent> createDecoder(SchemaStore resolver) {
+  public static BinaryMessageDecoder<LeadPromotedAvroEvent> createDecoder(SchemaStore resolver) {
     return new BinaryMessageDecoder<>(MODEL$, SCHEMA$, resolver);
   }
 
   /**
-   * Serializes this LeadRejectedEvent to a ByteBuffer.
+   * Serializes this LeadPromotedAvroEvent to a ByteBuffer.
    * @return a buffer holding the serialized data for this instance
    * @throws java.io.IOException if this instance could not be serialized
    */
@@ -67,29 +67,29 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
   }
 
   /**
-   * Deserializes a LeadRejectedEvent from a ByteBuffer.
+   * Deserializes a LeadPromotedAvroEvent from a ByteBuffer.
    * @param b a byte buffer holding serialized data for an instance of this class
-   * @return a LeadRejectedEvent instance decoded from the given buffer
+   * @return a LeadPromotedAvroEvent instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static LeadRejectedEvent fromByteBuffer(
+  public static LeadPromotedAvroEvent fromByteBuffer(
       java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
-  private com.crm.validation.lead.avro.LeadId id;
-  private com.crm.validation.lead.avro.PersonalInfo personalInfo;
-  private com.crm.validation.lead.avro.Email email;
-  private com.crm.validation.lead.avro.PhoneNumber phoneNumber;
-  private com.crm.validation.lead.avro.Document document;
-  private com.crm.validation.lead.avro.LeadState state;
+  private com.crm.validation.lead.domain.avro.LeadId id;
+  private com.crm.validation.lead.domain.avro.PersonalInfo personalInfo;
+  private com.crm.validation.lead.domain.avro.Email email;
+  private com.crm.validation.lead.domain.avro.PhoneNumber phoneNumber;
+  private com.crm.validation.lead.domain.avro.Document document;
+  private com.crm.validation.lead.domain.avro.LeadState state;
 
   /**
    * Default constructor.  Note that this does not initialize fields
    * to their default values from the schema.  If that is desired then
    * one should use <code>newBuilder()</code>.
    */
-  public LeadRejectedEvent() {}
+  public LeadPromotedAvroEvent() {}
 
   /**
    * All-args constructor.
@@ -100,7 +100,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * @param document The new value for document
    * @param state The new value for state
    */
-  public LeadRejectedEvent(com.crm.validation.lead.avro.LeadId id, com.crm.validation.lead.avro.PersonalInfo personalInfo, com.crm.validation.lead.avro.Email email, com.crm.validation.lead.avro.PhoneNumber phoneNumber, com.crm.validation.lead.avro.Document document, com.crm.validation.lead.avro.LeadState state) {
+  public LeadPromotedAvroEvent(com.crm.validation.lead.domain.avro.LeadId id, com.crm.validation.lead.domain.avro.PersonalInfo personalInfo, com.crm.validation.lead.domain.avro.Email email, com.crm.validation.lead.domain.avro.PhoneNumber phoneNumber, com.crm.validation.lead.domain.avro.Document document, com.crm.validation.lead.domain.avro.LeadState state) {
     this.id = id;
     this.personalInfo = personalInfo;
     this.email = email;
@@ -134,12 +134,12 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
   @SuppressWarnings(value="unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: id = (com.crm.validation.lead.avro.LeadId)value$; break;
-    case 1: personalInfo = (com.crm.validation.lead.avro.PersonalInfo)value$; break;
-    case 2: email = (com.crm.validation.lead.avro.Email)value$; break;
-    case 3: phoneNumber = (com.crm.validation.lead.avro.PhoneNumber)value$; break;
-    case 4: document = (com.crm.validation.lead.avro.Document)value$; break;
-    case 5: state = (com.crm.validation.lead.avro.LeadState)value$; break;
+    case 0: id = (com.crm.validation.lead.domain.avro.LeadId)value$; break;
+    case 1: personalInfo = (com.crm.validation.lead.domain.avro.PersonalInfo)value$; break;
+    case 2: email = (com.crm.validation.lead.domain.avro.Email)value$; break;
+    case 3: phoneNumber = (com.crm.validation.lead.domain.avro.PhoneNumber)value$; break;
+    case 4: document = (com.crm.validation.lead.domain.avro.Document)value$; break;
+    case 5: state = (com.crm.validation.lead.domain.avro.LeadState)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -148,7 +148,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'id' field.
    * @return The value of the 'id' field.
    */
-  public com.crm.validation.lead.avro.LeadId getId() {
+  public com.crm.validation.lead.domain.avro.LeadId getId() {
     return id;
   }
 
@@ -157,7 +157,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Sets the value of the 'id' field.
    * @param value the value to set.
    */
-  public void setId(com.crm.validation.lead.avro.LeadId value) {
+  public void setId(com.crm.validation.lead.domain.avro.LeadId value) {
     this.id = value;
   }
 
@@ -165,7 +165,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'personalInfo' field.
    * @return The value of the 'personalInfo' field.
    */
-  public com.crm.validation.lead.avro.PersonalInfo getPersonalInfo() {
+  public com.crm.validation.lead.domain.avro.PersonalInfo getPersonalInfo() {
     return personalInfo;
   }
 
@@ -174,7 +174,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Sets the value of the 'personalInfo' field.
    * @param value the value to set.
    */
-  public void setPersonalInfo(com.crm.validation.lead.avro.PersonalInfo value) {
+  public void setPersonalInfo(com.crm.validation.lead.domain.avro.PersonalInfo value) {
     this.personalInfo = value;
   }
 
@@ -182,7 +182,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'email' field.
    * @return The value of the 'email' field.
    */
-  public com.crm.validation.lead.avro.Email getEmail() {
+  public com.crm.validation.lead.domain.avro.Email getEmail() {
     return email;
   }
 
@@ -191,7 +191,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Sets the value of the 'email' field.
    * @param value the value to set.
    */
-  public void setEmail(com.crm.validation.lead.avro.Email value) {
+  public void setEmail(com.crm.validation.lead.domain.avro.Email value) {
     this.email = value;
   }
 
@@ -199,7 +199,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'phoneNumber' field.
    * @return The value of the 'phoneNumber' field.
    */
-  public com.crm.validation.lead.avro.PhoneNumber getPhoneNumber() {
+  public com.crm.validation.lead.domain.avro.PhoneNumber getPhoneNumber() {
     return phoneNumber;
   }
 
@@ -208,7 +208,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Sets the value of the 'phoneNumber' field.
    * @param value the value to set.
    */
-  public void setPhoneNumber(com.crm.validation.lead.avro.PhoneNumber value) {
+  public void setPhoneNumber(com.crm.validation.lead.domain.avro.PhoneNumber value) {
     this.phoneNumber = value;
   }
 
@@ -216,7 +216,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'document' field.
    * @return The value of the 'document' field.
    */
-  public com.crm.validation.lead.avro.Document getDocument() {
+  public com.crm.validation.lead.domain.avro.Document getDocument() {
     return document;
   }
 
@@ -225,7 +225,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Sets the value of the 'document' field.
    * @param value the value to set.
    */
-  public void setDocument(com.crm.validation.lead.avro.Document value) {
+  public void setDocument(com.crm.validation.lead.domain.avro.Document value) {
     this.document = value;
   }
 
@@ -233,7 +233,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Gets the value of the 'state' field.
    * @return The value of the 'state' field.
    */
-  public com.crm.validation.lead.avro.LeadState getState() {
+  public com.crm.validation.lead.domain.avro.LeadState getState() {
     return state;
   }
 
@@ -242,62 +242,62 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
    * Sets the value of the 'state' field.
    * @param value the value to set.
    */
-  public void setState(com.crm.validation.lead.avro.LeadState value) {
+  public void setState(com.crm.validation.lead.domain.avro.LeadState value) {
     this.state = value;
   }
 
   /**
-   * Creates a new LeadRejectedEvent RecordBuilder.
-   * @return A new LeadRejectedEvent RecordBuilder
+   * Creates a new LeadPromotedAvroEvent RecordBuilder.
+   * @return A new LeadPromotedAvroEvent RecordBuilder
    */
-  public static com.crm.validation.lead.avro.LeadRejectedEvent.Builder newBuilder() {
-    return new com.crm.validation.lead.avro.LeadRejectedEvent.Builder();
+  public static com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder newBuilder() {
+    return new com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder();
   }
 
   /**
-   * Creates a new LeadRejectedEvent RecordBuilder by copying an existing Builder.
+   * Creates a new LeadPromotedAvroEvent RecordBuilder by copying an existing Builder.
    * @param other The existing builder to copy.
-   * @return A new LeadRejectedEvent RecordBuilder
+   * @return A new LeadPromotedAvroEvent RecordBuilder
    */
-  public static com.crm.validation.lead.avro.LeadRejectedEvent.Builder newBuilder(com.crm.validation.lead.avro.LeadRejectedEvent.Builder other) {
+  public static com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder newBuilder(com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.LeadRejectedEvent.Builder();
+      return new com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder();
     } else {
-      return new com.crm.validation.lead.avro.LeadRejectedEvent.Builder(other);
+      return new com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder(other);
     }
   }
 
   /**
-   * Creates a new LeadRejectedEvent RecordBuilder by copying an existing LeadRejectedEvent instance.
+   * Creates a new LeadPromotedAvroEvent RecordBuilder by copying an existing LeadPromotedAvroEvent instance.
    * @param other The existing instance to copy.
-   * @return A new LeadRejectedEvent RecordBuilder
+   * @return A new LeadPromotedAvroEvent RecordBuilder
    */
-  public static com.crm.validation.lead.avro.LeadRejectedEvent.Builder newBuilder(com.crm.validation.lead.avro.LeadRejectedEvent other) {
+  public static com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder newBuilder(com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.LeadRejectedEvent.Builder();
+      return new com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder();
     } else {
-      return new com.crm.validation.lead.avro.LeadRejectedEvent.Builder(other);
+      return new com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder(other);
     }
   }
 
   /**
-   * RecordBuilder for LeadRejectedEvent instances.
+   * RecordBuilder for LeadPromotedAvroEvent instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<LeadRejectedEvent>
-    implements org.apache.avro.data.RecordBuilder<LeadRejectedEvent> {
+  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<LeadPromotedAvroEvent>
+    implements org.apache.avro.data.RecordBuilder<LeadPromotedAvroEvent> {
 
-    private com.crm.validation.lead.avro.LeadId id;
-    private com.crm.validation.lead.avro.LeadId.Builder idBuilder;
-    private com.crm.validation.lead.avro.PersonalInfo personalInfo;
-    private com.crm.validation.lead.avro.PersonalInfo.Builder personalInfoBuilder;
-    private com.crm.validation.lead.avro.Email email;
-    private com.crm.validation.lead.avro.Email.Builder emailBuilder;
-    private com.crm.validation.lead.avro.PhoneNumber phoneNumber;
-    private com.crm.validation.lead.avro.PhoneNumber.Builder phoneNumberBuilder;
-    private com.crm.validation.lead.avro.Document document;
-    private com.crm.validation.lead.avro.Document.Builder documentBuilder;
-    private com.crm.validation.lead.avro.LeadState state;
+    private com.crm.validation.lead.domain.avro.LeadId id;
+    private com.crm.validation.lead.domain.avro.LeadId.Builder idBuilder;
+    private com.crm.validation.lead.domain.avro.PersonalInfo personalInfo;
+    private com.crm.validation.lead.domain.avro.PersonalInfo.Builder personalInfoBuilder;
+    private com.crm.validation.lead.domain.avro.Email email;
+    private com.crm.validation.lead.domain.avro.Email.Builder emailBuilder;
+    private com.crm.validation.lead.domain.avro.PhoneNumber phoneNumber;
+    private com.crm.validation.lead.domain.avro.PhoneNumber.Builder phoneNumberBuilder;
+    private com.crm.validation.lead.domain.avro.Document document;
+    private com.crm.validation.lead.domain.avro.Document.Builder documentBuilder;
+    private com.crm.validation.lead.domain.avro.LeadState state;
 
     /** Creates a new Builder */
     private Builder() {
@@ -308,42 +308,42 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.crm.validation.lead.avro.LeadRejectedEvent.Builder other) {
+    private Builder(com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
         fieldSetFlags()[0] = other.fieldSetFlags()[0];
       }
       if (other.hasIdBuilder()) {
-        this.idBuilder = com.crm.validation.lead.avro.LeadId.newBuilder(other.getIdBuilder());
+        this.idBuilder = com.crm.validation.lead.domain.avro.LeadId.newBuilder(other.getIdBuilder());
       }
       if (isValidValue(fields()[1], other.personalInfo)) {
         this.personalInfo = data().deepCopy(fields()[1].schema(), other.personalInfo);
         fieldSetFlags()[1] = other.fieldSetFlags()[1];
       }
       if (other.hasPersonalInfoBuilder()) {
-        this.personalInfoBuilder = com.crm.validation.lead.avro.PersonalInfo.newBuilder(other.getPersonalInfoBuilder());
+        this.personalInfoBuilder = com.crm.validation.lead.domain.avro.PersonalInfo.newBuilder(other.getPersonalInfoBuilder());
       }
       if (isValidValue(fields()[2], other.email)) {
         this.email = data().deepCopy(fields()[2].schema(), other.email);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
       if (other.hasEmailBuilder()) {
-        this.emailBuilder = com.crm.validation.lead.avro.Email.newBuilder(other.getEmailBuilder());
+        this.emailBuilder = com.crm.validation.lead.domain.avro.Email.newBuilder(other.getEmailBuilder());
       }
       if (isValidValue(fields()[3], other.phoneNumber)) {
         this.phoneNumber = data().deepCopy(fields()[3].schema(), other.phoneNumber);
         fieldSetFlags()[3] = other.fieldSetFlags()[3];
       }
       if (other.hasPhoneNumberBuilder()) {
-        this.phoneNumberBuilder = com.crm.validation.lead.avro.PhoneNumber.newBuilder(other.getPhoneNumberBuilder());
+        this.phoneNumberBuilder = com.crm.validation.lead.domain.avro.PhoneNumber.newBuilder(other.getPhoneNumberBuilder());
       }
       if (isValidValue(fields()[4], other.document)) {
         this.document = data().deepCopy(fields()[4].schema(), other.document);
         fieldSetFlags()[4] = other.fieldSetFlags()[4];
       }
       if (other.hasDocumentBuilder()) {
-        this.documentBuilder = com.crm.validation.lead.avro.Document.newBuilder(other.getDocumentBuilder());
+        this.documentBuilder = com.crm.validation.lead.domain.avro.Document.newBuilder(other.getDocumentBuilder());
       }
       if (isValidValue(fields()[5], other.state)) {
         this.state = data().deepCopy(fields()[5].schema(), other.state);
@@ -352,10 +352,10 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
     }
 
     /**
-     * Creates a Builder by copying an existing LeadRejectedEvent instance
+     * Creates a Builder by copying an existing LeadPromotedAvroEvent instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.crm.validation.lead.avro.LeadRejectedEvent other) {
+    private Builder(com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -392,7 +392,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Gets the value of the 'id' field.
       * @return The value.
       */
-    public com.crm.validation.lead.avro.LeadId getId() {
+    public com.crm.validation.lead.domain.avro.LeadId getId() {
       return id;
     }
 
@@ -402,7 +402,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setId(com.crm.validation.lead.avro.LeadId value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setId(com.crm.validation.lead.domain.avro.LeadId value) {
       validate(fields()[0], value);
       this.idBuilder = null;
       this.id = value;
@@ -422,12 +422,12 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * Gets the Builder instance for the 'id' field and creates one if it doesn't exist yet.
      * @return This builder.
      */
-    public com.crm.validation.lead.avro.LeadId.Builder getIdBuilder() {
+    public com.crm.validation.lead.domain.avro.LeadId.Builder getIdBuilder() {
       if (idBuilder == null) {
         if (hasId()) {
-          setIdBuilder(com.crm.validation.lead.avro.LeadId.newBuilder(id));
+          setIdBuilder(com.crm.validation.lead.domain.avro.LeadId.newBuilder(id));
         } else {
-          setIdBuilder(com.crm.validation.lead.avro.LeadId.newBuilder());
+          setIdBuilder(com.crm.validation.lead.domain.avro.LeadId.newBuilder());
         }
       }
       return idBuilder;
@@ -439,7 +439,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * @return This builder.
      */
 
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setIdBuilder(com.crm.validation.lead.avro.LeadId.Builder value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setIdBuilder(com.crm.validation.lead.domain.avro.LeadId.Builder value) {
       clearId();
       idBuilder = value;
       return this;
@@ -457,7 +457,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder clearId() {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder clearId() {
       id = null;
       idBuilder = null;
       fieldSetFlags()[0] = false;
@@ -468,7 +468,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Gets the value of the 'personalInfo' field.
       * @return The value.
       */
-    public com.crm.validation.lead.avro.PersonalInfo getPersonalInfo() {
+    public com.crm.validation.lead.domain.avro.PersonalInfo getPersonalInfo() {
       return personalInfo;
     }
 
@@ -478,7 +478,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'personalInfo'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setPersonalInfo(com.crm.validation.lead.avro.PersonalInfo value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setPersonalInfo(com.crm.validation.lead.domain.avro.PersonalInfo value) {
       validate(fields()[1], value);
       this.personalInfoBuilder = null;
       this.personalInfo = value;
@@ -498,12 +498,12 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * Gets the Builder instance for the 'personalInfo' field and creates one if it doesn't exist yet.
      * @return This builder.
      */
-    public com.crm.validation.lead.avro.PersonalInfo.Builder getPersonalInfoBuilder() {
+    public com.crm.validation.lead.domain.avro.PersonalInfo.Builder getPersonalInfoBuilder() {
       if (personalInfoBuilder == null) {
         if (hasPersonalInfo()) {
-          setPersonalInfoBuilder(com.crm.validation.lead.avro.PersonalInfo.newBuilder(personalInfo));
+          setPersonalInfoBuilder(com.crm.validation.lead.domain.avro.PersonalInfo.newBuilder(personalInfo));
         } else {
-          setPersonalInfoBuilder(com.crm.validation.lead.avro.PersonalInfo.newBuilder());
+          setPersonalInfoBuilder(com.crm.validation.lead.domain.avro.PersonalInfo.newBuilder());
         }
       }
       return personalInfoBuilder;
@@ -515,7 +515,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * @return This builder.
      */
 
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setPersonalInfoBuilder(com.crm.validation.lead.avro.PersonalInfo.Builder value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setPersonalInfoBuilder(com.crm.validation.lead.domain.avro.PersonalInfo.Builder value) {
       clearPersonalInfo();
       personalInfoBuilder = value;
       return this;
@@ -533,7 +533,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'personalInfo' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder clearPersonalInfo() {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder clearPersonalInfo() {
       personalInfo = null;
       personalInfoBuilder = null;
       fieldSetFlags()[1] = false;
@@ -544,7 +544,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Gets the value of the 'email' field.
       * @return The value.
       */
-    public com.crm.validation.lead.avro.Email getEmail() {
+    public com.crm.validation.lead.domain.avro.Email getEmail() {
       return email;
     }
 
@@ -554,7 +554,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'email'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setEmail(com.crm.validation.lead.avro.Email value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setEmail(com.crm.validation.lead.domain.avro.Email value) {
       validate(fields()[2], value);
       this.emailBuilder = null;
       this.email = value;
@@ -574,12 +574,12 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * Gets the Builder instance for the 'email' field and creates one if it doesn't exist yet.
      * @return This builder.
      */
-    public com.crm.validation.lead.avro.Email.Builder getEmailBuilder() {
+    public com.crm.validation.lead.domain.avro.Email.Builder getEmailBuilder() {
       if (emailBuilder == null) {
         if (hasEmail()) {
-          setEmailBuilder(com.crm.validation.lead.avro.Email.newBuilder(email));
+          setEmailBuilder(com.crm.validation.lead.domain.avro.Email.newBuilder(email));
         } else {
-          setEmailBuilder(com.crm.validation.lead.avro.Email.newBuilder());
+          setEmailBuilder(com.crm.validation.lead.domain.avro.Email.newBuilder());
         }
       }
       return emailBuilder;
@@ -591,7 +591,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * @return This builder.
      */
 
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setEmailBuilder(com.crm.validation.lead.avro.Email.Builder value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setEmailBuilder(com.crm.validation.lead.domain.avro.Email.Builder value) {
       clearEmail();
       emailBuilder = value;
       return this;
@@ -609,7 +609,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'email' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder clearEmail() {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder clearEmail() {
       email = null;
       emailBuilder = null;
       fieldSetFlags()[2] = false;
@@ -620,7 +620,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Gets the value of the 'phoneNumber' field.
       * @return The value.
       */
-    public com.crm.validation.lead.avro.PhoneNumber getPhoneNumber() {
+    public com.crm.validation.lead.domain.avro.PhoneNumber getPhoneNumber() {
       return phoneNumber;
     }
 
@@ -630,7 +630,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'phoneNumber'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setPhoneNumber(com.crm.validation.lead.avro.PhoneNumber value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setPhoneNumber(com.crm.validation.lead.domain.avro.PhoneNumber value) {
       validate(fields()[3], value);
       this.phoneNumberBuilder = null;
       this.phoneNumber = value;
@@ -650,12 +650,12 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * Gets the Builder instance for the 'phoneNumber' field and creates one if it doesn't exist yet.
      * @return This builder.
      */
-    public com.crm.validation.lead.avro.PhoneNumber.Builder getPhoneNumberBuilder() {
+    public com.crm.validation.lead.domain.avro.PhoneNumber.Builder getPhoneNumberBuilder() {
       if (phoneNumberBuilder == null) {
         if (hasPhoneNumber()) {
-          setPhoneNumberBuilder(com.crm.validation.lead.avro.PhoneNumber.newBuilder(phoneNumber));
+          setPhoneNumberBuilder(com.crm.validation.lead.domain.avro.PhoneNumber.newBuilder(phoneNumber));
         } else {
-          setPhoneNumberBuilder(com.crm.validation.lead.avro.PhoneNumber.newBuilder());
+          setPhoneNumberBuilder(com.crm.validation.lead.domain.avro.PhoneNumber.newBuilder());
         }
       }
       return phoneNumberBuilder;
@@ -667,7 +667,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * @return This builder.
      */
 
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setPhoneNumberBuilder(com.crm.validation.lead.avro.PhoneNumber.Builder value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setPhoneNumberBuilder(com.crm.validation.lead.domain.avro.PhoneNumber.Builder value) {
       clearPhoneNumber();
       phoneNumberBuilder = value;
       return this;
@@ -685,7 +685,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'phoneNumber' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder clearPhoneNumber() {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder clearPhoneNumber() {
       phoneNumber = null;
       phoneNumberBuilder = null;
       fieldSetFlags()[3] = false;
@@ -696,7 +696,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Gets the value of the 'document' field.
       * @return The value.
       */
-    public com.crm.validation.lead.avro.Document getDocument() {
+    public com.crm.validation.lead.domain.avro.Document getDocument() {
       return document;
     }
 
@@ -706,7 +706,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'document'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setDocument(com.crm.validation.lead.avro.Document value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setDocument(com.crm.validation.lead.domain.avro.Document value) {
       validate(fields()[4], value);
       this.documentBuilder = null;
       this.document = value;
@@ -726,12 +726,12 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * Gets the Builder instance for the 'document' field and creates one if it doesn't exist yet.
      * @return This builder.
      */
-    public com.crm.validation.lead.avro.Document.Builder getDocumentBuilder() {
+    public com.crm.validation.lead.domain.avro.Document.Builder getDocumentBuilder() {
       if (documentBuilder == null) {
         if (hasDocument()) {
-          setDocumentBuilder(com.crm.validation.lead.avro.Document.newBuilder(document));
+          setDocumentBuilder(com.crm.validation.lead.domain.avro.Document.newBuilder(document));
         } else {
-          setDocumentBuilder(com.crm.validation.lead.avro.Document.newBuilder());
+          setDocumentBuilder(com.crm.validation.lead.domain.avro.Document.newBuilder());
         }
       }
       return documentBuilder;
@@ -743,7 +743,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
      * @return This builder.
      */
 
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setDocumentBuilder(com.crm.validation.lead.avro.Document.Builder value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setDocumentBuilder(com.crm.validation.lead.domain.avro.Document.Builder value) {
       clearDocument();
       documentBuilder = value;
       return this;
@@ -761,7 +761,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'document' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder clearDocument() {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder clearDocument() {
       document = null;
       documentBuilder = null;
       fieldSetFlags()[4] = false;
@@ -772,7 +772,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Gets the value of the 'state' field.
       * @return The value.
       */
-    public com.crm.validation.lead.avro.LeadState getState() {
+    public com.crm.validation.lead.domain.avro.LeadState getState() {
       return state;
     }
 
@@ -782,7 +782,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * @param value The value of 'state'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder setState(com.crm.validation.lead.avro.LeadState value) {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder setState(com.crm.validation.lead.domain.avro.LeadState value) {
       validate(fields()[5], value);
       this.state = value;
       fieldSetFlags()[5] = true;
@@ -802,7 +802,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
       * Clears the value of the 'state' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadRejectedEvent.Builder clearState() {
+    public com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent.Builder clearState() {
       state = null;
       fieldSetFlags()[5] = false;
       return this;
@@ -810,9 +810,9 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
 
     @Override
     @SuppressWarnings("unchecked")
-    public LeadRejectedEvent build() {
+    public LeadPromotedAvroEvent build() {
       try {
-        LeadRejectedEvent record = new LeadRejectedEvent();
+        LeadPromotedAvroEvent record = new LeadPromotedAvroEvent();
         if (idBuilder != null) {
           try {
             record.id = this.idBuilder.build();
@@ -821,7 +821,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
             throw e;
           }
         } else {
-          record.id = fieldSetFlags()[0] ? this.id : (com.crm.validation.lead.avro.LeadId) defaultValue(fields()[0]);
+          record.id = fieldSetFlags()[0] ? this.id : (com.crm.validation.lead.domain.avro.LeadId) defaultValue(fields()[0]);
         }
         if (personalInfoBuilder != null) {
           try {
@@ -831,7 +831,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
             throw e;
           }
         } else {
-          record.personalInfo = fieldSetFlags()[1] ? this.personalInfo : (com.crm.validation.lead.avro.PersonalInfo) defaultValue(fields()[1]);
+          record.personalInfo = fieldSetFlags()[1] ? this.personalInfo : (com.crm.validation.lead.domain.avro.PersonalInfo) defaultValue(fields()[1]);
         }
         if (emailBuilder != null) {
           try {
@@ -841,7 +841,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
             throw e;
           }
         } else {
-          record.email = fieldSetFlags()[2] ? this.email : (com.crm.validation.lead.avro.Email) defaultValue(fields()[2]);
+          record.email = fieldSetFlags()[2] ? this.email : (com.crm.validation.lead.domain.avro.Email) defaultValue(fields()[2]);
         }
         if (phoneNumberBuilder != null) {
           try {
@@ -851,7 +851,7 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
             throw e;
           }
         } else {
-          record.phoneNumber = fieldSetFlags()[3] ? this.phoneNumber : (com.crm.validation.lead.avro.PhoneNumber) defaultValue(fields()[3]);
+          record.phoneNumber = fieldSetFlags()[3] ? this.phoneNumber : (com.crm.validation.lead.domain.avro.PhoneNumber) defaultValue(fields()[3]);
         }
         if (documentBuilder != null) {
           try {
@@ -861,9 +861,9 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
             throw e;
           }
         } else {
-          record.document = fieldSetFlags()[4] ? this.document : (com.crm.validation.lead.avro.Document) defaultValue(fields()[4]);
+          record.document = fieldSetFlags()[4] ? this.document : (com.crm.validation.lead.domain.avro.Document) defaultValue(fields()[4]);
         }
-        record.state = fieldSetFlags()[5] ? this.state : (com.crm.validation.lead.avro.LeadState) defaultValue(fields()[5]);
+        record.state = fieldSetFlags()[5] ? this.state : (com.crm.validation.lead.domain.avro.LeadState) defaultValue(fields()[5]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -874,8 +874,8 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<LeadRejectedEvent>
-    WRITER$ = (org.apache.avro.io.DatumWriter<LeadRejectedEvent>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<LeadPromotedAvroEvent>
+    WRITER$ = (org.apache.avro.io.DatumWriter<LeadPromotedAvroEvent>)MODEL$.createDatumWriter(SCHEMA$);
 
   @Override public void writeExternal(java.io.ObjectOutput out)
     throws java.io.IOException {
@@ -883,8 +883,8 @@ public class LeadRejectedEvent extends org.apache.avro.specific.SpecificRecordBa
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<LeadRejectedEvent>
-    READER$ = (org.apache.avro.io.DatumReader<LeadRejectedEvent>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<LeadPromotedAvroEvent>
+    READER$ = (org.apache.avro.io.DatumReader<LeadPromotedAvroEvent>)MODEL$.createDatumReader(SCHEMA$);
 
   @Override public void readExternal(java.io.ObjectInput in)
     throws java.io.IOException {

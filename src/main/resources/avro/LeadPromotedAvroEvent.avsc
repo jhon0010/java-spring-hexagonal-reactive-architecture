@@ -1,7 +1,7 @@
 {
   "type": "record",
   "name": "LeadPromotedAvroEvent",
-  "namespace": "com.crm.validation.lead.avro",
+  "namespace": "com.crm.validation.lead.domain.avro",
   "doc": "Avro schema for Lead domain model",
   "fields": [
     {

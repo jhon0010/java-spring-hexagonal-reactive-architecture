@@ -3,7 +3,7 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.crm.validation.lead.avro;
+package com.crm.validation.lead.domain.avro;
 
 import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
@@ -14,10 +14,10 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class LeadId extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -4195643468574993774L;
+  private static final long serialVersionUID = 6167976390325190118L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"LeadId\",\"namespace\":\"com.crm.validation.lead.avro\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"LeadId\",\"namespace\":\"com.crm.validation.lead.domain.avro\",\"fields\":[{\"name\":\"value\",\"type\":{\"type\":\"string\",\"avro.java.string\":\"String\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -136,8 +136,8 @@ public class LeadId extends org.apache.avro.specific.SpecificRecordBase implemen
    * Creates a new LeadId RecordBuilder.
    * @return A new LeadId RecordBuilder
    */
-  public static com.crm.validation.lead.avro.LeadId.Builder newBuilder() {
-    return new com.crm.validation.lead.avro.LeadId.Builder();
+  public static com.crm.validation.lead.domain.avro.LeadId.Builder newBuilder() {
+    return new com.crm.validation.lead.domain.avro.LeadId.Builder();
   }
 
   /**
@@ -145,11 +145,11 @@ public class LeadId extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param other The existing builder to copy.
    * @return A new LeadId RecordBuilder
    */
-  public static com.crm.validation.lead.avro.LeadId.Builder newBuilder(com.crm.validation.lead.avro.LeadId.Builder other) {
+  public static com.crm.validation.lead.domain.avro.LeadId.Builder newBuilder(com.crm.validation.lead.domain.avro.LeadId.Builder other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.LeadId.Builder();
+      return new com.crm.validation.lead.domain.avro.LeadId.Builder();
     } else {
-      return new com.crm.validation.lead.avro.LeadId.Builder(other);
+      return new com.crm.validation.lead.domain.avro.LeadId.Builder(other);
     }
   }
 
@@ -158,11 +158,11 @@ public class LeadId extends org.apache.avro.specific.SpecificRecordBase implemen
    * @param other The existing instance to copy.
    * @return A new LeadId RecordBuilder
    */
-  public static com.crm.validation.lead.avro.LeadId.Builder newBuilder(com.crm.validation.lead.avro.LeadId other) {
+  public static com.crm.validation.lead.domain.avro.LeadId.Builder newBuilder(com.crm.validation.lead.domain.avro.LeadId other) {
     if (other == null) {
-      return new com.crm.validation.lead.avro.LeadId.Builder();
+      return new com.crm.validation.lead.domain.avro.LeadId.Builder();
     } else {
-      return new com.crm.validation.lead.avro.LeadId.Builder(other);
+      return new com.crm.validation.lead.domain.avro.LeadId.Builder(other);
     }
   }
 
@@ -184,7 +184,7 @@ public class LeadId extends org.apache.avro.specific.SpecificRecordBase implemen
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.crm.validation.lead.avro.LeadId.Builder other) {
+    private Builder(com.crm.validation.lead.domain.avro.LeadId.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.value)) {
         this.value = data().deepCopy(fields()[0].schema(), other.value);
@@ -196,7 +196,7 @@ public class LeadId extends org.apache.avro.specific.SpecificRecordBase implemen
      * Creates a Builder by copying an existing LeadId instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.crm.validation.lead.avro.LeadId other) {
+    private Builder(com.crm.validation.lead.domain.avro.LeadId other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.value)) {
         this.value = data().deepCopy(fields()[0].schema(), other.value);
@@ -218,7 +218,7 @@ public class LeadId extends org.apache.avro.specific.SpecificRecordBase implemen
       * @param value The value of 'value'.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadId.Builder setValue(java.lang.String value) {
+    public com.crm.validation.lead.domain.avro.LeadId.Builder setValue(java.lang.String value) {
       validate(fields()[0], value);
       this.value = value;
       fieldSetFlags()[0] = true;
@@ -238,7 +238,7 @@ public class LeadId extends org.apache.avro.specific.SpecificRecordBase implemen
       * Clears the value of the 'value' field.
       * @return This builder.
       */
-    public com.crm.validation.lead.avro.LeadId.Builder clearValue() {
+    public com.crm.validation.lead.domain.avro.LeadId.Builder clearValue() {
       value = null;
       fieldSetFlags()[0] = false;
       return this;
