@@ -1,20 +1,10 @@
 package com.crm.validation.lead.application.services;
 
-import com.crm.validation.lead.application.ports.mocks.JudicialRecordsMock;
-import com.crm.validation.lead.application.ports.mocks.NationalRegistryMock;
-import com.crm.validation.lead.application.ports.mocks.ScoringMock;
-import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
-import com.crm.validation.lead.application.ports.out.events.DomainEventPublisher;
-import com.crm.validation.lead.domain.LeadValidationResult;
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.domain.model.valueobjects.Document;
-import com.crm.validation.lead.domain.model.valueobjects.Email;
-import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
-import com.crm.validation.lead.infrastructure.adapter.in.kafka.producer.KafkaProducer;
-import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
-import com.crm.validation.lead.infrastructure.adapter.out.db.mappers.LeadPersistenceMapper;
-import com.crm.validation.lead.objectmother.LeadObjectMother;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,13 +12,24 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.crm.validation.lead.application.ports.mocks.JudicialRecordsMock;
+import com.crm.validation.lead.application.ports.mocks.NationalRegistryMock;
+import com.crm.validation.lead.application.ports.mocks.ScoringMock;
+import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
+import com.crm.validation.lead.domain.LeadValidationResult;
+import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.domain.model.enums.LeadState;
+import com.crm.validation.lead.domain.model.valueobjects.Document;
+import com.crm.validation.lead.domain.model.valueobjects.Email;
+import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
+import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
+import com.crm.validation.lead.infrastructure.adapter.out.db.mappers.LeadPersistenceMapper;
+import com.crm.validation.lead.infrastructure.adapter.out.kafka.producer.KafkaProducer;
+import com.crm.validation.lead.objectmother.LeadObjectMother;
+
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class LeadValidatorUseCaseTest {

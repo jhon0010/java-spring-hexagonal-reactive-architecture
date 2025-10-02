@@ -2,8 +2,14 @@ package com.crm.validation.lead.infrastructure.adapter.in.commons.mappers;
 
 import java.time.ZoneOffset;
 
-import com.crm.validation.lead.avro.LeadPromotedAvroEvent;
-import com.crm.validation.lead.avro.LeadRejectedEvent;
+import com.crm.validation.lead.domain.avro.Document;
+import com.crm.validation.lead.domain.avro.Email;
+import com.crm.validation.lead.domain.avro.LeadId;
+import com.crm.validation.lead.domain.avro.LeadPromotedAvroEvent;
+import com.crm.validation.lead.domain.avro.LeadRejectedEvent;
+import com.crm.validation.lead.domain.avro.LeadState;
+import com.crm.validation.lead.domain.avro.PersonalInfo;
+import com.crm.validation.lead.domain.avro.PhoneNumber;
 import com.crm.validation.lead.domain.model.Lead;
 
 public class AvroMappers {
@@ -18,28 +24,28 @@ public class AvroMappers {
         }
 
         // Create nested Avro objects
-        com.crm.validation.lead.avro.LeadId avroId = com.crm.validation.lead.avro.LeadId.newBuilder()
+        LeadId avroId = LeadId.newBuilder()
             .setValue(lead.getId().getValue().toString())
             .build();
 
-        com.crm.validation.lead.avro.PersonalInfo avroPersonalInfo = 
-            com.crm.validation.lead.avro.PersonalInfo.newBuilder()
+        PersonalInfo avroPersonalInfo = 
+            PersonalInfo.newBuilder()
                 .setName(lead.getPersonalInfo().name())
                 .setBirthdate(lead.getPersonalInfo().birthdate().atStartOfDay().toInstant(ZoneOffset.UTC))
                 .build();
 
-        com.crm.validation.lead.avro.Email avroEmail = 
-            com.crm.validation.lead.avro.Email.newBuilder()
+        Email avroEmail = 
+            Email.newBuilder()
                 .setValue(lead.getEmail().getValue())
                 .build();
 
-        com.crm.validation.lead.avro.PhoneNumber avroPhoneNumber = 
-            com.crm.validation.lead.avro.PhoneNumber.newBuilder()
+        PhoneNumber avroPhoneNumber = 
+            PhoneNumber.newBuilder()
                 .setValue(lead.getPhoneNumber().getValue())
                 .build();
 
-        com.crm.validation.lead.avro.Document avroDocument = 
-            com.crm.validation.lead.avro.Document.newBuilder()
+        Document avroDocument = 
+            Document.newBuilder()
                 .setType(lead.getDocument().getType())
                 .setNumber(lead.getDocument().getNumber()) 
                 .build();
@@ -51,7 +57,7 @@ public class AvroMappers {
             .setEmail(avroEmail)
             .setPhoneNumber(avroPhoneNumber)
             .setDocument(avroDocument)
-            .setState(com.crm.validation.lead.avro.LeadState.valueOf(lead.getState().name()))
+            .setState(LeadState.valueOf(lead.getState().name()))
             .build();
     }
 
@@ -63,28 +69,28 @@ public class AvroMappers {
 
 
         // Create nested Avro objects
-        com.crm.validation.lead.avro.LeadId avroId = com.crm.validation.lead.avro.LeadId.newBuilder()
+        LeadId avroId = LeadId.newBuilder()
             .setValue(lead.getId().getValue().toString())
             .build();
 
-        com.crm.validation.lead.avro.PersonalInfo avroPersonalInfo = 
-            com.crm.validation.lead.avro.PersonalInfo.newBuilder()
+        PersonalInfo avroPersonalInfo = 
+            PersonalInfo.newBuilder()
                 .setName(lead.getPersonalInfo().name())
                 .setBirthdate(lead.getPersonalInfo().birthdate().atStartOfDay().toInstant(ZoneOffset.UTC))
                 .build();
 
-        com.crm.validation.lead.avro.Email avroEmail = 
-            com.crm.validation.lead.avro.Email.newBuilder()
+        Email avroEmail = 
+            Email.newBuilder()
                 .setValue(lead.getEmail().getValue())
                 .build();
 
-        com.crm.validation.lead.avro.PhoneNumber avroPhoneNumber = 
-            com.crm.validation.lead.avro.PhoneNumber.newBuilder()
+        PhoneNumber avroPhoneNumber = 
+            PhoneNumber.newBuilder()
                 .setValue(lead.getPhoneNumber().getValue())
                 .build();
 
-        com.crm.validation.lead.avro.Document avroDocument = 
-            com.crm.validation.lead.avro.Document.newBuilder()
+        Document avroDocument = 
+            Document.newBuilder()
                 .setType(lead.getDocument().getType())
                 .setNumber(lead.getDocument().getNumber()) 
                 .build();
@@ -96,7 +102,7 @@ public class AvroMappers {
             .setEmail(avroEmail)
             .setPhoneNumber(avroPhoneNumber)
             .setDocument(avroDocument)
-            .setState(com.crm.validation.lead.avro.LeadState.valueOf(lead.getState().name()))
+            .setState(LeadState.valueOf(lead.getState().name()))
             .build();
     }
 
