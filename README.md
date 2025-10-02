@@ -1,14 +1,15 @@
-# crm-validation
+# crm-validation java hexagonal architecture & reactive
 
-# How to start the project 
+## How to start the project
 
-## Start Docker containers
+### Start Docker containers
 
 ```bash
 docker compose up -d
 ```
 
 Otheer commands to manage the containers:
+
 ```bash
 docker compose ps
 docker logs -f leads-db
@@ -25,7 +26,6 @@ docker compose down
 ```bash
 docker compose down --volumes --remove-orphans
 docker compose down --rmi all
-
 ```
 
 
@@ -61,24 +61,24 @@ The application has 2 main entry points:
 The command line interface will start automatically when the application starts.
 
 It will start asking you for the lead information, then it will validate it, and finally show you the results by console messages.
-               
+
 To execute the CLI client, you can run the application with the following command:
 
 ```bash
 mvn spring-boot:run -Dspring-boot.run.arguments="--app.cli.enabled=true"
 ```
-                 
+
 ## REST API
 
 You can find the SWAGGER specification once the application is running at:
 
-```
+```bash
 http://localhost:8080/swagger-ui.html
 ```
 
 You can also use the REST API to send leads to the application. The API is documented in the SWAGGER specification.
 
-```
+```bash
 curl -X 'POST' \
 'http://localhost:8080/api/leads/validate' \
 -H 'accept: */*' \
@@ -116,10 +116,31 @@ In a success execution you will se a response like this:
 }
 ```
 
+### Validate schema registry
+
+You can validate the schema registry at:
+
+```bash
+
+// Get all subjects
+curl -s http://localhost:8081/subjects | jq .
+
+// Get all versions of a subject
+curl -s http://localhost:8081/subjects/leads-value/versions | jq .
+
+// Get latest version metadata (shows the schema and its ID)
+curl -s http://localhost:8081/subjects/leads-value/versions/latest | jq .
+
+// If the latest metadata says "id": 21 (example), fetch by ID:
+curl -s http://localhost:8081/schemas/ids/21 | jq .
+
+```
+
 ### Manually execute flyway migrations
 
 If you want to manually execute the flyway migrations, you can do it with the following command:
-```
+
+```bash
 mvn flyway:migrate
 ```
 

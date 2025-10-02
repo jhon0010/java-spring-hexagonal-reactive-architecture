@@ -38,7 +38,7 @@ spring:
       value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
       auto-offset-reset: earliest
       properties:
-        isolation.level: read_committed   # if you use EOS on producer
+        isolation.level: read_committed
     specific:
       avro:
         reader: true

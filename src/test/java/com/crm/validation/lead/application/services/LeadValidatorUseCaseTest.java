@@ -11,7 +11,7 @@ import com.crm.validation.lead.domain.model.enums.LeadState;
 import com.crm.validation.lead.domain.model.valueobjects.Document;
 import com.crm.validation.lead.domain.model.valueobjects.Email;
 import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
-import com.crm.validation.lead.infrastructure.adapter.in.kafka.producer.KafkaLeadPromotedProducer;
+import com.crm.validation.lead.infrastructure.adapter.in.kafka.producer.KafkaProducer;
 import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
 import com.crm.validation.lead.infrastructure.adapter.out.db.mappers.LeadPersistenceMapper;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
@@ -37,7 +37,7 @@ class LeadValidatorUseCaseTest {
     private LeadRepository leadRepository;
 
     @Mock
-    private KafkaLeadPromotedProducer eventPublisher;
+    private KafkaProducer eventPublisher;
 
     private LeadPersistenceMapper leadPersistenceMapper;
 

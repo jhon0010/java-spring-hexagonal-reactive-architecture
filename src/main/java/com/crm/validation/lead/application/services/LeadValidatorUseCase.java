@@ -5,17 +5,14 @@ import com.crm.validation.lead.application.ports.out.db.repositories.LeadReposit
 import com.crm.validation.lead.application.ports.out.endpoints.JudicialRecordsPort;
 import com.crm.validation.lead.application.ports.out.endpoints.NationalRegistryPort;
 import com.crm.validation.lead.application.ports.out.endpoints.ScoringPort;
-import com.crm.validation.lead.application.ports.out.events.DomainEventPublisher;
 import com.crm.validation.lead.application.services.validator.CompositeValidator;
 import com.crm.validation.lead.application.services.validator.IndependentValidator;
 import com.crm.validation.lead.avro.LeadPromotedAvroEvent;
 import com.crm.validation.lead.domain.LeadValidationResult;
-import com.crm.validation.lead.domain.events.LeadPromotedEvent;
-import com.crm.validation.lead.domain.events.LeadRejectedEvent;
 import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
 import com.crm.validation.lead.domain.model.Lead;
 import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.infrastructure.adapter.in.kafka.producer.KafkaLeadPromotedProducer;
+import com.crm.validation.lead.infrastructure.adapter.in.kafka.producer.KafkaProducer;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,11 +30,11 @@ public class LeadValidatorUseCase implements PromoteLeadUseCase {
     private final ScoringPort scoringPort;
     private final IndependentValidator<Lead> validator;
     private final LeadRepository leadRepository;
-    private final KafkaLeadPromotedProducer kafkaLeadPromotedProducer;
+    private final KafkaProducer kafkaLeadPromotedProducer;
 
     public LeadValidatorUseCase(JudicialRecordsPort judicialRecordsPort, NationalRegistryPort nationalRegistryPort,
                                 ScoringPort scoringPort, LeadRepository leadRepository,
-                                KafkaLeadPromotedProducer kafkaLeadPromotedProducer) {
+                                KafkaProducer kafkaLeadPromotedProducer) {
         this.leadRepository = leadRepository;
         this.judicialRecordsPort = judicialRecordsPort;
         this.nationalRegistryPort = nationalRegistryPort;
