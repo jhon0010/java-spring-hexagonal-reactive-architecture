@@ -1,0 +1,92 @@
+{
+  "type": "record",
+  "name": "LeadRejectedEvent",
+  "namespace": "com.crm.validation.lead.avro",
+  "doc": "Avro schema for Lead domain model",
+  "fields": [
+    {
+      "name": "id",
+      "type": {
+        "type": "record",
+        "name": "LeadId",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "personalInfo",
+      "type": {
+        "type": "record",
+        "name": "PersonalInfo",
+        "fields": [
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "birthdate",
+            "type": {
+              "type": "long",
+              "logicalType": "timestamp-millis"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "email",
+      "type": {
+        "type": "record",
+        "name": "Email",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "phoneNumber",
+      "type": {
+        "type": "record",
+        "name": "PhoneNumber",
+        "fields": [
+          {
+            "name": "value",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "name": "document",
+      "type": {
+        "type": "record",
+        "name": "Document",
+        "fields": [
+          {
+            "name": "type",
+            "type": "string"
+          },
+          {
+            "name": "number",
+            "type": "int"
+          }
+        ]
+      }
+    },
+    {
+      "name": "state",
+      "type": {
+        "type": "enum",
+        "name": "LeadState",
+        "symbols": ["NEW", "IN_PROGRESS", "PROSPECT", "REJECTED"]
+      }
+    }
+  ]
+}
