@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in.kafka;
+package com.crm.validation.lead.infrastructure.adapter.configurations;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

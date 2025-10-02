@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in.kafka.producer;
+package com.crm.validation.lead.infrastructure.adapter.out.kafka.producer;
 
 import org.apache.avro.specific.SpecificRecordBase;
 import org.springframework.kafka.core.KafkaTemplate;
