@@ -1,7 +1,7 @@
 package com.crm.validation.lead.application.services.validator;
 
 import com.crm.validation.lead.domain.exceptions.IndependentValidationFailsException;
-import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationOutcome;
 import reactor.core.publisher.Mono;
 
 /**

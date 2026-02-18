@@ -1,4 +1,4 @@
-package com.crm.validation.lead.domain.model.validator;
+package com.crm.validation.lead.domain.model.lead.validator;
 
 import io.micrometer.common.lang.Nullable;
 import lombok.Builder;

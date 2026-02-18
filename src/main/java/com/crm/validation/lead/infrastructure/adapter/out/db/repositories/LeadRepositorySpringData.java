@@ -1,6 +1,6 @@
 package com.crm.validation.lead.infrastructure.adapter.out.db.repositories;
 
-import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
+import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadEntity;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 import java.util.UUID;
 
 @Repository
-public interface LeadRepositorySpringData extends ReactiveCrudRepository<LeadJPAEntity, UUID> {
+public interface LeadRepositorySpringData extends ReactiveCrudRepository<LeadEntity, UUID> {
 
     @Query("""
         SELECT * FROM leads
@@ -20,7 +20,7 @@ public interface LeadRepositorySpringData extends ReactiveCrudRepository<LeadJPA
           AND document_number = :documentNumber
         LIMIT 1
         """)
-    Mono<LeadJPAEntity> findByCoreData(@Param("email") String email, @Param("phoneNumber") String phoneNumber, @Param("documentNumber") Integer documentNumber);
+    Mono<LeadEntity> findByCoreData(@Param("email") String email, @Param("phoneNumber") String phoneNumber, @Param("documentNumber") Integer documentNumber);
 
     @Query("""
          UPDATE leads
@@ -29,10 +29,10 @@ public interface LeadRepositorySpringData extends ReactiveCrudRepository<LeadJPA
            AND state <> :targetState
          RETURNING *
          """)
-    Mono<LeadJPAEntity> promoteIfNotYet(@Param("id") String id, @Param("targetState") String targetState);
+    Mono<LeadEntity> promoteIfNotYet(@Param("id") String id, @Param("targetState") String targetState);
 
     @Query("SELECT * FROM leads WHERE state = :state")
-    Flux<LeadJPAEntity> findByState(@Param("state") String state);
+    Flux<LeadEntity> findByState(@Param("state") String state);
 
     @Query("""
         SELECT * FROM leads
@@ -40,6 +40,6 @@ public interface LeadRepositorySpringData extends ReactiveCrudRepository<LeadJPA
           AND document_number = :documentNumber
         LIMIT 1
         """)
-    Mono<LeadJPAEntity> findByDocumentTypeAndDocumentNumber(@Param("documentType") String documentType, @Param("documentNumber") Integer documentNumber);
+    Mono<LeadEntity> findByDocumentTypeAndDocumentNumber(@Param("documentType") String documentType, @Param("documentNumber") Integer documentNumber);
 
 }

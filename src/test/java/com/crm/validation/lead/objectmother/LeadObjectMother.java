@@ -1,17 +1,17 @@
 package com.crm.validation.lead.objectmother;
 
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
-import com.crm.validation.lead.domain.model.validator.ValidationResults;
-import com.crm.validation.lead.domain.model.enums.DocumentType;
-import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.domain.model.valueobjects.Document;
-import com.crm.validation.lead.domain.model.valueobjects.Email;
-import com.crm.validation.lead.domain.model.valueobjects.LeadId;
-import com.crm.validation.lead.domain.model.valueobjects.PersonalInfo;
-import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationResults;
+import com.crm.validation.lead.domain.model.lead.enums.DocumentType;
+import com.crm.validation.lead.domain.model.lead.enums.LeadState;
+import com.crm.validation.lead.domain.model.lead.valueobjects.Document;
+import com.crm.validation.lead.domain.model.lead.valueobjects.Email;
+import com.crm.validation.lead.domain.model.lead.valueobjects.LeadId;
+import com.crm.validation.lead.domain.model.lead.valueobjects.PersonalInfo;
+import com.crm.validation.lead.domain.model.lead.valueobjects.PhoneNumber;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
-import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
+import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadEntity;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -60,8 +60,8 @@ public class LeadObjectMother {
                 .build();
     }
 
-    public static LeadJPAEntity createLeadEntity() {
-        return LeadJPAEntity.builder()
+    public static LeadEntity createLeadEntity() {
+        return LeadEntity.builder()
                 .id(java.util.UUID.randomUUID())
                 .name("John Doe")
                 .email("jhon.doe@gmail.com")
@@ -73,8 +73,8 @@ public class LeadObjectMother {
                 .build();
     }
 
-    public static LeadJPAEntity createProspectEntity() {
-        return LeadJPAEntity.builder()
+    public static LeadEntity createProspectEntity() {
+        return LeadEntity.builder()
                 .id(java.util.UUID.randomUUID())
                 .name("John Doe")
                 .email("jhon.doe@gmail.com")
@@ -86,8 +86,8 @@ public class LeadObjectMother {
                 .build();
     }
 
-    public static LeadJPAEntity createRejectedEntity() {
-        return LeadJPAEntity.builder()
+    public static LeadEntity createRejectedEntity() {
+        return LeadEntity.builder()
                 .id(java.util.UUID.randomUUID())
                 .name("John Doe")
                 .email("jhon.doe@gmail.com")

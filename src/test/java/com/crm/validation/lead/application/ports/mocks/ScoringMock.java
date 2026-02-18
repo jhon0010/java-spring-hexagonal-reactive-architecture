@@ -1,8 +1,8 @@
 package com.crm.validation.lead.application.ports.mocks;
 
 import com.crm.validation.lead.application.ports.out.endpoints.ScoringPort;
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationOutcome;
 import com.crm.validation.lead.domain.exceptions.IndependentValidationFailsException;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import lombok.extern.log4j.Log4j2;

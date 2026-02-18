@@ -1,9 +1,9 @@
 package com.crm.validation.lead.infrastructure.adapter.out.endpoints;
 
 import com.crm.validation.lead.application.ports.out.endpoints.JudicialRecordsPort;
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
-import com.crm.validation.lead.domain.model.validator.ValidationResults;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationResults;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

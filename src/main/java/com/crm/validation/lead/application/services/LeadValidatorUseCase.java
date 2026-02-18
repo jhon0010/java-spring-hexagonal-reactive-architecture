@@ -9,10 +9,10 @@ import com.crm.validation.lead.application.ports.out.endpoints.NationalRegistryP
 import com.crm.validation.lead.application.ports.out.endpoints.ScoringPort;
 import com.crm.validation.lead.application.services.validator.CompositeValidator;
 import com.crm.validation.lead.application.services.validator.IndependentValidator;
-import com.crm.validation.lead.domain.LeadValidationResult;
+import com.crm.validation.lead.domain.model.lead.LeadValidationResult;
 import com.crm.validation.lead.domain.exceptions.LeadAlreadyExistException;
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.enums.LeadState;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.enums.LeadState;
 import com.crm.validation.lead.infrastructure.adapter.commons.mappers.AvroMappers;
 import com.crm.validation.lead.infrastructure.adapter.out.kafka.producer.KafkaProducer;
 

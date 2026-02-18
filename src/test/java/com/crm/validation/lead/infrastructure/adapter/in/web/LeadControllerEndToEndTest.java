@@ -2,11 +2,11 @@ package com.crm.validation.lead.infrastructure.adapter.in.web;
 
 import com.crm.validation.lead.LeadApplication;
 import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.domain.model.valueobjects.Document;
-import com.crm.validation.lead.domain.model.valueobjects.Email;
-import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.enums.LeadState;
+import com.crm.validation.lead.domain.model.lead.valueobjects.Document;
+import com.crm.validation.lead.domain.model.lead.valueobjects.Email;
+import com.crm.validation.lead.domain.model.lead.valueobjects.PhoneNumber;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.AfterEach;

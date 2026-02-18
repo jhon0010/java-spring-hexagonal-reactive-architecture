@@ -10,7 +10,7 @@ import com.crm.validation.lead.domain.avro.LeadRejectedEvent;
 import com.crm.validation.lead.domain.avro.LeadState;
 import com.crm.validation.lead.domain.avro.PersonalInfo;
 import com.crm.validation.lead.domain.avro.PhoneNumber;
-import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.domain.model.lead.Lead;
 
 public class AvroMappers {
     

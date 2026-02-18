@@ -1,4 +1,4 @@
-package com.crm.validation.lead.domain.model.valueobjects;
+package com.crm.validation.lead.domain.model.lead.valueobjects;
 
 import com.crm.validation.lead.domain.exceptions.InvalidLeadDataException;
 import lombok.Value;

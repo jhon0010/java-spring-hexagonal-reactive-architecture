@@ -1,7 +1,7 @@
 package com.crm.validation.lead.infrastructure.adapter.out.endpoints;
 
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationOutcome;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,13 +1,12 @@
-package com.crm.validation.lead.domain.model;
+package com.crm.validation.lead.domain.model.lead;
 
-import com.crm.validation.lead.domain.model.validator.ValidationResults;
-import com.crm.validation.lead.domain.LeadValidationResult;
-import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.domain.model.valueobjects.Email;
-import com.crm.validation.lead.domain.model.valueobjects.Document;
-import com.crm.validation.lead.domain.model.valueobjects.LeadId;
-import com.crm.validation.lead.domain.model.valueobjects.PersonalInfo;
-import com.crm.validation.lead.domain.model.valueobjects.PhoneNumber;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationResults;
+import com.crm.validation.lead.domain.model.lead.enums.LeadState;
+import com.crm.validation.lead.domain.model.lead.valueobjects.Email;
+import com.crm.validation.lead.domain.model.lead.valueobjects.Document;
+import com.crm.validation.lead.domain.model.lead.valueobjects.LeadId;
+import com.crm.validation.lead.domain.model.lead.valueobjects.PersonalInfo;
+import com.crm.validation.lead.domain.model.lead.valueobjects.PhoneNumber;
 import lombok.Builder;
 import lombok.Value;
 

@@ -1,8 +1,8 @@
 package com.crm.validation.lead.infrastructure.adapter.out.endpoints;
 
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.validator.ValidationOutcome;
-import com.crm.validation.lead.domain.model.enums.DocumentType;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationOutcome;
+import com.crm.validation.lead.domain.model.lead.enums.DocumentType;
 import lombok.extern.log4j.Log4j2;
 import reactor.core.publisher.Mono;
 

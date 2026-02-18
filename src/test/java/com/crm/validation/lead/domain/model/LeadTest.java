@@ -1,8 +1,9 @@
 package com.crm.validation.lead.domain.model;
 
-import com.crm.validation.lead.domain.model.validator.ValidationResults;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.validator.ValidationResults;
 import com.crm.validation.lead.domain.exceptions.InvalidLeadDataException;
-import com.crm.validation.lead.domain.model.enums.LeadState;
+import com.crm.validation.lead.domain.model.lead.enums.LeadState;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 import com.crm.validation.lead.objectmother.LeadObjectMother;
 import org.junit.jupiter.api.DisplayName;

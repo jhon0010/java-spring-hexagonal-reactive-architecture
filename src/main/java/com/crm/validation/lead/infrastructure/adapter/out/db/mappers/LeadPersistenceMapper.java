@@ -1,8 +1,8 @@
 package com.crm.validation.lead.infrastructure.adapter.out.db.mappers;
 
-import com.crm.validation.lead.domain.model.Lead;
-import com.crm.validation.lead.domain.model.enums.LeadState;
-import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadJPAEntity;
+import com.crm.validation.lead.domain.model.lead.Lead;
+import com.crm.validation.lead.domain.model.lead.enums.LeadState;
+import com.crm.validation.lead.infrastructure.adapter.out.db.entities.LeadEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -27,7 +27,7 @@ public interface LeadPersistenceMapper {
     @Mapping(source = "document.type", target = "documentType")
     @Mapping(source = "document.number", target = "documentNumber")
     @Mapping(source = "state", target = "state", qualifiedByName = "mapStateToString")
-    LeadJPAEntity toPersistenceEntity(Lead lead);
+    LeadEntity toPersistenceEntity(Lead lead);
 
     /**
      * Converts a persistence entity to a domain entity.
@@ -39,7 +39,7 @@ public interface LeadPersistenceMapper {
     @Mapping(target = "phoneNumber", expression = "java(PhoneNumber.of(entity.getPhoneNumber()))")
     @Mapping(target = "document", expression = "java(Document.of(entity.getDocumentType(), entity.getDocumentNumber()))")
     @Mapping(source = "state", target = "state", qualifiedByName = "mapStringToState")
-    Lead toDomainEntity(LeadJPAEntity entity);
+    Lead toDomainEntity(LeadEntity entity);
 
     /**
      * Maps a LeadState enum to its string representation.

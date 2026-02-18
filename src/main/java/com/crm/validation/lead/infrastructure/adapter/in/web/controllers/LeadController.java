@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in.web;
+package com.crm.validation.lead.infrastructure.adapter.in.web.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

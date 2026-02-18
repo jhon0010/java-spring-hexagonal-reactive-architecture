@@ -1,4 +1,4 @@
-package com.crm.validation.lead.domain.model.validator;
+package com.crm.validation.lead.domain.model.lead.validator;
 
 import java.util.ArrayList;
 import java.util.Collections;

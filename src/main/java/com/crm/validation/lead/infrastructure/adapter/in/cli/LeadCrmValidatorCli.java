@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 
 import com.crm.validation.lead.application.ports.in.PromoteLeadUseCase;
-import com.crm.validation.lead.domain.model.enums.DocumentType;
+import com.crm.validation.lead.domain.model.lead.enums.DocumentType;
 import com.crm.validation.lead.infrastructure.adapter.commons.mappers.LeadWebMapper;
 import com.crm.validation.lead.infrastructure.adapter.in.web.dtos.LeadDto;
 

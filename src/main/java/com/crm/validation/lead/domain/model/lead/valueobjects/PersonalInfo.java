@@ -1,4 +1,4 @@
-package com.crm.validation.lead.domain.model.valueobjects;
+package com.crm.validation.lead.domain.model.lead.valueobjects;
 
 import java.time.LocalDate;
 import java.time.Period;

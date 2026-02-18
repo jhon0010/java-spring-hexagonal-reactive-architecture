@@ -1,7 +1,7 @@
 package com.crm.validation.lead.application.ports.in;
 
-import com.crm.validation.lead.domain.LeadValidationResult;
-import com.crm.validation.lead.domain.model.Lead;
+import com.crm.validation.lead.domain.model.lead.LeadValidationResult;
+import com.crm.validation.lead.domain.model.lead.Lead;
 import reactor.core.publisher.Mono;
 
 /**

@@ -1,4 +1,4 @@
-package com.crm.validation.lead.domain.model.enums;
+package com.crm.validation.lead.domain.model.lead.enums;
 
 public enum LeadState {
     CREATED,
