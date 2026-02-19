@@ -1,4 +1,4 @@
-package com.crm.validation.lead.infrastructure.adapter.in.web;
+package com.crm.validation.lead.infrastructure.adapter.in.web.controllers;
 
 import com.crm.validation.lead.LeadApplication;
 import com.crm.validation.lead.application.ports.out.db.repositories.LeadRepository;

@@ -21,7 +21,7 @@ public class StockMarketService implements StockMarket {
     }
 
     /**
-     * Stream analytics from stock market.
+     * Stream analytics from stock market. giving all require information for real time dashboard.
      * Analyze the data by calculating a Moving Average of the last 5 prices.
      * Resilience: If the database fails, return a default "Unknown" company instead of crashing the stream.
      * @return StockSummaryResult, summary stock information.
@@ -46,22 +46,22 @@ public class StockMarketService implements StockMarket {
                             PriceTick lastPriceTick = priceTicks.get(priceTicks.size() - 1);
                             
                             return stockCompanyRepository.findByStockSymbol(lastPriceTick.symbol())
-                                .map(company -> {
-                                    StockSummaryResult result = new StockSummaryResult();
-                                    result.setPriceTicks(priceTicks);
-                                    result.setAveragePrice(averagePrice);
-                                    result.setName(company.getName());
-                                    result.setDescription(company.getDescription());
-                                    return result;
-                                })
-                                .switchIfEmpty(Mono.fromCallable(() -> {
-                                    StockSummaryResult result = new StockSummaryResult();
-                                    result.setPriceTicks(priceTicks);
-                                    result.setAveragePrice(averagePrice);
-                                    result.setName("Unknown");
-                                    result.setDescription("Company not found");
-                                    return result;
-                                }));
+                                .map(company ->
+                                    StockSummaryResult.builder()
+                                            .priceTicks(priceTicks)
+                                            .averagePrice(averagePrice)
+                                            .name(company.getName())
+                                            .description(company.getDescription())
+                                            .build()
+                                )
+                                .switchIfEmpty(Mono.fromCallable(() ->
+                                    StockSummaryResult.builder()
+                                            .priceTicks(priceTicks)
+                                            .averagePrice(averagePrice)
+                                            .name("Unknown")
+                                            .description("Company not found")
+                                            .build()
+                                ));
                         })
                 );
     }

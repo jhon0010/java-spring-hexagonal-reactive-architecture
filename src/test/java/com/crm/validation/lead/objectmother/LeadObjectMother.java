@@ -60,6 +60,20 @@ public class LeadObjectMother {
                 .build();
     }
 
+    public static LeadEntity createEntityFromLead(Lead lead){
+        return LeadEntity.builder()
+                .id(lead.getId().getValue())
+                .name(lead.getPersonalInfo().name())
+                .email(lead.getEmail().getValue())
+                .phoneNumber(lead.getPhoneNumber().getValue())
+                .documentType(lead.getDocument().getType())
+                .documentNumber(lead.getDocument().getNumber())
+                .birthdate(lead.getPersonalInfo().birthdate())
+                .state(lead.getState().name())
+                .build();
+
+    }
+
     public static LeadEntity createLeadEntity() {
         return LeadEntity.builder()
                 .id(java.util.UUID.randomUUID())

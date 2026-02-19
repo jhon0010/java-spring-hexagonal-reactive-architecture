@@ -1,10 +1,12 @@
 package com.crm.validation.lead.infrastructure.adapter.in.web.dtos;
 
 import com.crm.validation.lead.domain.model.stock.PriceTick;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
+@Builder
 @Data
 public class StockSummaryResult {
     private List<PriceTick> priceTicks;
