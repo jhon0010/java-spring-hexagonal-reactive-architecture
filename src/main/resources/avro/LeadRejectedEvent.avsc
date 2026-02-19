@@ -85,7 +85,7 @@
       "type": {
         "type": "enum",
         "name": "LeadState",
-        "symbols": ["NEW", "IN_PROGRESS", "PROSPECT", "REJECTED"]
+        "symbols": ["CREATED", "ON_VALIDATION", "PROSPECT", "REFUSED", "REJECTED"]
       }
     }
   ]
